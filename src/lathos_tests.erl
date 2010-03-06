@@ -32,4 +32,5 @@ linked_node_test() ->
         {text, "See: "}, {link, "here", node1}]}, []} = lathos:subtree(node0),
     {node, #node{id=node1, parent_ids=[], description=[
         {text, "See: "}, {link, "here", node0}, {text, "and"}, {link, "here", node2}]}, []} = lathos:subtree(node1).
+        
     

@@ -12,8 +12,7 @@
 start() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 stop() ->
-    io:format("hello"),
-    gen_server:terminate(?MODULE).
+    gen_server:call(?MODULE, {stop}).
 create_node(Id, Parent_ids, Description) ->
     gen_server:call(?MODULE, {create_node, Id, Parent_ids, Description}).
 reset() ->
@@ -79,6 +78,13 @@ handle_call(
     ets:delete_all_objects(State#state.nodes),
     ets:delete_all_objects(State#state.children_ids),
     {reply, {ok}, State};
+    
+handle_call(
+    {stop},
+    _From, 
+    State
+) -> 
+    {stop, stop_requested, ok, State};
     
 handle_call(
     {subtree, Id},
