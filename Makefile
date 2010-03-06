@@ -12,7 +12,7 @@ BIN=ebin
 	
 ERL = erl -boot start_clean
 
-MODS = src/lathos src/lathos_tests
+MODS = src/lathos src/lathos_tests src/lathos_serve
 
 all: test
 

@@ -46,14 +46,14 @@ insert_child(Child_id, State) ->
 
 expand(Id, Visited0, State) ->
     case ets:lookup(State#state.nodes, Id) of
-        [] -> {no_such_node, Id};
+        [] -> {no_tree, Id};
         [Node] ->
             VisitedN = sets:add_element(Id, Visited0),
             Children_tuples = ets:lookup(State#state.children_ids, Id),
             Children_ids0 = lists:map(fun({_, X}) -> X end, Children_tuples),
             Children_ids1 = lists:filter(fun(X) -> not(sets:is_element(X, VisitedN)) end, Children_ids0),
             Children = lists:map(fun(X) -> expand(X, VisitedN, State) end, Children_ids1),
-            {node, Node, Children}
+            {tree, Node, Children}
     end.
 
 handle_call(
