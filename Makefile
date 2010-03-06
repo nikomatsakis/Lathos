@@ -1,21 +1,29 @@
+EUNIT=eunit/Makefile
+EUNITBIN=eunit/ebin
+BIN=ebin
+
 .SUFFIXES: .erl .beam .yrl
 
 .erl.beam:
-	erlc -o bin -W $<
+	erlc -pa ${EUNITBIN} -o ${BIN} -W $<
 	
 .yrl.erl:
-	erlc -o bin -W $<
+	erlc -o ${BIN} -W $<
 	
 ERL = erl -boot start_clean
 
-MODS = src/lathos
+MODS = src/lathos src/lathos_tests
 
 all: compile
 
 clean:
 	rm -rf bin/*
 
-compile: ${MODS:%=%.beam} 
+${EUNIT}:
+	svn co http://svn.process-one.net/contribs/trunk/eunit eunit
+	cd eunit; make
+
+compile: ${EUNIT} ${MODS:%=%.beam} 
 
 test: compile
-	erl -noshell -pa bin -pa test/bin -s test_suite test
+	erl -noshell -pa ${BIN} -pa ${EUNITBIN} -s lathos_tests test -s init stop
