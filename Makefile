@@ -14,7 +14,7 @@ ERL = erl -boot start_clean
 
 MODS = src/lathos src/lathos_tests
 
-all: compile
+all: test
 
 clean:
 	rm -rf bin/*
