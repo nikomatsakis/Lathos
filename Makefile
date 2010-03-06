@@ -1,11 +1,9 @@
-EUNIT=eunit/Makefile
-EUNITBIN=eunit/ebin
 BIN=ebin
 
 .SUFFIXES: .erl .beam .yrl
 
 .erl.beam:
-	erlc -pa ${EUNITBIN} -o ${BIN} -W $<
+	erlc -o ${BIN} -W $<
 	
 .yrl.erl:
 	erlc -o ${BIN} -W $<
@@ -19,11 +17,7 @@ all: test
 clean:
 	rm -rf bin/*
 
-${EUNIT}:
-	svn co http://svn.process-one.net/contribs/trunk/eunit eunit
-	cd eunit; make
-
-compile: ${EUNIT} ${MODS:%=%.beam} 
+compile: ${MODS:%=%.beam} 
 
 test: compile
-	erl -noshell -pa ${BIN} -pa ${EUNITBIN} -s lathos_tests test -s init stop
+	erl -noshell -pa ${BIN} -s lathos_tests test -s init stop
