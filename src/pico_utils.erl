@@ -63,6 +63,8 @@ str2urlencoded([$ |T]) ->
     [$+|str2urlencoded(T)];
 str2urlencoded([$\n|T]) ->
     "%0D%0A" ++ str2urlencoded(T);
+str2urlencoded([$.|T]) ->
+    "." ++ str2urlencoded(T);
 str2urlencoded([H|T]) ->
     case is_alphanum(H) of
 	true ->
