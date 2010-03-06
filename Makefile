@@ -10,7 +10,9 @@ BIN=ebin
 	
 ERL = erl -boot start_clean
 
-MODS = src/lathos src/lathos_tests src/lathos_serve
+MODS = 	src/lathos src/lathos_tests src/lathos_serve \
+		src/pico_http_server src/pico_socket_server \
+		src/pico_utils
 
 all: test
 
