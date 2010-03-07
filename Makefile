@@ -3,7 +3,7 @@ BIN=ebin
 .SUFFIXES: .erl .beam .yrl
 
 .erl.beam:
-	erlc -o $@ -W $<
+	erlc -o ${BIN} -W $<
 	
 .yrl.erl:
 	erlc -o $@ -W $<
@@ -11,8 +11,8 @@ BIN=ebin
 	
 ERL = erl -boot start_clean
 
-MODS = 	src/lathos src/lathos_tests src/lathos_serve \
-        src/lathos_parse src/lathos_parse_tests \
+MODS =	src/lathos src/lathos_tests src/lathos_serve \
+		src/lathos_parse src/lathos_parse_tests \
 		src/pico_http_server src/pico_socket_server \
 		src/pico_utils 
 
@@ -26,3 +26,9 @@ compile: ${MODS:%=%.beam}
 test: compile
 	erl -noshell -pa ${BIN} -s lathos_tests test -s init stop
 	erl -noshell -pa ${BIN} -s lathos_parse_tests test -s init stop
+
+run_server: compile
+	erl -pa ebin -s lathos_serve start
+	
+post_test_tuple:
+	curl --data-binary '@test_tuple.post' http://localhost:4999/create_node

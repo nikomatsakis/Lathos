@@ -2,7 +2,6 @@
 -include_lib("eunit/include/eunit.hrl").
 -import(lathos_parse, [parse/1, tokenize/1, tokenize_and_parse/1]).
 
-
 tokenize_atoms_test() ->
     [{atom, 1, foo}, {atom, 1, bar}, {'$end', 1}] = 
         tokenize("foo bar").

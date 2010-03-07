@@ -9,7 +9,7 @@ stop()   -> pico_http_server:stop(4999, foo1234).
 
 start_handler(_) ->
     lathos:start(), 
-    lathos:create_node(#id{name="index", version=0}, [], [{text, "Index"}]),
+    lathos:create_node(#id{name="index", version=1}, [], [{text, "Index"}]),
     ok.
     
 stop_handler(Reason, ok) ->
@@ -45,6 +45,7 @@ css() ->
         "    margin-top: .1cm;",
         "    margin-bottom: .1cm;",
         "    margin-left: .3cm;",
+        "    margin-right: 0cm;",
         "}",
         ".initiallyOpen {",
         "    opacity: 1.0;",
@@ -106,20 +107,52 @@ response_for(IdStrs) ->
         "</HTML>"
     ].
 
+validate_chunk({text, String}) when is_list(String) ->
+    {text, String};
+validate_chunk({link, String, Id}) when is_list(String), is_tuple(Id) ->
+    VId = validate_id(Id),
+    {link, String, VId};
+validate_chunk(Chunk) ->
+    throw({invalid, chunk, Chunk}).
+    
+validate_description(Description) when is_list(Description) ->
+    lists:map(fun validate_chunk/1, Description);
+validate_description(Description) ->
+    throw({invalid, description, Description}).
+    
+validate_id(#id{name=Name, version=Version}) when is_list(Name), is_integer(Version) ->
+    #id{name=Name, version=Version};
+validate_id(Id) ->
+    throw({invalid, id, Id}).
+    
+validate_node(#node{id=Id, parent_ids=Parent_ids, description=Description}) when is_list(Parent_ids) ->
+    VId = validate_id(Id),
+    VParent_ids = lists:map(fun validate_id/1, Parent_ids),
+    VDescription = validate_description(Description),
+    #node{id=VId, parent_ids=VParent_ids, description=VDescription};
+validate_node(Node) ->
+    throw({invalid, node, Node}).
+    
+create_validated_node(VNode) ->
+    lathos:create_node(VNode#node.id, VNode#node.parent_ids, VNode#node.description).
+    
 event_handler({get, _Hostname, "/favicon.ico", _Args}, State) ->
     Code = "404 Not Found",
     Response = "<html><body>no such file, dude.</body></html>",
-    {[header({error,Code,Response})], State};    
+    {[header({error,Code,Response})], State};   
+     
 event_handler({get, _Hostname, Uri, _Args}, State) ->
     io:format("Uri:~p~n", [Uri]),
     Decoded = pico_utils:urlencoded2str(Uri),
     Response = case string:tokens(Decoded, "/") of
-        [] -> response_for(["index.0"]);
+        [] -> response_for(["index.1"]);
         Ids -> response_for(Ids)
     end,
     {[header({ok, html}), Response], State};
     
-event_handler({post, _Hostname, _Uri, _Args}, State) ->
-    Code = "404 Not Found",
-    Response = "<html><body><h1>post not permitted (yet)</h1></body></html>",
-    {[header({error,Code,Response})], State}.
+event_handler({post, _Hostname, "/create_node", [{PostData, _}]}, State) ->
+    {ok, Node} = lathos_parse:tokenize_and_parse(PostData),
+    io:format("Node=~p~n", [Node]),
+    VNode = validate_node(Node),
+    Response = create_validated_node(VNode),
+    {[header({ok, text}), io_lib:format("~p", [Response])], State}.
