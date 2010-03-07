@@ -96,12 +96,17 @@ script() ->
 
 link(Text,Id) -> ["<A href='", url(Id), "'>", escape(Text), "</A>"].
 
-html_description([]) ->
+html_description(_IdStr, []) ->
     [];
-html_description([{text, Text} | D]) ->
-    [escape(Text) | html_description(D)];
-html_description([{link, Text, Id} | D]) ->
-    [link(Text, Id), html_description(D)].
+html_description(IdStr, [{text, Text} | D]) ->
+    [
+        "<SPAN class='msg' onclick='toggleId(\"", IdStr, "\")'>",
+        escape(Text),
+        "</SPAN>"
+        | html_description(IdStr, D)
+    ];
+html_description(IdStr, [{link, Text, Id} | D]) ->
+    [link(Text, Id), html_description(IdStr, D)].
 
 html_tree(Depth, {tree, Node, Children}) ->
     [
@@ -110,9 +115,7 @@ html_tree(Depth, {tree, Node, Children}) ->
         " class='log initiallyOpen'",
         " style='background-color: #", color(Depth), ";'",
         ">\n",
-        "<SPAN class='msg' onclick='toggleId(\"", id_to_str(Node#node.id), "\")'>",
-        html_description(Node#node.description),
-        "</SPAN>\n",
+        html_description(id_to_str(Node#node.id), Node#node.description),
         lists:map(fun(C) -> html_tree(Depth+1, C) end, Children),
         "</DIV>\n"
     ].
