@@ -1,31 +1,28 @@
-BIN=ebin
-
 .SUFFIXES: .erl .beam .yrl
 
-.erl.beam:
-	erlc -o ${BIN} -W $<
+ebin/%.beam: src.erl/%.erl
+	erlc -o ebin -W $<
 	
-.yrl.erl:
+src.erl/%.erl: src.erl/%.yrl
 	erlc -o $@ -W $<
 	chmod u-w $@
 	
-ERL = erl -boot start_clean
-
-MODS =	src/lathos src/lathos_tests src/lathos_serve \
-		src/lathos_parse src/lathos_parse_tests \
-		src/pico_http_server src/pico_socket_server \
-		src/pico_utils 
+ERLS =	lathos lathos_tests lathos_serve \
+		lathos_parse lathos_parse_tests \
+		pico_http_server pico_socket_server \
+		pico_utils 
+BEAMS = ${ERLS:%=ebin/%.beam} 
 
 all: test
 
 clean:
-	rm -rf bin/*
+	rm -rf ebin/*
 
-compile: ${MODS:%=%.beam} 
+compile: ${BEAMS}
 
 test: compile
-	erl -noshell -pa ${BIN} -s lathos_tests test -s init stop
-	erl -noshell -pa ${BIN} -s lathos_parse_tests test -s init stop
+	erl -noshell -pa ebin -s lathos_tests test -s init stop
+	erl -noshell -pa ebin -s lathos_parse_tests test -s init stop
 
 run_server: compile
 	erl -pa ebin -s lathos_serve start
