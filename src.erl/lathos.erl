@@ -3,7 +3,7 @@
 %-include_lib("eunit/include/eunit.htl").
 -include("lathos.hrl").
 -behaviour(gen_server).
--export([start/0, stop/0, create_node/3, reset/0, subtree/1]).
+-export([start/0, stop/0, create_nodes/1, reset/0, subtree/1]).
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
 -record(state, { nodes, children_ids }).
 
@@ -13,8 +13,8 @@ start() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 stop() ->
     gen_server:call(?MODULE, {stop}).
-create_node(Id, Parent_ids, Description) ->
-    gen_server:call(?MODULE, {create_node, Id, Parent_ids, Description}).
+create_nodes(Nodes) ->
+    gen_server:call(?MODULE, {create_nodes, Nodes}).
 reset() ->
     gen_server:call(?MODULE, {reset}).
 subtree(Id) ->
@@ -33,17 +33,19 @@ exists_node_named(Id, State) -> case ets:lookup(State#state.nodes, Id) of
     [_] -> true
 end.
 
-unlinked_ids([], _State) -> [];
-unlinked_ids([{text, _} | Ids], State) -> unlinked_ids(Ids, State);
-unlinked_ids([{link, _, Id} | Ids], State) ->
+unlinked_ids_in_description([], _State) ->
+    [];
+unlinked_ids_in_description([{text, _} | Desc], State) ->
+    unlinked_ids_in_description(Desc, State);
+unlinked_ids_in_description([{link, _, Id} | Desc], State) ->
     case exists_node_named(Id, State) of
-        false -> [Id | unlinked_ids(Ids, State)];
-        true -> unlinked_ids(Ids, State)
+        false -> [Id | unlinked_ids_in_description(Desc, State)];
+        true -> unlinked_ids_in_description(Desc, State)
     end.
     
-insert_child(Child_id, State) -> 
-    fun(Parent_id) -> ets:insert(State#state.children_ids, {Parent_id, Child_id}) end.
-
+unlinked_ids_in_node(Node, State) ->
+    unlinked_ids_in_description(Node#node.description, State).
+    
 expand(Id, Visited0, State) ->
     case ets:lookup(State#state.nodes, Id) of
         [] -> {no_tree, Id};
@@ -55,15 +57,23 @@ expand(Id, Visited0, State) ->
             Children = lists:map(fun(X) -> expand(X, VisitedN, State) end, Children_ids1),
             {tree, Node, Children}
     end.
+    
+insert_child(Child_id, State) -> 
+    fun(Parent_id) ->
+        ets:insert(State#state.children_ids, {Parent_id, Child_id}) 
+    end.
+
+insert_node(Node, State) ->
+    ets:insert(State#state.nodes, Node),
+    lists:foreach(insert_child(Node#node.id, State), Node#node.parent_ids).
 
 handle_call(
-    {create_node, Id, Parent_ids, Description},
+    {create_nodes, Nodes},
     _From, 
     State
 ) -> 
-    ets:insert(State#state.nodes, #node{id=Id, parent_ids=Parent_ids, description=Description}),
-    lists:foreach(insert_child(Id, State), Parent_ids),
-    Unlinked_ids = unlinked_ids(Description, State),
+    lists:foreach(fun(N) -> insert_node(N, State) end, Nodes),
+    Unlinked_ids = lists:flatmap(fun(N) -> unlinked_ids_in_node(N, State) end, Nodes),
     {reply, Unlinked_ids, State};
 
 handle_call(

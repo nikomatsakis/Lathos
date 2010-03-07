@@ -205,8 +205,8 @@ event_handler({get, _Hostname, Uri, _Args}, State) ->
     end,
     {[header({ok, html}), Response], State};
     
-event_handler({post, _Hostname, "/create_node", [{PostData, _}]}, State) ->
-    {ok, Node} = lathos_parse:tokenize_and_parse(PostData),
-    VNode = validate_node(Node),
-    Response = create_validated_node(VNode),
+event_handler({post, _Hostname, "/create_nodes", [{PostData, _}]}, State) ->
+    Nodes = lathos_parse:tokenize_and_parse(PostData),
+    VNodes = lists:map(fun validate_node/1, Nodes),
+    Response = lists:flatmap(fun create_validated_node/1, VNodes),
     {[header({ok, text}), io_lib:format("~p", [Response])], State}.

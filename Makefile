@@ -28,7 +28,7 @@ run_server: compile
 	erl -pa ebin -s lathos_serve start
 	
 post_test_tuples:
-	curl --data-binary '@test_tuple1.post' http://localhost:4999/create_node
+	curl --data-binary '@test_tuple1.post' http://localhost:4999/create_nodes
 	@echo
-	curl --data-binary '@test_tuple2.post' http://localhost:4999/create_node
+	curl --data-binary '@test_tuple2.post' http://localhost:4999/create_nodes
 	@echo
