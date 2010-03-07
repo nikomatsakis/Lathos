@@ -118,6 +118,17 @@ html_tree(Depth, {tree, Node, Children}) ->
         html_description(id_to_str(Node#node.id), Node#node.description),
         lists:map(fun(C) -> html_tree(Depth+1, C) end, Children),
         "</DIV>\n"
+    ];
+html_tree(Depth, {no_tree, Id}) ->
+    IdStr = id_to_str(Id),
+    [
+        "<DIV",
+        " id='", IdStr, "'",
+        " class='log initiallyOpen'",
+        " style='background-color: #", color(Depth), ";'",
+        ">\n",
+        "<b>Node ", escape(IdStr), " is not defined.</b>\n",
+        "</DIV>\n"
     ].
     
 response_for(IdStrs) ->

@@ -1,0 +1,9 @@
+{node, 
+    {id, "test", 2}, 
+    [{id, "index", 1}], 
+    [{text, "This is \"test.2\".  It links to "},
+     {link, "test.1", {id, "test", 1}},
+     {text, " and "},
+     {link, "test.3", {id, "test", 3}},
+     {text, " in order to test the linking facility."}]
+}

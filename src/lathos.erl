@@ -61,14 +61,10 @@ handle_call(
     _From, 
     State
 ) -> 
-    case ets:lookup(State#state.nodes, Id) of
-        [_Node] -> {reply, {duplicate_node, Id}, State};
-        [] ->
-            ets:insert(State#state.nodes, #node{id=Id, parent_ids=Parent_ids, description=Description}),
-            lists:foreach(insert_child(Id, State), Parent_ids),
-            Unlinked_ids = unlinked_ids(Description, State),
-            {reply, {unlinked_ids, Unlinked_ids}, State}
-    end;
+    ets:insert(State#state.nodes, #node{id=Id, parent_ids=Parent_ids, description=Description}),
+    lists:foreach(insert_child(Id, State), Parent_ids),
+    Unlinked_ids = unlinked_ids(Description, State),
+    {reply, Unlinked_ids, State};
 
 handle_call(
     {reset},
