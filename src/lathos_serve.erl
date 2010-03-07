@@ -38,32 +38,61 @@ url(Id) ->
     pico_utils:str2urlencoded(IdStr).
     
 css() ->
-    [
-        "DIV.log {",
-        "    border-width: thin;",
-        "    border-style: solid;",
-        "    margin-top: .1cm;",
-        "    margin-bottom: .1cm;",
-        "    margin-left: .3cm;",
-        "    margin-right: 0cm;",
-        "}",
-        ".initiallyOpen {",
-        "    opacity: 1.0;",
-        "}",
-        ".initiallyClosed {",
-        "    opacity: 0.25;",
-        "}",
-        "A:hover {",
-        "    text-decoration: underline;",
-        "}",
-        "A:link {",
-        "    text-decoration: none;",
-        "}",
-        "A:visited {",
-        "    text-decoration: none;",
-        "}"
-    ].
-    
+    "DIV.log {"
+    "    border-width: thin;"
+    "    border-style: solid;"
+    "    margin-top: .1cm;"
+    "    margin-bottom: .1cm;"
+    "    margin-left: .3cm;"
+    "    margin-right: 0cm;"
+    "}"
+    ".initiallyOpen {"
+    "    opacity: 1.0;"
+    "}"
+    ".initiallyClosed {"
+    "    opacity: 0.25;"
+    "}"
+    "A:hover {"
+    "    text-decoration: underline;"
+    "}"
+    "A:link {"
+    "    text-decoration: none;"
+    "}"
+    "A:visited {"
+    "    text-decoration: none;"
+    "}"
+    .
+
+script() ->
+    "function toggleId(id)"
+    "{"
+    "    var target = document.getElementById(id);"
+    "    var kids = target.childNodes;"
+    "    var openedKids = false;"
+    "    var closedKids = false;"
+    "    for(var i = 0; (i < kids.length); i++) {"
+    "        var kid = kids[i];"
+    "        if("
+    "            kid.className == 'log initiallyOpen' ||"
+    "            kid.className == 'log initiallyClosed'"
+    "        ) {"
+    "            if(kid.style.display == 'none') {"
+    "                kid.style.display = 'block';"
+    "                openedKids = true;"
+    "            } else {"
+    "                kid.style.display = 'none';"
+    "                closedKids = true;"
+    "            }"
+    "        }"
+    "    }"
+    "    "
+    "    if(openedKids) {"
+    "        target.style.opacity = 1.0;"
+    "    } else if (closedKids) {"
+    "        target.style.opacity = 0.25;                            "
+    "    }"
+    "}"
+    .
 
 link(Text,Id) -> ["<A href='", url(Id), "'>", escape(Text), "</A>"].
 
@@ -78,7 +107,7 @@ html_tree(Depth, {tree, Node, Children}) ->
     [
         "<DIV",
         " id='", id_to_str(Node#node.id), "'",
-        " class='log'",
+        " class='log initiallyOpen'",
         " style='background-color: #", color(Depth), ";'",
         ">\n",
         "<SPAN class='msg' onclick='toggleId(\"", id_to_str(Node#node.id), "\")'>",
@@ -97,6 +126,7 @@ response_for(IdStrs) ->
         "<HEAD>\n",
         "   <TITLE>Item ", escape(id_to_str(RootId)), "</TITLE>\n",
         "   <STYLE>", css(), "</STYLE>\n",
+        "   <SCRIPT type='text/javascript'>", script(), "</SCRIPT>\n",
         "</HEAD>\n",
         "<BODY>\n",
         "<DIV id='breadcrumbs'>\n",
