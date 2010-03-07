@@ -94,7 +94,8 @@ script() ->
     "}"
     .
 
-link(Text,Id) -> ["<A href='", url(Id), "'>", escape(Text), "</A>"].
+link_to_url(Text,Url) -> ["<A href='", Url, "'>", escape(Text), "</A>"].
+link_to_id(Text,Id) -> link_to_url(Text, url(Id)).
 
 html_description(_IdStr, []) ->
     [];
@@ -106,35 +107,46 @@ html_description(IdStr, [{text, Text} | D]) ->
         | html_description(IdStr, D)
     ];
 html_description(IdStr, [{link, Text, Id} | D]) ->
-    [link(Text, Id), html_description(IdStr, D)].
-
-html_tree(Depth, {tree, Node, Children}) ->
+    [link_to_id(Text, Id), html_description(IdStr, D)].
+    
+open_div(Depth, UpLinkId, NodeId) ->
     [
         "<DIV",
-        " id='", id_to_str(Node#node.id), "'",
+        " id='", id_to_str(NodeId), "'",
         " class='log initiallyOpen'",
         " style='background-color: #", color(Depth), ";'",
         ">\n",
-        html_description(id_to_str(Node#node.id), Node#node.description),
-        lists:map(fun(C) -> html_tree(Depth+1, C) end, Children),
-        "</DIV>\n"
+        "<A href='#", id_to_str(UpLinkId), "'>&#8689;</A>&nbsp;"
+    ].
+    
+close_div() ->
+    "</DIV>\n".
+
+html_tree(Depth, UpLinkId, {tree, Node, Children}) ->
+    NodeId = Node#node.id,
+    [
+        open_div(Depth, UpLinkId, NodeId),
+        html_description(id_to_str(NodeId), Node#node.description),
+        lists:map(fun(C) -> html_tree(Depth+1, NodeId, C) end, Children),
+        close_div()
     ];
-html_tree(Depth, {no_tree, Id}) ->
+html_tree(Depth, UpLinkId, {no_tree, Id}) ->
     IdStr = id_to_str(Id),
     [
-        "<DIV",
-        " id='", IdStr, "'",
-        " class='log initiallyOpen'",
-        " style='background-color: #", color(Depth), ";'",
-        ">\n",
+        open_div(Depth, UpLinkId, Id),
         "<b>Node ", escape(IdStr), " is not defined.</b>\n",
-        "</DIV>\n"
+        close_div()
     ].
+    
+breadcrumbs(Prefix, []) -> [];
+breadcrumbs(Prefix, [Id | Ids]) -> 
+    IdStr = id_to_str(Id),
+    PrefixedIdStr = Prefix ++ [$/ | IdStr],
+    [": ", link_to_url(IdStr, PrefixedIdStr) | breadcrumbs(PrefixedIdStr, Ids)].
     
 response_for(IdStrs) ->
     Ids = lists:map(fun str_to_id/1, IdStrs),
     RootId = lists:last(Ids),
-    io:format("RootId = ~p~n", [RootId]),    
     [
         "<HTML>\n",
         "<HEAD>\n",
@@ -144,9 +156,9 @@ response_for(IdStrs) ->
         "</HEAD>\n",
         "<BODY>\n",
         "<DIV id='breadcrumbs'>\n",
-        lists:map(fun(I) -> [": ", link(id_to_str(I), I)] end, Ids),
+        breadcrumbs("", Ids),
         "</DIV>\n",
-        html_tree(1, lathos:subtree(RootId)),
+        html_tree(1, RootId, lathos:subtree(RootId)),
         "</BODY>\n",
         "</HTML>"
     ].
@@ -186,7 +198,6 @@ event_handler({get, _Hostname, "/favicon.ico", _Args}, State) ->
     {[header({error,Code,Response})], State};   
      
 event_handler({get, _Hostname, Uri, _Args}, State) ->
-    io:format("Uri:~p~n", [Uri]),
     Decoded = pico_utils:urlencoded2str(Uri),
     Response = case string:tokens(Decoded, "/") of
         [] -> response_for(["index.1"]);
@@ -196,7 +207,6 @@ event_handler({get, _Hostname, Uri, _Args}, State) ->
     
 event_handler({post, _Hostname, "/create_node", [{PostData, _}]}, State) ->
     {ok, Node} = lathos_parse:tokenize_and_parse(PostData),
-    io:format("Node=~p~n", [Node]),
     VNode = validate_node(Node),
     Response = create_validated_node(VNode),
     {[header({ok, text}), io_lib:format("~p", [Response])], State}.
