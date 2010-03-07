@@ -9,10 +9,10 @@
 %% Modified by Nicholas Matsakis in 2010 to remove use of
 %% deprecated regexp package and other miscellany.
 
--export([str2urlencoded/1, urlencoded2str/1]).
+-export([str2urlencoded/1, urlencoded2str/1, decode_hex/2]).
 -export([show/1, header/1, body/1, pre/1, h1/1, h3/1, b/1, str/1, classify/1]).
 -export([parse_header/1, parse_uri_args/1]).
--export([permit/2]).
+-export([permit/2, is_alphanum/1]).
 
 -include_lib("kernel/include/inet.hrl").
 
