@@ -8,7 +8,7 @@ public class LogParser {
 	
 	public static final LogParser parser = new LogParser(); 
 
-	LList<LogId> parseStreamAsLogIdList(Reader reader) throws IOException, ParseFailure {
+	LList<LogId, Void> parseStreamAsLogIdList(Reader reader) throws IOException, ParseFailure {
 		StreamTokenizer tok = new StreamTokenizer(reader);
 		tok.slashSlashComments(false);
 		tok.slashStarComments(false);
@@ -18,15 +18,15 @@ public class LogParser {
 		tok.lowerCaseMode(false);
 		
 		tok.nextToken();
-		LList<LogId> result = parseList(tok);
+		LList<LogId, Void> result = parseList(tok);
 		if(tok.ttype != StreamTokenizer.TT_EOF)
 			throw new ParseFailure(tok, "<EOF>");
 		return result;
 	}
 
-	LList<LogId> parseList(StreamTokenizer tok) throws IOException, ParseFailure {
+	LList<LogId, Void> parseList(StreamTokenizer tok) throws IOException, ParseFailure {
 		expect(tok, '[');
-		LList<LogId> result = parseListContents(tok);
+		LList<LogId, Void> result = parseListContents(tok);
 		expect(tok, ']');
 		return result;
 	}
@@ -37,17 +37,17 @@ public class LogParser {
 		tok.nextToken();
 	}
 
-	private LList<LogId> parseListContents(StreamTokenizer tok) throws IOException, ParseFailure {
+	private LList<LogId, Void> parseListContents(StreamTokenizer tok) throws IOException, ParseFailure {
 		if(tok.ttype == '{') {
 			LogId id = parseId(tok);
-			LList<LogId> next;
+			LList<LogId, Void> next;
 			if(tok.ttype == ',') {
 				tok.nextToken();
 				next = parseListContents(tok);
 			} else {
 				next = null;
 			}			
-			return new LList<LogId>(id, next);
+			return new LList<LogId, Void>(id, null, next);
 		} else return null;
 	}
 

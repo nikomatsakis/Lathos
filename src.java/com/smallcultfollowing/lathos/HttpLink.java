@@ -23,7 +23,7 @@ public class HttpLink extends LogLink {
 	}
 	
 	@Override
-	public LList<LogId> createNode(String msg) {
+	public LList<LogId, Void> createNode(String msg) {
 		try {
 			URL url = new URL("http", hostname, port, "/createNodes");
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();

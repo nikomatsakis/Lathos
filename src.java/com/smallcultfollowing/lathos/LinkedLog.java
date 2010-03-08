@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class LinkedLog implements Log {
 	private int counter;
-	private LList<LogId> idStack = new LList<LogId>(LogId.index, null);
+	private LList<LogId, Void> idStack = new LList<LogId, Void>(LogId.index, null, null);
 	private final LogLink link;
 	
 	public LinkedLog(LogLink link) {
@@ -42,8 +42,8 @@ public class LinkedLog implements Log {
 		sb.append("]}, "); // include a trailing comma because we always define erlang nodes in lists
 	}
 	
-	private LList<Loggable> appendErlangNodeForLogMessage(
-			LList<Loggable> links, 
+	private LList<LogId, Loggable> appendErlangNodeForLogMessage(
+			LList<LogId, Loggable> links, 
 			StringBuilder sb, 
 			LogId id, 
 			LogId parentId,
@@ -80,15 +80,15 @@ public class LinkedLog implements Log {
 		return links;
 	}
 	
-	private LList<Loggable> appendLink(
-			LList<Loggable> links, 
+	private LList<LogId, Loggable> appendLink(
+			LList<LogId, Loggable> links, 
 			StringBuilder sb, 
 			Object object) 
 	{
 		if(object instanceof Loggable) {
 			Loggable l = (Loggable) object;
-			links = LList.add(l, links);
 			LogId objectId = l.logId();
+			links = LList.add(objectId, l, links);
 			sb.append("{link, ");
 			Util.appendEscapedString(sb, objectId.toString());
 			sb.append(", ");
@@ -101,8 +101,8 @@ public class LinkedLog implements Log {
 		return links;
 	}
 	
-	private LList<Loggable> appendErlangNodesForLoggable(
-			LList<Loggable> links,
+	private LList<LogId, Loggable> appendErlangNodesForLoggable(
+			LList<LogId, Loggable> links,
 			StringBuilder sb,
 			LogId logId, 
 			Loggable item)
@@ -128,15 +128,15 @@ public class LinkedLog implements Log {
 		return links;
 	}
 
-	private void achieveClosure(LList<LogId> missing, LList<Loggable> links) {
+	private void achieveClosure(LList<LogId, Void> missing, LList<LogId, Loggable> links) {
 		while(missing != null) {
 			StringBuilder sb = new StringBuilder("[");
-			LList<Loggable> nextLinks = null;
+			LList<LogId, Loggable> nextLinks = null;
 			
 			while(links != null) {
-				LogId logId = links.elem.logId();
-				if(LList.contains(missing, logId))
-					nextLinks = appendErlangNodesForLoggable(nextLinks, sb, logId, links.elem);
+				LogId logId = links.elemE;
+				if(LList.containsE(missing, logId))
+					nextLinks = appendErlangNodesForLoggable(nextLinks, sb, logId, links.elemF);
 				links = links.next;
 			}
 			
@@ -154,10 +154,10 @@ public class LinkedLog implements Log {
 	public LogId log(String fmt, Object... args) {
 		LogId id = freshLogId();
 		StringBuilder sb = new StringBuilder("[");
-		LList<Loggable> links = appendErlangNodeForLogMessage(null, sb, id, idStack.elem, fmt, args);
+		LList<LogId, Loggable> links = appendErlangNodeForLogMessage(null, sb, id, idStack.elemE, fmt, args);
 		strikeTrailingComma(sb);
 		sb.append("]");
-		LList<LogId> missing = link.createNode(sb.toString());
+		LList<LogId, Void> missing = link.createNode(sb.toString());
 		achieveClosure(missing, links);
 		return id;
 	}
@@ -180,15 +180,15 @@ public class LinkedLog implements Log {
 	 */
 	public LogId indent(String fmt, Object... args) {
 		LogId id = log(fmt, args);
-		idStack = new LList<LogId>(id, idStack);
-		return idStack.elem;
+		idStack = LList.add(id, null, idStack);
+		return idStack.elemE;
 	}
 	
 	/* (non-Javadoc)
 	 * @see com.smallcultfollowing.lathos.LogInter#undent(com.smallcultfollowing.lathos.LogId)
 	 */
 	public void undent(LogId top) {
-		assert top == idStack.elem : "Unmatched indent and undent";
+		assert top == idStack.elemE : "Unmatched indent and undent";
 		idStack = idStack.next;
 	}
 

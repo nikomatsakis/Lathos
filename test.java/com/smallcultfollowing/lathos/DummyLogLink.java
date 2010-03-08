@@ -7,12 +7,12 @@ import junit.framework.Assert;
 
 public class DummyLogLink extends LogLink {
 	
-	public final List<LList<LogId>> returnValues = new ArrayList<LList<LogId>>();
+	public final List<LList<LogId, Void>> returnValues = new ArrayList<LList<LogId, Void>>();
 	public final List<String> messages = new ArrayList<String>();
 	public int position = 0;
 
 	@Override
-	public LList<LogId> createNode(String msg) {
+	public LList<LogId, Void> createNode(String msg) {
 		int index = messages.size();
 		messages.add(msg);
 		return returnValues.get(index);

@@ -15,7 +15,7 @@ public class TestLogParser {
 	public final LogId foo0 = new LogId("foo", 0);
 	public final LogId bar0 = new LogId("bar", 0);
 	
-	public LList<LogId> parseString(String str) throws IOException, ParseFailure {
+	public LList<LogId, Void> parseString(String str) throws IOException, ParseFailure {
 		return LogParser.parser.parseStreamAsLogIdList(new StringReader(str));
 	}
 
