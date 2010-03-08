@@ -89,7 +89,9 @@ public class TestLinkedLog {
 		link.returnValues.add(LList.llist(test1.logId()));
 		link.returnValues.add(null);
 		log.log("%s", test1);
-		link.dumpMessages();
+		//link.dumpMessages();
+		link.assertNextMessage("[{node, {id, \"Log0\", 1}, [{id, \"index\", 1}], [{link, \"test1.1\", {id, \"test1\", 1}}]}]");
+		link.assertNextMessage("[{node, {id, \"test1\", 1}, [], [{text, \"Heading1\"}]}, {node, {id, \"Log1\", 1}, [{id, \"test1\", 1}], [{text, \"x: \"}, {text, \"y\"}]}]");
 		link.assertAllMessages();
 	}
 	
@@ -99,14 +101,16 @@ public class TestLinkedLog {
 		link.returnValues.add(LList.llist(test1.logId()));
 		link.returnValues.add(null);
 		log.log("Hi:", test1);
-		link.dumpMessages();
+		//link.dumpMessages();
+		link.assertNextMessage("[{node, {id, \"Log0\", 1}, [{id, \"index\", 1}], [{text, \"Hi:\"}, {link, \"test1.1\", {id, \"test1\", 1}}]}]");
+		link.assertNextMessage("[{node, {id, \"test1\", 1}, [], [{text, \"Heading1\"}]}, {node, {id, \"Log1\", 1}, [{id, \"test1\", 1}], [{text, \"x: \"}, {text, \"y\"}]}]");
 		link.assertAllMessages();
 	}
 	
 	@Test public void missingArgument() {
 		link.returnValues.add(null);
 		log.log("Hello, %s! test1=%s.", "foo");
-		link.dumpMessages();
+		//link.dumpMessages();
 		link.assertNextMessage("[{node, {id, \"Log0\", 1}, [{id, \"index\", 1}], [{text, \"Hello, \"}, {text, \"foo\"}, {text, \"! test1=\"}, {text, \"???\"}, {text, \".\"}]}]");
 		link.assertAllMessages();
 	}
