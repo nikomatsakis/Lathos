@@ -75,8 +75,12 @@ class LogSerializer {
 				sb.append("{text, \"%\"}, ");
 				upToIndex = nextPercent + 2;
 			} else if(fmt.charAt(nextPercent + 1) == 's') {
-				links = appendLink(links, args[upToArg]);
-				upToArg += 1;
+				if(upToArg < args.length) {
+					links = appendLink(links, args[upToArg]);
+					upToArg += 1;
+				} else {
+					sb.append("{text, \"???\"}, ");
+				}
 				upToIndex = nextPercent + 2;
 			}
 		} 
@@ -96,7 +100,11 @@ class LogSerializer {
 	{
 		if(object instanceof Loggable) {
 			Loggable l = (Loggable) object;
+			
 			LogId objectId = l.logId();
+			if(objectId == null)
+				objectId = log.freshLogId();
+			
 			links = LList.add(objectId, l, links);
 			sb.append("{link, ");
 			Util.appendEscapedString(sb, objectId.toString());

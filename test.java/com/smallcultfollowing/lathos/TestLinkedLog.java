@@ -31,7 +31,9 @@ public class TestLinkedLog {
 
 		@Override
 		public LogId logId() {
-			return new LogId(name, 1);
+			if(name != null)
+				return new LogId(name, 1);
+			return null;
 		}
 		
 	}
@@ -44,7 +46,7 @@ public class TestLinkedLog {
 		log = new LinkedLog(link);		
 	}
 	
-	@Test public void foo() {
+	@Test public void twoInlinedObjects() {
 		TestLoggable test1 = new TestLoggable("test1", "Heading1");
 		test1.fields.put("x", "y");
 		
@@ -53,10 +55,12 @@ public class TestLinkedLog {
 		
 		link.returnValues.add(LList.llist(test1.logId(), test2.logId()));
 		link.returnValues.add(null);
+		link.returnValues.add(null);
 		
 		log.log("Hello, %s! test1=%s, test2=%s.", "you", test1, test2);
+		log.log("test1=%s", test1);
 		
-		link.dumpMessages();
+		//link.dumpMessages();
 		link.assertNextMessage(
 				"[{node, {id, \"Log0\", 1}, [{id, \"index\", 1}], [" +
 				"{text, \"Hello, \"}, {text, \"you\"}, {text, \"! test1=\"}, " +
@@ -71,7 +75,40 @@ public class TestLinkedLog {
 				"{node, {id, \"Log2\", 1}, [{id, \"test1\", 1}], [{text, \"x: \"}, {text, \"y\"}]}" +
 				"]"
 				);
+		link.assertNextMessage(
+				"[{node, {id, \"Log3\", 1}, [{id, \"index\", 1}], [" +
+				"{text, \"test1=\"}, " +
+				"{link, \"test1.1\", {id, \"test1\", 1}}]}]"
+				);
 		link.assertAllMessages();
 	}
 
+	@Test public void justFormatSpecifier() {
+		TestLoggable test1 = new TestLoggable("test1", "Heading1");
+		test1.fields.put("x", "y");
+		link.returnValues.add(LList.llist(test1.logId()));
+		link.returnValues.add(null);
+		log.log("%s", test1);
+		link.dumpMessages();
+		link.assertAllMessages();
+	}
+	
+	@Test public void missingFormatSpecifier() {
+		TestLoggable test1 = new TestLoggable("test1", "Heading1");
+		test1.fields.put("x", "y");
+		link.returnValues.add(LList.llist(test1.logId()));
+		link.returnValues.add(null);
+		log.log("Hi:", test1);
+		link.dumpMessages();
+		link.assertAllMessages();
+	}
+	
+	@Test public void missingArgument() {
+		link.returnValues.add(null);
+		log.log("Hello, %s! test1=%s.", "foo");
+		link.dumpMessages();
+		link.assertNextMessage("[{node, {id, \"Log0\", 1}, [{id, \"index\", 1}], [{text, \"Hello, \"}, {text, \"foo\"}, {text, \"! test1=\"}, {text, \"???\"}, {text, \".\"}]}]");
+		link.assertAllMessages();
+	}
+	
 }
