@@ -9,7 +9,12 @@ stop()   -> pico_http_server:stop(4999, foo1234).
 
 start_handler(_) ->
     lathos:start(), 
-    lathos:create_node(#id{name="index", version=1}, [], [{text, "Index"}]),
+    lathos:create_nodes([
+        #node{
+            id=#id{name="index", version=1}, 
+            parent_ids=[], 
+            description=[{text, "Index"}]}
+    ]),
     ok.
     
 stop_handler(Reason, ok) ->
@@ -138,7 +143,7 @@ html_tree(Depth, UpLinkId, {no_tree, Id}) ->
         close_div()
     ].
     
-breadcrumbs(Prefix, []) -> [];
+breadcrumbs(_Prefix, []) -> [];
 breadcrumbs(Prefix, [Id | Ids]) -> 
     IdStr = id_to_str(Id),
     PrefixedIdStr = Prefix ++ [$/ | IdStr],
@@ -189,9 +194,6 @@ validate_node(#node{id=Id, parent_ids=Parent_ids, description=Description}) when
 validate_node(Node) ->
     throw({invalid, node, Node}).
     
-create_validated_node(VNode) ->
-    lathos:create_node(VNode#node.id, VNode#node.parent_ids, VNode#node.description).
-    
 event_handler({get, _Hostname, "/favicon.ico", _Args}, State) ->
     Code = "404 Not Found",
     Response = "<html><body>no such file, dude.</body></html>",
@@ -206,7 +208,7 @@ event_handler({get, _Hostname, Uri, _Args}, State) ->
     {[header({ok, html}), Response], State};
     
 event_handler({post, _Hostname, "/create_nodes", [{PostData, _}]}, State) ->
-    Nodes = lathos_parse:tokenize_and_parse(PostData),
+    {ok, Nodes} = lathos_parse:tokenize_and_parse(PostData),
     VNodes = lists:map(fun validate_node/1, Nodes),
-    Response = lists:flatmap(fun create_validated_node/1, VNodes),
+    Response = lathos:create_nodes(VNodes),
     {[header({ok, text}), io_lib:format("~p", [Response])], State}.

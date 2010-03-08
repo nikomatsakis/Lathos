@@ -18,5 +18,5 @@
          {text, "with "},
          {link, "test.2", {id, "test", 2}},
          {text, " and so does not show up as missing in the response."}]
-    },
+    }
 ]

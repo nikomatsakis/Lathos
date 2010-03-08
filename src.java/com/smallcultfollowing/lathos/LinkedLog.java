@@ -2,14 +2,29 @@ package com.smallcultfollowing.lathos;
 
 import java.util.Map;
 
-public class Log {
+public class LinkedLog implements LogInter {
 	private int counter;
 	private LList<LogId> idStack = new LList<LogId>(LogId.index, null);
-	private LogLink link;
+	private final LogLink link;
 	
+	public LinkedLog(LogLink link) {
+		this.link = link;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.smallcultfollowing.lathos.LogInter#freshLogId()
+	 */
 	public LogId freshLogId() {
 		int value = counter++;
 		return new LogId("Log"+value, 1);
+	}
+	
+	private void strikeTrailingComma(StringBuilder sb) {
+		int length = sb.length();
+		if(length > 2) {
+			if(sb.charAt(length - 2) == ',' && sb.charAt(length - 1) == ' ')
+				sb.setLength(length - 2);
+		}
 	}
 	
 	private void appendPrefixForErlangNode(StringBuilder sb, LogId logId, LogId parentId)
@@ -23,6 +38,7 @@ public class Log {
 	}
 	
 	private void appendSuffixForErlangNode(StringBuilder sb) {
+		strikeTrailingComma(sb);
 		sb.append("]}, "); // include a trailing comma because we always define erlang nodes in lists
 	}
 	
@@ -30,10 +46,11 @@ public class Log {
 			LList<Loggable> links, 
 			StringBuilder sb, 
 			LogId id, 
+			LogId parentId,
 			String fmt, 
 			Object[] args)
 	{
-		appendPrefixForErlangNode(sb, id, idStack.elem);
+		appendPrefixForErlangNode(sb, id, parentId);
 		
 		int length = fmt.length();
 		int upToIndex = 0;
@@ -70,7 +87,7 @@ public class Log {
 	{
 		if(object instanceof Loggable) {
 			Loggable l = (Loggable) object;
-			links = links.prefix(l);
+			links = LList.add(l, links);
 			LogId objectId = l.logId();
 			sb.append("{link, ");
 			Util.appendEscapedString(sb, objectId.toString());
@@ -118,11 +135,12 @@ public class Log {
 			
 			while(links != null) {
 				LogId logId = links.elem.logId();
-				if(missing.contains(logId))
+				if(LList.contains(missing, logId))
 					nextLinks = appendErlangNodesForLoggable(nextLinks, sb, logId, links.elem);
-				missing = missing.next;
+				links = links.next;
 			}
 			
+			strikeTrailingComma(sb);
 			sb.append("]");
 			
 			links = nextLinks;
@@ -130,10 +148,14 @@ public class Log {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.smallcultfollowing.lathos.LogInter#log(java.lang.String, java.lang.Object)
+	 */
 	public LogId log(String fmt, Object... args) {
 		LogId id = freshLogId();
 		StringBuilder sb = new StringBuilder("[");
-		LList<Loggable> links = appendErlangNodeForLogMessage(null, sb, id, fmt, args);
+		LList<Loggable> links = appendErlangNodeForLogMessage(null, sb, id, idStack.elem, fmt, args);
+		strikeTrailingComma(sb);
 		sb.append("]");
 		LList<LogId> missing = link.createNode(sb.toString());
 		achieveClosure(missing, links);
@@ -146,19 +168,25 @@ public class Log {
 			int fromIndex,
 			int toIndex) 
 	{
-		if(fromIndex < toIndex - 1) {
+		if(fromIndex < toIndex) {
 			sb.append("{text, ");
 			Util.appendEscapedString(sb, text, fromIndex, toIndex);
 			sb.append("}, ");
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.smallcultfollowing.lathos.LogInter#indent(java.lang.String, java.lang.Object)
+	 */
 	public LogId indent(String fmt, Object... args) {
 		LogId id = log(fmt, args);
 		idStack = new LList<LogId>(id, idStack);
 		return idStack.elem;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.smallcultfollowing.lathos.LogInter#undent(com.smallcultfollowing.lathos.LogId)
+	 */
 	public void undent(LogId top) {
 		assert top == idStack.elem : "Unmatched indent and undent";
 		idStack = idStack.next;
