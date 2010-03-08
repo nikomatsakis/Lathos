@@ -44,7 +44,7 @@ public final class LList<E> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		LList other = (LList) obj;
+		LList<?> other = (LList<?>) obj;
 		if (elem == null) {
 			if (other.elem != null)
 				return false;
