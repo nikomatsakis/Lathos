@@ -2,7 +2,7 @@ package com.smallcultfollowing.lathos;
 
 import java.util.Map;
 
-public class LinkedLog implements LogInter {
+public class LinkedLog implements Log {
 	private int counter;
 	private LList<LogId> idStack = new LList<LogId>(LogId.index, null);
 	private final LogLink link;
