@@ -3,12 +3,10 @@ package com.smallcultfollowing.lathos;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestLog {
+public class TestLinkedLog {
 	
 	public class TestLoggable implements Loggable {
 		

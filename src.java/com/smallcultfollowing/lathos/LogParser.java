@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 
-public class LogParser {
+class LogParser {
 	
 	public static final LogParser parser = new LogParser(); 
 
@@ -24,7 +24,7 @@ public class LogParser {
 		return result;
 	}
 
-	LList<LogId, Void> parseList(StreamTokenizer tok) throws IOException, ParseFailure {
+	private LList<LogId, Void> parseList(StreamTokenizer tok) throws IOException, ParseFailure {
 		expect(tok, '[');
 		LList<LogId, Void> result = parseListContents(tok);
 		expect(tok, ']');
