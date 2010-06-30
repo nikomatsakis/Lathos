@@ -1,7 +1,6 @@
 package com.smallcultfollowing.lathos.server;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
