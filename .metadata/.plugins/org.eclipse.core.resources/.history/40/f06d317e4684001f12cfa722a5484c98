@@ -1,0 +1,20 @@
+package com.smallcultfollowing.lathos.server;
+
+import com.smallcultfollowing.lathos.model.ContentItem;
+import com.smallcultfollowing.lathos.model.Output;
+import com.smallcultfollowing.lathos.model.Page;
+
+public class Link implements ContentItem {
+	
+	private final Page page;
+	private final String message;
+
+	@Override
+	public void addedTo(Page page) {
+	}
+
+	@Override
+	public void renderEmbedded(Output out) {
+	}
+
+}

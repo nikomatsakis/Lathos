@@ -1,0 +1,19 @@
+package com.smallcultfollowing.lathos.user;
+
+import com.smallcultfollowing.lathos.model.DataStructure;
+
+public interface Context {
+	
+	public String freshId();
+
+	public void pushChildNode(String id);
+	public void pushTopLevelNode(String id);
+	
+	public void addParent(String id);
+	public void addText(String text);
+	public void addLink(String id);
+	public void addDataStructure(DataStructure struct);
+	
+	public void popNode(String id);
+	
+}

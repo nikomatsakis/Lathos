@@ -1,0 +1,34 @@
+1277895787350	Rename type 'Message'
+1277896117528	Change method 'toHtml'
+1277896265176	Change method 'toHtml'
+1277896926120	Rename package 'com.smallcultfollowing.lathos.model'
+1277897204599	Move compilation unit
+1277897277892	Rename type 'Node'
+1277901552457	Delete element
+1277901555195	Delete element
+1277901557588	Delete element
+1277902207854	Rename method 'render'
+1277902443191	Delete element
+1277902459136	Rename type 'ContentItem'
+1277902537827	Rename type 'Line'
+1277902656988	Rename method 'renderEmbedded'
+1277902729498	Rename type 'PageImpl'
+1277902734317	Rename type 'UserPageImpl'
+1277903999996	Rename type 'LineContent'
+1277904884970	Rename type 'Server'
+1277905033998	Delete element
+1277905076568	Rename method 'id'
+1277905209953	Rename type 'ServerImpl'
+1277906118425	Change method 'topPage'
+1277907510664	Delete element
+1277907644094	Rename field 'trails'
+1277908157021	Rename type 'DefaultContext'
+1277908301403	Change method 'addContent'
+1277910273248	Rename method 'render'
+1277911231433	Change method 'renderInPage'
+1277911256832	Change method 'renderInLine'
+1277912464604	Rename type 'WebServer'
+1277912509637	Rename type 'Server'
+1277912865011	Move compilation unit
+1277912911353	Rename type 'pest'
+1277913230923	Rename type 'TestApp1'

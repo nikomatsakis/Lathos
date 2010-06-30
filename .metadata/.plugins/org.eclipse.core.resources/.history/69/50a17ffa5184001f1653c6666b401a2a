@@ -1,0 +1,44 @@
+package com.smallcultfollowing.lathos.server;
+
+import java.io.Writer;
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.commons.lang.StringEscapeUtils;
+
+import com.smallcultfollowing.lathos.model.Output;
+import com.smallcultfollowing.lathos.model.Page;
+
+public class HtmlOutput implements Output {
+	
+	public final List<Page> topPages;
+	public final Writer writer;
+
+	public HtmlOutput(List<Page> topPages) {
+		super();
+		this.topPages = Collections.unmodifiableList(topPages);
+	}
+
+	@Override
+	public List<Page> topPages() {
+		return topPages;
+	}
+
+	@Override
+	public void outputObject(Object content) {
+	}
+
+	@Override
+	public void outputText(String content) {
+		StringEscapeUtils.escapeHtml(content);
+	}
+
+	@Override
+	public void startLink(Page target) {
+	}
+
+	@Override
+	public void endLink(Page target) {
+	}
+
+}

@@ -1,0 +1,12 @@
+package com.smallcultfollowing.lathos.model;
+
+import java.util.List;
+
+public interface Page 
+extends ContentItem 
+{
+	public String getId();
+	public List<ContentItem> contents();
+	public void addContent(ContentItem content);
+	public void renderTopLevel(Output out);
+}

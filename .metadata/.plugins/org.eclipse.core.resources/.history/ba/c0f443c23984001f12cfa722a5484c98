@@ -1,0 +1,10 @@
+package com.smallcultfollowing.lathos.user;
+
+import java.util.List;
+
+import com.smallcultfollowing.lathos.server.Displayable;
+
+public interface DataStructure {
+	public List<String> getFields();
+	public Displayable getField(String name);
+}

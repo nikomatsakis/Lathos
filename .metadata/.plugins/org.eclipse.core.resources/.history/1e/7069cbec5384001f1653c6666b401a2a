@@ -1,0 +1,90 @@
+package com.smallcultfollowing.lathos.context;
+
+import java.util.LinkedList;
+
+import com.smallcultfollowing.lathos.model.Line;
+import com.smallcultfollowing.lathos.model.Page;
+import com.smallcultfollowing.lathos.model.Server;
+import com.smallcultfollowing.lathos.server.LineImpl;
+import com.smallcultfollowing.lathos.server.UserPage;
+
+public abstract class AbstractContext implements Context {
+	
+	private final LinkedList<Page> stack = new LinkedList<Page>();
+	private Line previousLine;
+	
+	private String supplyDefault(String id) {
+		if(id != null)
+			return id;
+		return freshId();
+	}
+
+	@Override
+	public Page pushTopLevel(String id, Object... title) {
+		id = supplyDefault(id);
+		
+		Page page = new UserPage(id, null);
+		stack.add(page);
+		server.addTopLevelPage(page);
+				
+		log(title);
+		
+		return page;
+	}
+	
+	@Override
+	public Page pushChild(String id, Object... title) {
+		if(stack.isEmpty())
+			return pushTopLevel(id, title);
+		
+		id = supplyDefault(id);
+		Page page = new UserPage(id, stack.getLast());
+		stack.add(page);
+		
+		log(title);
+		
+		return page;
+	}
+
+	@Override
+	public void push(Page page) {
+		stack.add(page);
+	}
+
+	@Override
+	public void embedIn(Page page) {
+		page.addContent(stack.getLast());
+	}
+
+	@Override
+	public void log(Object... line) {
+		previousLine = new LineImpl();
+		append(line);
+	}
+
+	@Override
+	public void append(Object... line) {
+		for(Object o : line) 
+			previousLine.addContent(o);
+	}
+
+	@Override
+	public void pop(Page page) {
+		if(page != null) {
+			if(stack.getLast() != page)
+				throw new RuntimeException(
+						String.format(
+								"Popping %s but passed in %s", 
+								stack.getLast(),
+								page));
+		}
+		
+		stack.removeLast();
+	}
+
+	@Override
+	public String freshId() {
+		return server.freshId();
+	}
+
+}

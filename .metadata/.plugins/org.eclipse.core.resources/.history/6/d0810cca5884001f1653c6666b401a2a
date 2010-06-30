@@ -1,0 +1,30 @@
+package com.smallcultfollowing.lathos.server;
+
+import com.smallcultfollowing.lathos.model.CustomOutput;
+import com.smallcultfollowing.lathos.model.PageContent;
+import com.smallcultfollowing.lathos.model.Output;
+import com.smallcultfollowing.lathos.model.Page;
+
+public class Link implements CustomOutput {
+	
+	private final Page page;
+	private final Object content;
+	
+	public Link(Page page, Object content) {
+		super();
+		assert page != null;
+		this.page = page;
+		this.content = content;
+	}
+
+	@Override
+	public void render(Output output) {
+		output.startLink(page);
+		if(content != null)
+			output.outputObject(content);
+		else
+			output.outputText(page.getId());
+		output.endLink(page);
+	}
+
+}

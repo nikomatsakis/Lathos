@@ -1,0 +1,10 @@
+package com.smallcultfollowing.lathos.model;
+
+
+public interface Page 
+extends PageContent 
+{
+	public String getId();
+	public PageContent[] contents();
+	public void addContent(PageContent content);
+}

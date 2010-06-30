@@ -1,0 +1,65 @@
+package com.smallcultfollowing.lathos.server;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import com.smallcultfollowing.lathos.model.Page;
+import com.smallcultfollowing.lathos.model.PageContent;
+import com.smallcultfollowing.lathos.model.Server;
+
+public class WebServer implements Server {
+	
+	private final AtomicInteger id = new AtomicInteger();
+	private final Map<String, List<Page>> topLevelPages = new HashMap<String, List<Page>>();
+	
+	@Override
+	public synchronized void addTopLevelPage(Page page) {
+		List<Page> list = topLevelPages.get(page.getId());
+		if(list == null) {
+			list = new LinkedList<Page>();
+			topLevelPages.put(page.getId(), list);
+		}
+		list.add(page);
+	}
+	
+	@Override
+	public String freshId() {
+		int i = id.getAndIncrement();
+		return "page" + Integer.toHexString(i);
+	}
+	
+	public void renderError(String url, String desc, Object... args) {
+		
+	}
+	
+	public synchronized void renderPage(String url) {
+		String[] ids = url.split("/");
+		
+		if(ids.length == 0) {
+			renderError(url, "Empty URL");
+			return;
+		}
+		
+		int nextIndex = 1;
+		Page[] topLevelPages = 
+		List<Page> topLevelPages = new ArrayList<Page>();
+		Page page = topLevelPages.get(ids[0]);
+		while(nextIndex < ids.length) {
+			if(page == null) {
+				renderError(url, "Id #%d (%s) not found.", nextIndex, ids[nextIndex - 1]);
+				return;
+			}
+			
+			for(PageContent content : page.contents()) {
+				if(content.)
+			}
+		}
+		if(page == null)
+	}
+	
+}

@@ -1,0 +1,41 @@
+package com.smallcultfollowing.lathos.server;
+
+import java.util.List;
+
+import com.smallcultfollowing.lathos.model.ContentItem;
+import com.smallcultfollowing.lathos.model.Output;
+import com.smallcultfollowing.lathos.model.Page;
+
+public class PageImpl implements Page {
+
+	@Override
+	public void addedTo(Page page) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void render(Output out) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public String getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ContentItem> contents() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addContent(ContentItem content) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,23 @@
+package com.smallcultfollowing.lathos.model;
+
+public class Text implements Displayable {
+	
+	public final String text;
+	
+	public Text(String text) {
+		super();
+		this.text = escape(text);
+	}
+	
+	private final String escape(String text) {
+		text = text.replaceAll("&", "&amp;");
+		text = text.replaceAll("<", "&lt;");
+		return text;
+	}
+
+	@Override
+	public String toHtml() {
+		return text;
+	}
+
+}

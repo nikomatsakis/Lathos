@@ -1,0 +1,9 @@
+package com.smallcultfollowing.lathos.server;
+
+import java.util.List;
+
+public interface Node {
+	public String getId();
+	public void toHTML(Render render, StringBuilder sb);
+	public List<Node> getChildren();
+}

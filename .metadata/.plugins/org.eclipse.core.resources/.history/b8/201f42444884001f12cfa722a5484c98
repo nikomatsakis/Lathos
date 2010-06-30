@@ -1,0 +1,54 @@
+package com.smallcultfollowing.lathos.context;
+
+import java.util.LinkedList;
+
+import com.smallcultfollowing.lathos.model.Page;
+import com.smallcultfollowing.lathos.server.Breadcrumbs;
+
+public class DefaultContext implements Context {
+	
+	private final LinkedList<Breadcrumbs> trail = new LinkedList<Breadcrumbs>();
+	private final Thread owner = Thread.currentThread();
+	
+	private final void checkThread() {
+		assert(Thread.currentThread() == owner);		
+	}
+
+	@Override
+	public Page pushChild(Object... title) {
+		checkThread();
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void push(Page page) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void embedIn(Page page) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void log(Object... line) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void append(Object... line) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void pop(Page page) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

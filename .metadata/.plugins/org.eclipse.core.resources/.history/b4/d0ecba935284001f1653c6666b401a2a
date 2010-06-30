@@ -1,0 +1,99 @@
+package com.smallcultfollowing.lathos.context;
+
+import java.util.LinkedList;
+
+import com.smallcultfollowing.lathos.model.Line;
+import com.smallcultfollowing.lathos.model.Page;
+import com.smallcultfollowing.lathos.model.Server;
+import com.smallcultfollowing.lathos.server.Breadcrumbs;
+import com.smallcultfollowing.lathos.server.LineImpl;
+import com.smallcultfollowing.lathos.server.UserPage;
+
+public class DefaultContext implements Context {
+	
+	private final Server server;
+	private final LinkedList<Page> trails = new LinkedList<Page>();
+	private Line previousLine;
+	
+	public DefaultContext(Server server) {
+		super();
+		this.server = server;
+	}
+	
+	private String supplyDefault(String id) {
+		if(id != null)
+			return id;
+		return freshId();
+	}
+
+	@Override
+	public Page pushTopLevel(String id, Object... title) {
+		id = supplyDefault(id);
+		
+		Page page = new UserPage(id, null);
+		trails.add(page);
+		server.addTopLevelPage(page);
+				
+		log(title);
+		
+		return page;
+	}
+	
+	@Override
+	public Page pushChild(String id, Object... title) {
+		if(trails.isEmpty())
+			return pushTopLevel(id, title);
+		
+		id = supplyDefault(id);
+		Page page = new UserPage(id, trails.getLast());
+		
+		trails.add(newTrail);
+		
+		log(title);
+		
+		return page;
+	}
+
+	@Override
+	public void push(Page page) {
+		Breadcrumbs newTrail = new Breadcrumbs(page, null);
+		trails.add(newTrail);
+	}
+
+	@Override
+	public void embedIn(Page page) {
+		page.addContent(trails.getLast().page);
+	}
+
+	@Override
+	public void log(Object... line) {
+		previousLine = new LineImpl();
+		append(line);
+	}
+
+	@Override
+	public void append(Object... line) {
+		for(Object o : line) 
+			previousLine.addContent(o);
+	}
+
+	@Override
+	public void pop(Page page) {
+		if(page != null) {
+			if(trails.getLast().page != page)
+				throw new RuntimeException(
+						String.format(
+								"Popping %s but passed in %s", 
+								trails.getLast().page,
+								page));
+		}
+		
+		trails.removeLast();
+	}
+
+	@Override
+	public String freshId() {
+		return server.freshId();
+	}
+
+}

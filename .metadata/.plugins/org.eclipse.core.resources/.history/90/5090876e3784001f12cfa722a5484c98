@@ -1,0 +1,17 @@
+package com.smallcultfollowing.lathos.model;
+
+public class Text implements Displayable {
+	
+	public final String text;
+	
+	public Text(String text) {
+		super();
+		this.text = text;
+	}
+
+	@Override
+	public String toHtml() {
+		return text;
+	}
+
+}

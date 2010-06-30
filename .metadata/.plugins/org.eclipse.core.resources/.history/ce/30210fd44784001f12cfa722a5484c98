@@ -1,0 +1,27 @@
+package com.smallcultfollowing.lathos.context;
+
+import com.smallcultfollowing.lathos.model.Page;
+
+public interface Context {
+
+	/** Creates a new child of the current page with {@code title} and with 
+	 *  an appropriate breadcrumb trail.  Returns the new page. */
+	public Page pushChild(Object... title);
+	
+	/** Given a page, pushes it onto the stack. */
+	public void push(Page page);
+	
+	/** Embeds top of stack into {@code page} */
+	public void embedIn(Page page);
+	
+	/** Adds a new line with {@code line} contents */
+	public void log(Object... line);
+	
+	/** Appends {@code line} to the last logged line */
+	public void append(Object... line);
+	
+	/** Pops top of the stack, which must equal {@code page} 
+	 *  (unless {@code page} is null). */
+	public void pop(Page page);
+	
+}

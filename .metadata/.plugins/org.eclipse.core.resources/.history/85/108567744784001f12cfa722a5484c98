@@ -1,0 +1,10 @@
+package com.smallcultfollowing.lathos.context;
+
+import com.smallcultfollowing.lathos.model.Page;
+
+public interface Context {
+
+	public Page pushChild(Object... title);
+	public void pop(Page page);
+	
+}

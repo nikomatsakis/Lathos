@@ -1,0 +1,21 @@
+package com.smallcultfollowing.lathos.server;
+
+import com.smallcultfollowing.lathos.model.ContentItem;
+import com.smallcultfollowing.lathos.model.Output;
+import com.smallcultfollowing.lathos.model.Page;
+
+public class Text implements ContentItem {
+
+	@Override
+	public void addedTo(Page page) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void renderEmbedded(Output out) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

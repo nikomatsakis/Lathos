@@ -1,0 +1,22 @@
+1267966478036	Delete element
+1267967735656	Rename local variable 'objectIndex'
+1267967764379	Rename local variable 'prevIndex'
+1267967827986	Extract method 'appendText'
+1267969321180	Change method 'appendText'
+1267969351514	Rename local variable 'upToIndex'
+1267969356966	Rename local variable 'length'
+1267969400181	Rename local variable 'nextArg'
+1267969543911	Rename local variable 'fmt'
+1267969712828	Delete element
+1267970602293	Rename type 'LogIdList'
+1267971061396	Rename field 'logId'
+1267971290680	Rename type 'PrefixList'
+1267971887625	Extract method 'appendEscapingStringContents'
+1267973567517	Rename method 'appendErlangNode'
+1267997605600	Move method 'parseStream'
+1267997662920	Rename method 'parseStream'
+1268029581447	Delete element
+1268030345292	Extract interface 'LogInter'
+1268030426502	Rename type 'Log'
+1268031878029	Rename type 'LogInter'
+1268037400030	Rename type 'TestLog'

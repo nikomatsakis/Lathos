@@ -1,0 +1,5 @@
+package com.smallcultfollowing.lathos.model;
+
+public interface Message {
+	public String toHtml();
+}

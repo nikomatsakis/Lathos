@@ -1,0 +1,26 @@
+package com.smallcultfollowing.lathos.server;
+
+import java.util.LinkedList;
+
+import com.smallcultfollowing.lathos.model.Line;
+import com.smallcultfollowing.lathos.model.CustomOutput;
+import com.smallcultfollowing.lathos.model.Output;
+import com.smallcultfollowing.lathos.model.PageContent;
+
+public class LineImpl implements PageContent, Line {
+
+	private final LinkedList<CustomOutput> contents = new LinkedList<CustomOutput>();
+	
+	@Override
+	public synchronized void render(Output out) {
+		for(Object content : contents) {
+			out.outputObject(content);
+		}
+	}
+
+	@Override
+	public synchronized void addContent(CustomOutput content) {
+		contents.add(content);
+	}
+
+}

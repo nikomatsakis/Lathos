@@ -1,0 +1,19 @@
+package com.smallcultfollowing.lathos.model;
+
+public class Link implements Displayable {
+	
+	public final Node link;
+	public final Displayable message;
+	
+	public Link(Node link, Displayable message) {
+		super();
+		this.link = link;
+		this.message = message;
+	}
+
+	@Override
+	public String toHtml() {
+		return null;
+	}
+
+}

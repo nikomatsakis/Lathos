@@ -1,0 +1,31 @@
+package com.smallcultfollowing.lathos.model;
+
+public class Link implements Displayable {
+	
+	public final Node link;
+	public final Displayable message; // could be null
+	
+	public Link(Node link, Displayable message) {
+		super();
+		this.link = link;
+		this.message = message;
+	}
+
+	@Override
+	public String toHtml(Render render) {
+		if(message == null) {
+			return String.format(
+					"<a href='%s'>%s</a>",
+					render.linkURI(link),
+					render.escape(link.id)
+			);
+		} else {
+			return String.format(
+					"<a href='%s'>%s</a>",
+					render.linkURI(link),
+					message.toHtml(render)
+			);
+		}
+	}
+
+}

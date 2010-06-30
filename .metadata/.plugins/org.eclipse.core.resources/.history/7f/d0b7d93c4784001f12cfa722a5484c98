@@ -1,0 +1,34 @@
+package com.smallcultfollowing.lathos.server;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import com.smallcultfollowing.lathos.model.PageContent;
+import com.smallcultfollowing.lathos.model.Output;
+import com.smallcultfollowing.lathos.model.Page;
+
+public class UserPageImpl implements Page {
+	
+	public final String id;
+	private final LinkedList<PageContent> contents = new LinkedList<PageContent>();
+	
+	public UserPageImpl(String id, List<Page> embeddedIn) {
+		super();
+		this.id = id;
+	}
+
+	@Override
+	public synchronized void render(Output out) {
+	}
+
+	@Override
+	public String getId() {
+		return id;
+	}
+
+	@Override
+	public synchronized void addContent(PageContent content) {
+		contents.add(content);
+	}
+
+}

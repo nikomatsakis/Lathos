@@ -1,0 +1,5 @@
+package com.smallcultfollowing.lathos.server;
+
+public interface Node {
+
+}

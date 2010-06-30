@@ -1,0 +1,6 @@
+package com.smallcultfollowing.lathos.model;
+
+public interface Page 
+implements ContentItem {
+
+}

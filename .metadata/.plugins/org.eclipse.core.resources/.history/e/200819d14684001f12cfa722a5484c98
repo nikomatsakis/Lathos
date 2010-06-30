@@ -1,0 +1,20 @@
+package com.smallcultfollowing.lathos.server;
+
+import com.smallcultfollowing.lathos.model.Line;
+import com.smallcultfollowing.lathos.model.Output;
+import com.smallcultfollowing.lathos.model.Page;
+import com.smallcultfollowing.lathos.model.PageContent;
+
+public class LineImpl implements PageContent, Line {
+
+	@Override
+	public void addedTo(Page page) {
+	}
+
+	@Override
+	public void renderEmbedded(Output out) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

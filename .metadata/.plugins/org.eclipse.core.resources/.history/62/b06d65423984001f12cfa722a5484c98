@@ -1,0 +1,5 @@
+package com.smallcultfollowing.lathos.user;
+
+public interface Context {
+
+}

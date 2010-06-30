@@ -1,0 +1,13 @@
+package com.smallcultfollowing.lathos.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Node {
+	
+	public final String id;
+	private String text;
+	private final List<Node> parents = new ArrayList<Node>();
+	private final List<Node> children = new ArrayList<Node>();
+
+}

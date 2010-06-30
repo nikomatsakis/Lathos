@@ -1,0 +1,46 @@
+package com.smallcultfollowing.lathos.server;
+
+import java.util.List;
+
+import com.smallcultfollowing.lathos.model.Output;
+import com.smallcultfollowing.lathos.model.Page;
+
+public class HtmlOutput implements Output {
+	
+	public final List<Page> topPages;
+
+	public HtmlOutput(List<Page> topPages) {
+		super();
+		this.topPages = topPages;
+	}
+
+	@Override
+	public List<Page> topPages() {
+		return topPages;
+	}
+
+	@Override
+	public void outputObject(Object content) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void outputText(String content) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void startLink(Page target) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void endLink(Page target) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

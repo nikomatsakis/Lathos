@@ -1,0 +1,706 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbench progressCount="25" version="2.0">
+<workbenchAdvisor/>
+<window height="820" maximized="true" width="1440" x="114" y="175">
+<fastViewData fastViewLocation="1024"/>
+<perspectiveBar>
+<itemSize x="160"/>
+</perspectiveBar>
+<coolbarLayout locked="0">
+<coolItem id="group.file" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.file" itemType="typeToolBarContribution" x="106" y="22"/>
+<coolItem id="additions" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="100" y="22"/>
+<coolItem id="org.eclipse.jdt.ui.JavaElementCreationActionSet" itemType="typeToolBarContribution" x="84" y="22"/>
+<coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="84" y="22"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="120" y="22"/>
+<coolItem id="org.eclipse.wst.xml.ui.perspective.NewFileToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="group.nav" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="152" y="22"/>
+<coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="group.help" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
+</coolbarLayout>
+<page aggregateWorkingSetId="Aggregate for window 1267966172832" focus="true" label="Workspace - Java">
+<editors>
+<editorArea activeWorkbook="DefaultEditorWorkbook">
+<info part="DefaultEditorWorkbook">
+<folder appearance="1" expanded="2">
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+<part id="3"/>
+<part id="4"/>
+<part id="5"/>
+<part id="6"/>
+<part id="7"/>
+<part id="8"/>
+<part id="9"/>
+<part id="10"/>
+<part id="11"/>
+<part id="12"/>
+<part id="13"/>
+<part id="14"/>
+<part id="15"/>
+<part id="16"/>
+<part id="17"/>
+<part id="18"/>
+<part id="19"/>
+<part id="20"/>
+<part id="21"/>
+<part id="22"/>
+<part id="23"/>
+<part id="24"/>
+<part id="25"/>
+<part id="26"/>
+<part id="27"/>
+<part id="28"/>
+<part id="29"/>
+<part id="30"/>
+<part id="31"/>
+</presentation>
+</folder>
+</info>
+</editorArea>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LinkedLog.java" partName="LinkedLog.java" path="/Users/niko/git/Lathos/src.java/com/smallcultfollowing/lathos/LinkedLog.java" title="LinkedLog.java" tooltip="Lathos/src.java/com/smallcultfollowing/lathos/LinkedLog.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos/src.java/com/smallcultfollowing/lathos/LinkedLog.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="69" selectionOffset="1330" selectionTopPixel="145"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Loggable.java" partName="Loggable.java" path="/Users/niko/git/Lathos/src.java/com/smallcultfollowing/lathos/Loggable.java" title="Loggable.java" tooltip="Lathos/src.java/com/smallcultfollowing/lathos/Loggable.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos/src.java/com/smallcultfollowing/lathos/Loggable.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="757" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LogId.java" partName="LogId.java" path="/Users/niko/git/Lathos/src.java/com/smallcultfollowing/lathos/LogId.java" title="LogId.java" tooltip="Lathos/src.java/com/smallcultfollowing/lathos/LogId.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos/src.java/com/smallcultfollowing/lathos/LogId.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="334" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Util.java" partName="Util.java" path="/Users/niko/git/Lathos/src.java/com/smallcultfollowing/lathos/Util.java" title="Util.java" tooltip="Lathos/src.java/com/smallcultfollowing/lathos/Util.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos/src.java/com/smallcultfollowing/lathos/Util.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="373" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LogLink.java" partName="LogLink.java" path="/Users/niko/git/Lathos/src.java/com/smallcultfollowing/lathos/LogLink.java" title="LogLink.java" tooltip="Lathos/src.java/com/smallcultfollowing/lathos/LogLink.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos/src.java/com/smallcultfollowing/lathos/LogLink.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="338" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LList.java" partName="LList.java" path="/Users/niko/git/Lathos/src.java/com/smallcultfollowing/lathos/LList.java" title="LList.java" tooltip="Lathos/src.java/com/smallcultfollowing/lathos/LList.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos/src.java/com/smallcultfollowing/lathos/LList.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1443" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HttpLink.java" partName="HttpLink.java" path="/Users/niko/git/Lathos/src.java/com/smallcultfollowing/lathos/HttpLink.java" title="HttpLink.java" tooltip="Lathos/src.java/com/smallcultfollowing/lathos/HttpLink.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos/src.java/com/smallcultfollowing/lathos/HttpLink.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1361" selectionTopPixel="293"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.ClassFileEditor" name="URL.class" partName="URL.class" title="URL.class" tooltip="java.net.URL" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" org.eclipse.jdt.ui.ClassFileIdentifier="=Lathos/\/System\/Library\/Frameworks\/JavaVM.framework\/Versions\/1.6.0\/Classes\/classes.jar&lt;java.net(URL.class"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="34702" selectionTopPixel="13695"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ParseFailure.java" partName="ParseFailure.java" path="/Users/niko/git/Lathos/src.java/com/smallcultfollowing/lathos/ParseFailure.java" title="ParseFailure.java" tooltip="Lathos/src.java/com/smallcultfollowing/lathos/ParseFailure.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos/src.java/com/smallcultfollowing/lathos/ParseFailure.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="148" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DummyLogLink.java" partName="DummyLogLink.java" path="/Users/niko/git/Lathos/test.java/com/smallcultfollowing/lathos/DummyLogLink.java" title="DummyLogLink.java" tooltip="Lathos/test.java/com/smallcultfollowing/lathos/DummyLogLink.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos/test.java/com/smallcultfollowing/lathos/DummyLogLink.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="34" selectionOffset="466" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LogParser.java" partName="LogParser.java" path="/Users/niko/git/Lathos/src.java/com/smallcultfollowing/lathos/LogParser.java" title="LogParser.java" tooltip="Lathos/src.java/com/smallcultfollowing/lathos/LogParser.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos/src.java/com/smallcultfollowing/lathos/LogParser.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="698" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TestLogParser.java" partName="TestLogParser.java" path="/Users/niko/git/Lathos/test.java/com/smallcultfollowing/lathos/TestLogParser.java" title="TestLogParser.java" tooltip="Lathos/test.java/com/smallcultfollowing/lathos/TestLogParser.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos/test.java/com/smallcultfollowing/lathos/TestLogParser.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="461" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Log.java" partName="Log.java" path="/Users/niko/git/Lathos/src.java/com/smallcultfollowing/lathos/Log.java" title="Log.java" tooltip="Lathos/src.java/com/smallcultfollowing/lathos/Log.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos/src.java/com/smallcultfollowing/lathos/Log.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="4" selectionOffset="622" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="NullLog.java" partName="NullLog.java" path="/Users/niko/git/Lathos/src.java/com/smallcultfollowing/lathos/NullLog.java" title="NullLog.java" tooltip="Lathos/src.java/com/smallcultfollowing/lathos/NullLog.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos/src.java/com/smallcultfollowing/lathos/NullLog.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="341" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LogSerializer.java" partName="LogSerializer.java" path="/Users/niko/git/Lathos/src.java/com/smallcultfollowing/lathos/LogSerializer.java" title="LogSerializer.java" tooltip="Lathos/src.java/com/smallcultfollowing/lathos/LogSerializer.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos/src.java/com/smallcultfollowing/lathos/LogSerializer.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2004" selectionTopPixel="720"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.ClassFileEditor" name="ArrayList.class" partName="ArrayList.class" title="ArrayList.class" tooltip="java.util.ArrayList" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" org.eclipse.jdt.ui.ClassFileIdentifier="=Lathos/\/System\/Library\/Frameworks\/JavaVM.framework\/Versions\/1.6.0\/Classes\/classes.jar&lt;java.util(ArrayList.class"/>
+<editorState selectionHorizontalPixel="0" selectionLength="20" selectionOffset="12223" selectionTopPixel="4380"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Page.java" partName="Page.java" path="/Users/niko/workspaces/Lathos/Lathos-Java/src/com/smallcultfollowing/lathos/model/Page.java" title="Page.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/model/Page.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos-Java/src/com/smallcultfollowing/lathos/model/Page.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="150" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PageContent.java" partName="PageContent.java" path="/Users/niko/workspaces/Lathos/Lathos-Java/src/com/smallcultfollowing/lathos/model/PageContent.java" title="PageContent.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/model/PageContent.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos-Java/src/com/smallcultfollowing/lathos/model/PageContent.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="95" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Output.java" partName="Output.java" path="/Users/niko/workspaces/Lathos/Lathos-Java/src/com/smallcultfollowing/lathos/model/Output.java" title="Output.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/model/Output.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos-Java/src/com/smallcultfollowing/lathos/model/Output.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="8" selectionOffset="117" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="UserPage.java" partName="UserPage.java" path="/Users/niko/workspaces/Lathos/Lathos-Java/src/com/smallcultfollowing/lathos/server/UserPage.java" title="UserPage.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/server/UserPage.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos-Java/src/com/smallcultfollowing/lathos/server/UserPage.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="803" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Context.java" partName="Context.java" path="/Users/niko/workspaces/Lathos/Lathos-Java/src/com/smallcultfollowing/lathos/context/Context.java" title="Context.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/context/Context.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos-Java/src/com/smallcultfollowing/lathos/context/Context.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="293" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Link.java" partName="Link.java" path="/Users/niko/workspaces/Lathos/Lathos-Java/src/com/smallcultfollowing/lathos/server/Link.java" title="Link.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/server/Link.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos-Java/src/com/smallcultfollowing/lathos/server/Link.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="441" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CustomOutput.java" partName="CustomOutput.java" path="/Users/niko/workspaces/Lathos/Lathos-Java/src/com/smallcultfollowing/lathos/model/CustomOutput.java" title="CustomOutput.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/model/CustomOutput.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos-Java/src/com/smallcultfollowing/lathos/model/CustomOutput.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="116" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LineImpl.java" partName="LineImpl.java" path="/Users/niko/workspaces/Lathos/Lathos-Java/src/com/smallcultfollowing/lathos/server/LineImpl.java" title="LineImpl.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/server/LineImpl.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos-Java/src/com/smallcultfollowing/lathos/server/LineImpl.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="530" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Line.java" partName="Line.java" path="/Users/niko/workspaces/Lathos/Lathos-Java/src/com/smallcultfollowing/lathos/model/Line.java" title="Line.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/model/Line.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos-Java/src/com/smallcultfollowing/lathos/model/Line.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="121" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Breadcrumbs.java" partName="Breadcrumbs.java" path="/Users/niko/workspaces/Lathos/Lathos-Java/src/com/smallcultfollowing/lathos/server/Breadcrumbs.java" title="Breadcrumbs.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/server/Breadcrumbs.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos-Java/src/com/smallcultfollowing/lathos/server/Breadcrumbs.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="469" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DefaultContext.java" partName="DefaultContext.java" path="/Users/niko/workspaces/Lathos/Lathos-Java/src/com/smallcultfollowing/lathos/context/DefaultContext.java" title="DefaultContext.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/context/DefaultContext.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos-Java/src/com/smallcultfollowing/lathos/context/DefaultContext.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1019" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.ClassFileEditor" name="LinkedList.class" partName="LinkedList.class" title="LinkedList.class" tooltip="java.util.LinkedList" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" org.eclipse.jdt.ui.ClassFileIdentifier="=Lathos-Java/\/System\/Library\/Frameworks\/JavaVM.framework\/Versions\/1.6.0\/Classes\/classes.jar&lt;java.util(LinkedList.class"/>
+<editorState selectionHorizontalPixel="0" selectionLength="7" selectionOffset="4651" selectionTopPixel="1395"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="WebServer.java" partName="WebServer.java" path="/Users/niko/workspaces/Lathos/Lathos-Java/src/com/smallcultfollowing/lathos/server/WebServer.java" title="WebServer.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/server/WebServer.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos-Java/src/com/smallcultfollowing/lathos/server/WebServer.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="924" selectionTopPixel="112"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Server.java" partName="Server.java" path="/Users/niko/workspaces/Lathos/Lathos-Java/src/com/smallcultfollowing/lathos/model/Server.java" title="Server.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/model/Server.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos-Java/src/com/smallcultfollowing/lathos/model/Server.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="131" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HtmlOutput.java" partName="HtmlOutput.java" path="/Users/niko/workspaces/Lathos/Lathos-Java/src/com/smallcultfollowing/lathos/server/HtmlOutput.java" title="HtmlOutput.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/server/HtmlOutput.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/Lathos-Java/src/com/smallcultfollowing/lathos/server/HtmlOutput.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="576" selectionTopPixel="0"/>
+</editor>
+</editors>
+<views>
+<view id="org.eclipse.jdt.junit.ResultView" partName="JUnit">
+<viewState failuresOnly="false" layout="1" orientation="2" ratio="500" scroll="false" time="true"/>
+</view>
+<view id="org.eclipse.jdt.ui.TypeHierarchy" partName="Hierarchy">
+<viewState hidefields="false" hidelocaltypes="false" hidenonpublic="false" hidestatic="false" input="=Lathos/\/System\/Library\/Frameworks\/JavaVM.framework\/Versions\/1.6.0\/Classes\/classes.jar&lt;java.net(URLConnection.class[URLConnection" link_editors="0" mv_vertical_scroll="0" orientation="3" qualified_names="0" ratio="350" selection="=Lathos/\/System\/Library\/Frameworks\/JavaVM.framework\/Versions\/1.6.0\/Classes\/classes.jar&lt;java.net(URLConnection.class[URLConnection" showinherited="false" sortbydefiningtype="false" vertical_scroll="18" view="2" workingSetName=""/>
+</view>
+<view id="org.eclipse.search.ui.views.SearchView" partName="Search">
+<viewState isPinned="false">
+<view IMemento.internal.id="org.eclipse.jdt.ui.JavaSearchResultPage" org.eclipse.jdt.search.resultpage.grouping="3" org.eclipse.jdt.search.resultpage.limit="1000" org.eclipse.jdt.search.resultpage.limit_enabled="TRUE" org.eclipse.jdt.search.resultpage.sorting="1" org.eclipse.search.lastActivation="1" org.eclipse.search.resultpage.layout="2"/>
+<view IMemento.internal.id="" org.eclipse.search.lastActivation="0"/>
+</viewState>
+</view>
+<view id="org.eclipse.debug.ui.DebugView" partName="Debug">
+<viewState/>
+</view>
+<view id="org.eclipse.debug.ui.BreakpointView" partName="Breakpoints">
+<viewState>
+<isTrackingSelection value="false"/>
+</viewState>
+</view>
+<view id="org.eclipse.ui.views.TaskList" partName="Tasks"/>
+<view id="org.eclipse.debug.ui.VariableView" partName="Variables">
+<viewState/>
+</view>
+<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
+<viewState/>
+</view>
+<view id="org.eclipse.ui.views.ProblemView" partName="Problems">
+<viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
+<expanded>
+<category IMemento.internal.id="Errors (2 items)"/>
+</expanded>
+<columnWidths org.eclipse.ui.ide.locationField="0" org.eclipse.ui.ide.markerType="0" org.eclipse.ui.ide.pathField="0" org.eclipse.ui.ide.resourceField="0" org.eclipse.ui.ide.severityAndDescriptionField="0"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.pathField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.locationField"/>
+<visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
+</viewState>
+</view>
+<view id="org.eclipse.jdt.ui.PackageExplorer" partName="Package Explorer">
+<viewState group_libraries="1" layout="2" linkWithEditor="0" rootMode="1" workingSetName="">
+<customFilters userDefinedPatternsEnabled="false">
+<xmlDefinedFilters>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer.LibraryFilter" isEnabled="false"/>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer.LocalTypesFilter" isEnabled="false"/>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer.StaticsFilter" isEnabled="false"/>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer.ClosedProjectsFilter" isEnabled="false"/>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer.NonSharedProjectsFilter" isEnabled="false"/>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer.NonJavaElementFilter" isEnabled="false"/>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer.ContainedLibraryFilter" isEnabled="false"/>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer.CuAndClassFileFilter" isEnabled="false"/>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer.NonJavaProjectsFilter" isEnabled="false"/>
+<child filterId="org.eclipse.jdt.internal.ui.PackageExplorer.EmptyInnerPackageFilter" isEnabled="true"/>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer.PackageDeclarationFilter" isEnabled="true"/>
+<child filterId="org.eclipse.jdt.internal.ui.PackageExplorer.EmptyPackageFilter" isEnabled="false"/>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer.ImportDeclarationFilter" isEnabled="true"/>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer.FieldsFilter" isEnabled="false"/>
+<child filterId="org.eclipse.jdt.internal.ui.PackageExplorer.HideInnerClassFilesFilter" isEnabled="true"/>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer.NonPublicFilter" isEnabled="false"/>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer_patternFilterId_.*" isEnabled="true"/>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer.EmptyLibraryContainerFilter" isEnabled="true"/>
+<child filterId="org.eclipse.jdt.ui.PackageExplorer.SyntheticMembersFilter" isEnabled="true"/>
+<child filterId="org.eclipse.mylyn.java.ui.MembersFilter" isEnabled="false"/>
+</xmlDefinedFilters>
+</customFilters>
+</viewState>
+</view>
+<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
+<viewState/>
+</view>
+<view id="org.eclipse.mylyn.tasks.ui.views.tasks" partName="Task List">
+<viewState linkWithEditor="true" presentation="org.eclipse.mylyn.tasks.ui.categorized">
+<sorter groupBy="CATEGORY_QUERY">
+<sorter>
+<sort0 sortDirection="1" sortKey="PRIORITY"/>
+<sort1 sortDirection="1" sortKey="RANK"/>
+<sort2 sortDirection="1" sortKey="DATE_CREATED"/>
+<sort3 sortDirection="1" sortKey="NONE"/>
+<sort4 sortDirection="1" sortKey="NONE"/>
+<sort5 sortDirection="1" sortKey="NONE"/>
+<sort6 sortDirection="1" sortKey="NONE"/>
+</sorter>
+</sorter>
+<filteredTreeFindHistory/>
+</viewState>
+</view>
+<view id="org.eclipse.jdt.ui.SourceView" partName="Declaration"/>
+<view id="org.eclipse.jdt.ui.JavadocView" partName="Javadoc"/>
+</views>
+<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
+<descriptor class="org.eclipse.jdt.internal.ui.JavaPerspectiveFactory" id="org.eclipse.jdt.ui.JavaPerspective" label="Java"/>
+<alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.search.searchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.annotationNavigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.navigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo"/>
+<alwaysOnActionSet id="org.eclipse.ui.externaltools.ExternalToolsSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.keyBindings"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.openFiles"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.doc.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.tasks.ui.navigation"/>
+<alwaysOnActionSet id="org.eclipse.debug.ui.launchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.jdt.ui.JavaActionSet"/>
+<alwaysOnActionSet id="org.eclipse.jdt.ui.JavaElementCreationActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.NavigateActionSet"/>
+<alwaysOnActionSet id="org.eclipse.debug.ui.breakpointActionSet"/>
+<alwaysOnActionSet id="org.eclipse.jdt.debug.ui.JDTDebugActionSet"/>
+<alwaysOnActionSet id="org.eclipse.jdt.junit.JUnitActionSet"/>
+<show_view_action id="org.eclipse.jdt.ui.PackageExplorer"/>
+<show_view_action id="org.eclipse.jdt.ui.TypeHierarchy"/>
+<show_view_action id="org.eclipse.jdt.ui.SourceView"/>
+<show_view_action id="org.eclipse.jdt.ui.JavadocView"/>
+<show_view_action id="org.eclipse.search.ui.views.SearchView"/>
+<show_view_action id="org.eclipse.ui.console.ConsoleView"/>
+<show_view_action id="org.eclipse.ui.views.ContentOutline"/>
+<show_view_action id="org.eclipse.ui.views.ProblemView"/>
+<show_view_action id="org.eclipse.ui.views.ResourceNavigator"/>
+<show_view_action id="org.eclipse.ui.views.TaskList"/>
+<show_view_action id="org.eclipse.ui.views.ProgressView"/>
+<show_view_action id="org.eclipse.ui.navigator.ProjectExplorer"/>
+<show_view_action id="org.eclipse.ui.texteditor.TemplatesView"/>
+<show_view_action id="org.eclipse.ant.ui.views.AntView"/>
+<show_view_action id="org.eclipse.pde.runtime.LogView"/>
+<show_view_action id="org.eclipse.mylyn.tasks.ui.views.tasks"/>
+<new_wizard_action id="org.eclipse.jdt.ui.wizards.JavaProjectWizard"/>
+<new_wizard_action id="org.eclipse.jdt.ui.wizards.NewPackageCreationWizard"/>
+<new_wizard_action id="org.eclipse.jdt.ui.wizards.NewClassCreationWizard"/>
+<new_wizard_action id="org.eclipse.jdt.ui.wizards.NewInterfaceCreationWizard"/>
+<new_wizard_action id="org.eclipse.jdt.ui.wizards.NewEnumCreationWizard"/>
+<new_wizard_action id="org.eclipse.jdt.ui.wizards.NewAnnotationCreationWizard"/>
+<new_wizard_action id="org.eclipse.jdt.ui.wizards.NewSourceFolderCreationWizard"/>
+<new_wizard_action id="org.eclipse.jdt.ui.wizards.NewSnippetFileCreationWizard"/>
+<new_wizard_action id="org.eclipse.jdt.ui.wizards.NewJavaWorkingSetWizard"/>
+<new_wizard_action id="org.eclipse.ui.wizards.new.folder"/>
+<new_wizard_action id="org.eclipse.ui.wizards.new.file"/>
+<new_wizard_action id="org.eclipse.ui.editors.wizards.UntitledTextFileWizard"/>
+<new_wizard_action id="org.eclipse.jdt.junit.wizards.NewTestCaseCreationWizard"/>
+<new_wizard_action id="org.eclipse.mylyn.tasks.ui.wizards.new.repository.task"/>
+<perspective_action id="org.eclipse.debug.ui.DebugPerspective"/>
+<perspective_action id="org.eclipse.jdt.ui.JavaBrowsingPerspective"/>
+<hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
+<view id="org.eclipse.jdt.ui.PackageExplorer"/>
+<view id="org.eclipse.jdt.ui.TypeHierarchy"/>
+<view id="org.eclipse.jdt.junit.ResultView"/>
+<view id="org.eclipse.ui.views.ProblemView"/>
+<view id="org.eclipse.jdt.ui.JavadocView"/>
+<view id="org.eclipse.jdt.ui.SourceView"/>
+<view id="org.eclipse.search.ui.views.SearchView"/>
+<view id="org.eclipse.ui.console.ConsoleView"/>
+<view id="org.eclipse.ui.views.ContentOutline"/>
+<view id="org.eclipse.mylyn.tasks.ui.views.tasks"/>
+<fastViewBars/>
+<layout>
+<mainWindow>
+<info folder="true" part="left">
+<folder activePageID="org.eclipse.jdt.ui.PackageExplorer" appearance="2" expanded="2">
+<page content="org.eclipse.jdt.ui.PackageExplorer" label="Package Explorer"/>
+<page content="org.eclipse.jdt.ui.TypeHierarchy" label="Hierarchy"/>
+<page content="org.eclipse.jdt.junit.ResultView" label="JUnit"/>
+<page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
+<page content="org.eclipse.ui.navigator.ProjectExplorer" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@2e5f8245" ratio="0.75" ratioLeft="762" ratioRight="254" relationship="2" relative="left">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
+<page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+</folder>
+</info>
+<info part="org.eclipse.ui.editorss" ratio="0.27291813" ratioLeft="390" ratioRight="1039" relationship="2" relative="left"/>
+<info folder="true" part="bottom" ratio="0.74963397" ratioLeft="512" ratioRight="171" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
+<page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
+<page content="org.eclipse.jdt.ui.SourceView" label="Declaration"/>
+<page content="org.eclipse.search.ui.views.SearchView" label="Search"/>
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.views.ProgressView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+<part id="3"/>
+<part id="4"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@501d5ebc" ratio="0.7493438" ratioLeft="571" ratioRight="191" relationship="2" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.mylyn.tasks.ui.views.tasks" appearance="2" expanded="2">
+<page content="org.eclipse.mylyn.tasks.ui.views.tasks" label="Task List"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="right" ratio="0.5" ratioLeft="256" ratioRight="256" relationship="4" relative="org.eclipse.ui.internal.ViewStack@501d5ebc">
+<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<page content="org.eclipse.ui.texteditor.TemplatesView" label="LabelNotFound"/>
+<page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+</presentation>
+</folder>
+</info>
+</mainWindow>
+</layout>
+</perspective>
+<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
+<descriptor class="org.eclipse.debug.internal.ui.DebugPerspectiveFactory" id="org.eclipse.debug.ui.DebugPerspective" label="Debug"/>
+<alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.search.searchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.annotationNavigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.navigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo"/>
+<alwaysOnActionSet id="org.eclipse.ui.externaltools.ExternalToolsSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.keyBindings"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.openFiles"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.doc.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.tasks.ui.navigation"/>
+<alwaysOnActionSet id="org.eclipse.debug.ui.launchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.NavigateActionSet"/>
+<alwaysOnActionSet id="org.eclipse.debug.ui.breakpointActionSet"/>
+<alwaysOnActionSet id="org.eclipse.jdt.debug.ui.JDTDebugActionSet"/>
+<alwaysOnActionSet id="org.eclipse.jdt.ui.JavaActionSet"/>
+<alwaysOnActionSet id="org.eclipse.debug.ui.debugActionSet"/>
+<show_view_action id="org.eclipse.debug.ui.DebugView"/>
+<show_view_action id="org.eclipse.debug.ui.VariableView"/>
+<show_view_action id="org.eclipse.debug.ui.BreakpointView"/>
+<show_view_action id="org.eclipse.debug.ui.ExpressionView"/>
+<show_view_action id="org.eclipse.ui.views.ContentOutline"/>
+<show_view_action id="org.eclipse.ui.console.ConsoleView"/>
+<show_view_action id="org.eclipse.ui.views.TaskList"/>
+<show_view_action id="org.eclipse.ant.ui.views.AntView"/>
+<show_view_action id="org.eclipse.pde.runtime.LogView"/>
+<show_view_action id="org.eclipse.jdt.debug.ui.DisplayView"/>
+<perspective_action id="org.eclipse.jdt.ui.JavaPerspective"/>
+<perspective_action id="org.eclipse.jdt.ui.JavaBrowsingPerspective"/>
+<perspective_action id="org.eclipse.wst.xml.ui.perspective"/>
+<hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
+<view id="org.eclipse.ui.console.ConsoleView"/>
+<view id="org.eclipse.ui.views.TaskList"/>
+<view id="org.eclipse.debug.ui.DebugView"/>
+<view id="org.eclipse.debug.ui.VariableView"/>
+<view id="org.eclipse.debug.ui.BreakpointView"/>
+<view id="org.eclipse.ui.views.ContentOutline"/>
+<fastViewBars/>
+<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
+<page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.ui.PackageExplorer" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.ui.TypeHierarchy" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1074" ratioRight="358" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
+<page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.debug.internal.ui.ConsoleFolderView" ratio="0.74965984" ratioLeft="551" ratioRight="184" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
+<page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.views.PropertySheet" label="LabelNotFound"/>
+<page content="org.eclipse.jdt.debug.ui.DisplayView" label="LabelNotFound"/>
+<page content="org.eclipse.search.SearchResultView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<part id="1"/>
+</presentation>
+</folder>
+</info>
+<info part="org.eclipse.ui.editorss" ratio="0.44827586" ratioLeft="247" ratioRight="304" relationship="4" relative="org.eclipse.debug.internal.ui.NavigatorFolderView"/>
+<info folder="true" part="org.eclipse.debug.internal.ui.OutlineFolderView" ratio="0.75" ratioLeft="1074" ratioRight="358" relationship="2" relative="org.eclipse.ui.editorss">&#x0A;<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<page content="org.eclipse.ant.ui.views.AntView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="org.eclipse.debug.internal.ui.ToolsFolderView" ratio="0.5" ratioLeft="716" ratioRight="716" relationship="2" relative="org.eclipse.debug.internal.ui.NavigatorFolderView">&#x0A;<folder activePageID="org.eclipse.debug.ui.VariableView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
+<page content="org.eclipse.debug.ui.BreakpointView" label="Breakpoints"/>
+<page content="org.eclipse.debug.ui.ExpressionView" label="LabelNotFound"/>
+<page content="org.eclipse.debug.ui.RegisterView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<part id="1"/>
+</presentation>
+</folder>
+</info>
+</mainWindow>
+</layout>
+</perspective>
+</perspectives>
+<workingSets/>
+<navigationHistory>
+<editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Lathos-Java/src/com/smallcultfollowing/lathos/context/Lathos.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Lathos-Java/src/com/smallcultfollowing/lathos/context/Context.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Lathos-Java/src/com/smallcultfollowing/lathos/server/UserPage.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Lathos-Java/src/com/smallcultfollowing/lathos/context/DefaultContext.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Lathos-Java/src/com/smallcultfollowing/lathos/server/ServerImpl.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Lathos-Java/src/com/smallcultfollowing/lathos/server/WebServer.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Lathos-Java/src/com/smallcultfollowing/lathos/model/Page.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Lathos-Java/src/com/smallcultfollowing/lathos/server/HtmlOutput.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/Lathos-Java/src/com/smallcultfollowing/lathos/model/Output.java"/>
+</editors>
+<item historyLabel="ServerImpl.java" index="4">
+<position info="not_deleted" x="584" y="0"/>
+</item>
+<item historyLabel="ServerImpl.java" index="4">
+<position info="not_deleted" x="590" y="0"/>
+</item>
+<item historyLabel="ServerImpl.java" index="4">
+<position info="not_deleted" x="712" y="0"/>
+</item>
+<item historyLabel="DefaultContext.java" index="3">
+<position info="not_deleted" x="2190" y="0"/>
+</item>
+<item historyLabel="Lathos.java" index="0">
+<position info="not_deleted" x="145" y="0"/>
+</item>
+<item historyLabel="DefaultContext.java" index="3">
+<position info="not_deleted" x="2190" y="0"/>
+</item>
+<item historyLabel="DefaultContext.java" index="3">
+<position info="not_deleted" x="1155" y="0"/>
+</item>
+<item historyLabel="DefaultContext.java" index="3">
+<position info="not_deleted" x="1162" y="0"/>
+</item>
+<item historyLabel="DefaultContext.java" index="3">
+<position info="not_deleted" x="1407" y="0"/>
+</item>
+<item historyLabel="DefaultContext.java" index="3">
+<position info="not_deleted" x="1019" y="0"/>
+</item>
+<item historyLabel="ServerImpl.java" index="4">
+<position info="not_deleted" x="712" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="1989" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="1988" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position/>
+</item>
+<item historyLabel="Page.java" index="6">
+<position info="not_deleted" x="64" y="4"/>
+</item>
+<item historyLabel="Page.java" index="6">
+<position info="not_deleted" x="150" y="0"/>
+</item>
+<item historyLabel="Page.java" index="6">
+<position info="not_deleted" x="137" y="0"/>
+</item>
+<item historyLabel="Page.java" index="6">
+<position info="not_deleted" x="150" y="0"/>
+</item>
+<item historyLabel="UserPage.java" index="2">
+<position info="not_deleted" x="433" y="0"/>
+</item>
+<item historyLabel="UserPage.java" index="2">
+<position info="not_deleted" x="803" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="619" y="0"/>
+</item>
+<item historyLabel="Context.java" index="1">
+<position info="not_deleted" x="293" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="619" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="619" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="667" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="660" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="751" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="810" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="881" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="887" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="937" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="1253" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="1411" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="1344" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="1574" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="1838" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="1891" y="0"/>
+</item>
+<item historyLabel="HtmlOutput.java" index="7">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="HtmlOutput.java" index="7">
+<position info="not_deleted" x="239" y="0"/>
+</item>
+<item historyLabel="Output.java" index="8">
+<position info="not_deleted" x="117" y="8"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="1985" y="0"/>
+</item>
+<item historyLabel="HtmlOutput.java" index="7">
+<position info="not_deleted" x="239" y="0"/>
+</item>
+<item historyLabel="HtmlOutput.java" index="7">
+<position info="not_deleted" x="399" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="1915" y="0"/>
+</item>
+<item historyLabel="HtmlOutput.java" index="7">
+<position info="not_deleted" x="576" y="0"/>
+</item>
+<item historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="1915" y="0"/>
+</item>
+<item active="true" historyLabel="WebServer.java" index="5">
+<position info="not_deleted" x="918" y="0"/>
+</item>
+</navigationHistory>
+<input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
+</page>
+<workbenchWindowAdvisor/>
+<actionBarAdvisor/>
+<trimLayout>
+<trimArea IMemento.internal.id="128">
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
+</trimArea>
+<trimArea IMemento.internal.id="1024">
+<trimItem IMemento.internal.id="org.eclise.ui.internal.FastViewBar"/>
+<trimItem IMemento.internal.id="org.eclipse.jface.action.StatusLineManager"/>
+<trimItem IMemento.internal.id="org.eclipse.ui.internal.progress.ProgressRegion"/>
+</trimArea>
+</trimLayout>
+</window>
+<mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HtmlOutput.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/server/HtmlOutput.java">
+<persistable path="/Lathos-Java/src/com/smallcultfollowing/lathos/server/HtmlOutput.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Server.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/model/Server.java">
+<persistable path="/Lathos-Java/src/com/smallcultfollowing/lathos/model/Server.java"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="LinkedList.class" tooltip="java.util.LinkedList">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=Lathos-Java/\/System\/Library\/Frameworks\/JavaVM.framework\/Versions\/1.6.0\/Classes\/classes.jar&lt;java.util(LinkedList.class"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DefaultContext.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/context/DefaultContext.java">
+<persistable path="/Lathos-Java/src/com/smallcultfollowing/lathos/context/DefaultContext.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Breadcrumbs.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/server/Breadcrumbs.java">
+<persistable path="/Lathos-Java/src/com/smallcultfollowing/lathos/server/Breadcrumbs.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Line.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/model/Line.java">
+<persistable path="/Lathos-Java/src/com/smallcultfollowing/lathos/model/Line.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Link.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/server/Link.java">
+<persistable path="/Lathos-Java/src/com/smallcultfollowing/lathos/server/Link.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Context.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/context/Context.java">
+<persistable path="/Lathos-Java/src/com/smallcultfollowing/lathos/context/Context.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Output.java" tooltip="Lathos-Java/src/com/smallcultfollowing/lathos/model/Output.java">
+<persistable path="/Lathos-Java/src/com/smallcultfollowing/lathos/model/Output.java"/>
+</file>
+</mruList>
+</workbench>

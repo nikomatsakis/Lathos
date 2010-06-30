@@ -1,0 +1,11 @@
+package com.smallcultfollowing.lathos.model;
+
+public interface Server {
+	
+	public void addTopLevelPage(Page page);
+	
+	public String freshId();
+	
+	public Context context();
+	
+}

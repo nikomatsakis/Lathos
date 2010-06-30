@@ -1,0 +1,11 @@
+package com.smallcultfollowing.lathos.model;
+
+public class Link implements Displayable {
+
+	@Override
+	public String toHtml() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

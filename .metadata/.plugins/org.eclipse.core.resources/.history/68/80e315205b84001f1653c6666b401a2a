@@ -1,0 +1,16 @@
+package com.smallcultfollowing.lathos.model;
+
+import java.util.List;;
+
+public interface Output {
+
+	public List<Page> topPages();
+
+	public void outputObject(Object content);
+	
+	public void outputText(String content);
+	
+	public void startLink(Page target);
+	public void endLink(Page target);
+
+}

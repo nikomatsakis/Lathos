@@ -1,0 +1,7 @@
+package com.smallcultfollowing.lathos.model;
+
+public interface Output {
+
+	public Page topPage();
+	
+}
