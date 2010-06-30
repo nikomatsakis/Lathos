@@ -64,6 +64,7 @@ public class AbstractContext implements Context {
 	@Override
 	public void log(Object... line) {
 		previousLine = new LineImpl();
+		stack.getLast().addContent(previousLine);
 		append(line);
 	}
 

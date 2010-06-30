@@ -1,7 +1,7 @@
 package com.smallcultfollowing.lathos.server;
 
 import java.io.IOException;
-import java.io.Writer;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,17 +13,22 @@ import com.smallcultfollowing.lathos.model.Page;
 public class HtmlOutput implements Output {
 	public final LathosServlet server;
 	public final List<Page> topPages;
-	public final Writer writer;
+	public final PrintWriter writer;
+	private int maxId;
 
 	public HtmlOutput(
 			LathosServlet server,
 			List<Page> topPages, 
-			Writer writer
+			PrintWriter writer
 	) {
 		super();
 		this.server = server;
 		this.topPages = Collections.unmodifiableList(topPages);
 		this.writer = writer;
+	}
+	
+	public String freshId() {
+		return "id"+maxId++;
 	}
 
 	@Override
@@ -42,14 +47,36 @@ public class HtmlOutput implements Output {
 
 	@Override
 	public void startLink(Page target) throws IOException {
-		writer.write("<a href='");
-		writer.write(server.url(target));
-		writer.write("'>");
+		writer.print("<a href='");
+		writer.print(server.url(target));
+		writer.print("'>");
 	}
 
 	@Override
 	public void endLink(Page target) throws IOException {
-		writer.write("</a>");
+		writer.print("</a>");
+	}
+
+	@Override
+	public String startDiv() throws IOException {
+		String id = freshId();
+		writer.printf("<DIV id='%s' class='log initiallyOpen'>", id);
+		return id;
+	}
+
+	@Override
+	public void endDiv() throws IOException {
+		writer.println("</DIV>");
+	}
+
+	@Override
+	public void startLine() throws IOException {
+		writer.println("<p>");
+	}
+
+	@Override
+	public void endLine() throws IOException {
+		writer.println("</p>");
 	}
 
 }

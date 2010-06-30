@@ -67,7 +67,7 @@ implements LathosServer
 		return "page" + Integer.toHexString(i);
 	}
 	
-	private void renderError(Writer out, String url, String desc, Object... args) throws IOException {
+	private void renderError(PrintWriter out, String url, String desc, Object... args) throws IOException {
 		out.write("<html><head><title>Error</title></head>");
 		out.write(String.format("<body><h1>Error with %s</h1>", StringEscapeUtils.escapeHtml(url)));
 		out.write(String.format("%s", StringEscapeUtils.escapeHtml(String.format(desc, args))));
@@ -93,7 +93,7 @@ implements LathosServer
 		}
 	}
 
-	public synchronized void renderURL(String url, Writer out)
+	public synchronized void renderURL(String url, PrintWriter out)
 	throws IOException
 	{
 		String[] ids = url.split("/");
@@ -141,9 +141,49 @@ implements LathosServer
 		
 		HtmlOutput output = new HtmlOutput(this, pages, out);
 		
+		out.println("<HTML>");
+		out.println("<HEAD>");
+		
+		out.println("<TITLE>");
+		out.println(StringEscapeUtils.escapeHtml(url));
+		out.println("</TITLE>");
+		
+        out.println("<STYLE>");
+        out.println("DIV.log {");
+        out.println("    border-width: thin;");
+        out.println("    border-style: solid;");
+        out.println("    margin-top: .1cm;");
+        out.println("    margin-bottom: .1cm;");
+        out.println("    margin-left: .3cm;                    ");
+        out.println("}");
+        out.println(".initiallyOpen {");
+        out.println("    opacity: 1.0;                    ");
+        out.println("}");
+        out.println(".initiallyClosed {");
+        out.println("    opacity: 0.25;");
+        out.println("}");
+        out.println("A:hover {");
+        out.println("    text-decoration: underline;");
+        out.println("}");
+        out.println("A:link {");
+        out.println("    text-decoration: none;");
+        out.println("}");
+        out.println("A:visited {");
+        out.println("    text-decoration: none;");
+        out.println("}");
+        out.println("</STYLE>");
+		
+		out.println("</HEAD>");
+        out.println("<BODY>");
+        out.println("<DIV id='id0'>");
+
 		for(Page page : pages) {
 			page.renderInPage(output);
 		}
+		
+        out.println("</DIV");
+        out.println("</BODY>");
+        out.println("</HTML>");
 	}
 
 	@Override

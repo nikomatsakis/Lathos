@@ -24,7 +24,30 @@ public class UserPage implements Page {
 
 	@Override
 	public synchronized void renderInPage(Output out) throws IOException {
+		out.startDiv();
 		
+		if(out.topPages().contains(this)) {
+			out.startLine();
+			printBreadcrumbs(this, out);
+			out.endLine();
+		}
+		
+		for(PageContent content : contents) {
+			content.renderInPage(out);
+		}
+		
+		out.endDiv();
+	}
+
+	private static void printBreadcrumbs(Page page, Output out) throws IOException {
+		if(page.getParent() != null) {
+			printBreadcrumbs(page.getParent(), out);
+			out.outputText(" → ");
+		}
+		
+		out.startLink(page);
+		out.outputText(page.getId());
+		out.endLink(page);
 	}
 
 	@Override

@@ -19,5 +19,16 @@ public interface Output {
 	public void endLink(Page target)
 	throws IOException;
 
+	public String startDiv()
+	throws IOException;
+
+	public void endDiv()
+	throws IOException;
+
+	public void startLine()
+	throws IOException;
+	
+	public void endLine()
+	throws IOException;
 
 }

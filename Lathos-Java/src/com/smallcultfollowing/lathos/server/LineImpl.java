@@ -14,6 +14,8 @@ public class LineImpl implements PageContent, Line {
 	
 	@Override
 	public synchronized void renderInPage(Output out) throws IOException {
+		out.startLine();
+		
 		for(Object content : contents) {
 			if(content instanceof CustomOutput) {
 				((CustomOutput) content).renderInLine(out);
@@ -22,7 +24,7 @@ public class LineImpl implements PageContent, Line {
 			}
 		}
 		
-		out.outputText("<br>");
+		out.endLine();
 	}
 
 	@Override
