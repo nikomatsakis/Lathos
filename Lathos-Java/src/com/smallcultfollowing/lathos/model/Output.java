@@ -31,4 +31,10 @@ public interface Output {
 	public void endLine()
 	throws IOException;
 
+	public void startBold()
+	throws IOException;
+	
+	public void endBold()
+	throws IOException;
+
 }

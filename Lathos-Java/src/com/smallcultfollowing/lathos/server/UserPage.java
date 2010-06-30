@@ -2,6 +2,7 @@ package com.smallcultfollowing.lathos.server;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 
 import com.smallcultfollowing.lathos.model.Output;
 import com.smallcultfollowing.lathos.model.Page;
@@ -66,15 +67,21 @@ public class UserPage implements Page {
 	}
 
 	@Override
-	public synchronized PageContent[] contents() {
-		return contents.toArray(new PageContent[contents.size()]);
-	}
-
-	@Override
 	public void renderInLine(Output output) throws IOException {
 		output.startLink(this);
 		output.outputText(getId());
 		output.endLink(this);
+	}
+
+	@Override
+	public void addSubpages(String withId, List<Page> toList) {
+		for(PageContent content : contents) {
+			if(content instanceof Page) {
+				Page subpage = (Page)content;
+				if(subpage.getId().equals(withId))
+					toList.add(subpage);
+			}
+		}
 	}
 
 }

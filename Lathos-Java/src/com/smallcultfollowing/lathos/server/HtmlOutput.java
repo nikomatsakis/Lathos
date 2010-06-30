@@ -2,6 +2,7 @@ package com.smallcultfollowing.lathos.server;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,6 +16,14 @@ public class HtmlOutput implements Output {
 	public final List<Page> topPages;
 	public final PrintWriter writer;
 	private int maxId;
+	private int currentColor;
+	
+	private final String[] backgroundColors = new String[] {	    "E6FAFF",
+	    "B2B091",
+	    "FFFDE9",
+	    "CCA6B2",
+	    "B29AA2"
+	};
 
 	public HtmlOutput(
 			LathosServlet server,
@@ -27,8 +36,12 @@ public class HtmlOutput implements Output {
 		this.writer = writer;
 	}
 	
-	public String freshId() {
+	private String freshId() {
 		return "id"+maxId++;
+	}
+	
+	private String nextBackgroundColor() {
+		return backgroundColors[(currentColor++) % backgroundColors.length];
 	}
 
 	@Override
@@ -60,7 +73,10 @@ public class HtmlOutput implements Output {
 	@Override
 	public String startDiv() throws IOException {
 		String id = freshId();
-		writer.printf("<DIV id='%s' class='log initiallyOpen'>", id);
+		String color = nextBackgroundColor();
+		writer.printf(
+				"<DIV id='%s' class='log initiallyOpen' style='background-color: #%s'>", 
+				id, color);
 		return id;
 	}
 
@@ -77,6 +93,16 @@ public class HtmlOutput implements Output {
 	@Override
 	public void endLine() throws IOException {
 		writer.println("</p>");
+	}
+
+	@Override
+	public void startBold() throws IOException {
+		writer.print("<b>");
+	}
+
+	@Override
+	public void endBold() throws IOException {
+		writer.print("</b>");
 	}
 
 }

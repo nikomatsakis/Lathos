@@ -32,7 +32,7 @@ public class AbstractContext implements Context {
 		stack.add(page);
 		server.addTopLevelPage(page);
 				
-		log(title);
+		addTitle(title);
 		
 		return page;
 	}
@@ -46,9 +46,15 @@ public class AbstractContext implements Context {
 		Page page = new UserPage(id, stack.getLast());
 		stack.add(page);
 		
-		log(title);
+		addTitle(title);
 		
 		return page;
+	}
+
+	private void addTitle(Object[] title) {
+		previousLine = new LineImpl(true);
+		stack.getLast().addContent(previousLine);
+		append(title);
 	}
 
 	@Override

@@ -3,7 +3,6 @@ package com.smallcultfollowing.lathos.server;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -51,14 +50,19 @@ implements LathosServer
 	}
 	
 	@Override
-	public synchronized void addTopLevelPage(Page page) {
-		List<Page> list = topLevelPages.get(page.getId());
-		if(list == null) {
-			list = new LinkedList<Page>();
-			topLevelPages.put(page.getId(), list);
+	public void addTopLevelPage(Page page) {
+		while(page.getParent() != null)
+			page = page.getParent();
+		
+		synchronized(this) {
+			List<Page> list = topLevelPages.get(page.getId());
+			if(list == null) {
+				list = new LinkedList<Page>();
+				topLevelPages.put(page.getId(), list);
+			}
+			if(!list.contains(page))
+				list.add(page);
 		}
-		if(!list.contains(page))
-			list.add(page);
 	}
 	
 	@Override
@@ -84,6 +88,9 @@ implements LathosServer
 		if(page.getParent() != null) {
 			addURL(page.getParent(), sb);
 			sb.append("/");
+		} else {
+			// This link might not be valid unless 'page' is a TLP:
+			addTopLevelPage(page);
 		}
 		
 		try {
@@ -126,13 +133,7 @@ implements LathosServer
 			
 			List<Page> newPages = new LinkedList<Page>();
 			for(Page page : pages) {
-				for(PageContent content : page.contents()) {
-					if(content instanceof Page) {
-						Page subPage = (Page) content;
-						if(subPage.getId().equals(ids[nextIndex]))
-							newPages.add(subPage);
-					}
-				}
+				page.addSubpages(ids[nextIndex], newPages);
 			}
 			
 			pages = newPages;
@@ -193,13 +194,16 @@ implements LathosServer
 
 	@Override
 	public void addToLine(Line previousLine, Object o) {
-		if(o instanceof String)
+		if(o instanceof String) {
 			previousLine.addText((String)o);
-		else if (o instanceof Number)
+		} else if (o instanceof Number) {
 			previousLine.addNumber((Number)o);
-		else if (o instanceof CustomOutput)
+		} else if (o instanceof Page) {
+			Page p = (Page)o;
+			previousLine.addContent((Page)o);
+		} else if (o instanceof CustomOutput) {
 			previousLine.addContent((CustomOutput)o);
-		else {
+		} else {
 			for(DataRenderer dr : dataRenderers()) {
 				if(dr.addToLine(previousLine, o))
 					return;
