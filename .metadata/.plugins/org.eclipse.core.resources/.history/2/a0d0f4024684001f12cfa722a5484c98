@@ -1,7 +1,0 @@
-package com.smallcultfollowing.lathos.model;
-
-public interface ContentItem 
-{
-	public void addedTo(Page page);
-	public void render(Output out);
-}

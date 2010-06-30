@@ -1,7 +1,0 @@
-package com.smallcultfollowing.lathos.context;
-
-public class Lathos {
-	
-	private final ThreadLocal<Context> ctx = new ThreadLocal<Context>();
-
-}

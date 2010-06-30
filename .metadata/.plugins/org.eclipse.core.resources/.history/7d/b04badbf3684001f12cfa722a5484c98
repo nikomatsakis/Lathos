@@ -1,8 +1,0 @@
-package com.smallcultfollowing.lathos.model;
-
-public class Node {
-	
-	public final String id;
-	private String 
-
-}

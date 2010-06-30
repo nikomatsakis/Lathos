@@ -1,7 +1,0 @@
-package com.smallcultfollowing.lathos.model;
-
-public interface CustomOutput {
-
-	public void renderInPage(Output output);
-	
-}

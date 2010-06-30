@@ -1,8 +1,0 @@
-package com.smallcultfollowing.lathos.context;
-
-public interface Context {
-
-	public Page pushChild(Object... title);
-	public void pop(Page page);
-	
-}

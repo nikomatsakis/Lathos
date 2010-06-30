@@ -1,7 +1,0 @@
-package com.smallcultfollowing.lathos.model;
-
-public interface Render {
-	public String linkURI(Node node);
-	public String escape(String text);
-	public void escape(String text, StringBuilder sb);
-}

@@ -1,5 +1,0 @@
-package com.smallcultfollowing.lathos.user;
-
-public interface DataStructure {
-
-}

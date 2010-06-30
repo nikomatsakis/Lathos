@@ -1,7 +1,0 @@
-package com.smallcultfollowing.lathos.model;
-
-public interface LineContent {
-
-	public void render(Output output);
-	
-}

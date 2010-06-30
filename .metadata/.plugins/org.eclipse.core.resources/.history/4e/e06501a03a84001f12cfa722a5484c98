@@ -1,7 +1,0 @@
-package com.smallcultfollowing.lathos.server;
-
-public interface Node {
-	public String getId();
-	public void toHTML(Render render, StringBuilder sb);
-	public List<Node> getChildren();
-}

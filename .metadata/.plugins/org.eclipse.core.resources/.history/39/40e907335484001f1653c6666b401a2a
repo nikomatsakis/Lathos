@@ -1,5 +1,0 @@
-package com.smallcultfollowing.lathos.model;
-
-public interface Line extends PageContent {
-	public void addContent(Object content);
-}
