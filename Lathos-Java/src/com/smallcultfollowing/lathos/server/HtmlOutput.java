@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -17,6 +19,7 @@ public class HtmlOutput implements Output {
 	public final PrintWriter writer;
 	private int maxId;
 	private int currentColor;
+	private LinkedList<String> idStack = new LinkedList<String>();
 	
 	private final String[] backgroundColors = new String[] {	    "E6FAFF",
 	    "B2B091",
@@ -67,17 +70,31 @@ public class HtmlOutput implements Output {
 	}
 
 	@Override
-	public String startDiv() throws IOException {
+	public String startPage(Page page) throws IOException {
+		String parentId = (idStack.isEmpty() ? "" : idStack.peek());
 		String id = freshId();
 		String color = nextBackgroundColor();
 		writer.printf(
 				"<DIV id='%s' class='log initiallyOpen' style='background-color: #%s'>", 
 				id, color);
+		idStack.add(id);
+		
+		writer.printf(
+				"<A href='#%s'>&#8689;</A>&nbsp;"+                                   // up-left arrow
+				//"<SPAN onclick='toggleId(\"%s\")'>&#9660;</SPAN>&nbsp;"+ // down arrow 
+				"<A href='#' onclick='toggleId(\"%s\")'>&#9660;</A>&nbsp;"+ // down arrow 
+				"<A href='%s'>&#9650;</A>",                                          // up arrow
+				parentId,
+				id,
+				server.url(page)
+				);
+		
 		return id;
 	}
 
 	@Override
-	public void endDiv() throws IOException {
+	public void endPage(Page page) throws IOException {
+		idStack.removeLast();
 		writer.println("</DIV>");
 	}
 

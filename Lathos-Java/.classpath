@@ -4,13 +4,13 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.5.jar"/>
-	<classpathentry kind="lib" path="jetty-distribution-8.0.0.M0/lib/servlet-api-3.0.jar"/>
-	<classpathentry kind="lib" path="jetty-distribution-8.0.0.M0/lib/jetty-continuation-8.0.0.M0.jar"/>
-	<classpathentry kind="lib" path="jetty-distribution-8.0.0.M0/lib/jetty-http-8.0.0.M0.jar"/>
-	<classpathentry kind="lib" path="jetty-distribution-8.0.0.M0/lib/jetty-io-8.0.0.M0.jar"/>
-	<classpathentry kind="lib" path="jetty-distribution-8.0.0.M0/lib/jetty-security-8.0.0.M0.jar"/>
-	<classpathentry kind="lib" path="jetty-distribution-8.0.0.M0/lib/jetty-server-8.0.0.M0.jar"/>
-	<classpathentry kind="lib" path="jetty-distribution-8.0.0.M0/lib/jetty-servlet-8.0.0.M0.jar"/>
-	<classpathentry kind="lib" path="jetty-distribution-8.0.0.M0/lib/jetty-util-8.0.0.M0.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-continuation-8.0.0.M0.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-http-8.0.0.M0.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-io-8.0.0.M0.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-security-8.0.0.M0.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-server-8.0.0.M0.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-servlet-8.0.0.M0.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-util-8.0.0.M0.jar"/>
+	<classpathentry kind="lib" path="lib/servlet-api-3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

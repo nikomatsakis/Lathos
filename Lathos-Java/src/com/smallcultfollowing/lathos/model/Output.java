@@ -16,10 +16,10 @@ public interface Output {
 	public void endLink(Page target)
 	throws IOException;
 
-	public String startDiv()
+	public String startPage(Page page)
 	throws IOException;
 
-	public void endDiv()
+	public void endPage(Page page)
 	throws IOException;
 
 	public void startPar()

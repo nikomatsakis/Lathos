@@ -64,7 +64,7 @@ implements LathosServer
 		int length = oldDataRenderers.length + 1;
 		DataRenderer[] newDataRenderers = new DataRenderer[length];
 		System.arraycopy(oldDataRenderers, 0, newDataRenderers, 0, length - 1);
-		newDataRenderers[length] = dr;
+		newDataRenderers[length - 1] = dr;
 		customDataRenderers.set(newDataRenderers);
 	}
 	
@@ -192,6 +192,37 @@ implements LathosServer
 		out.println(StringEscapeUtils.escapeHtml(url));
 		out.println("</TITLE>");
 		
+        out.println("<SCRIPT type='text/javascript'>");
+        out.println("function toggleId(id)");
+        out.println("{");
+        out.println("    var target = document.getElementById(id);");
+        out.println("    var kids = target.childNodes;");
+        out.println("    var openedKids = false;");
+        out.println("    var closedKids = false;");
+        out.println("    for(var i = 0; (i < kids.length); i++) {");
+        out.println("        var kid = kids[i];");
+        out.println("        if(");
+        out.println("            kid.className == 'log initiallyOpen' ||");
+        out.println("            kid.className == 'log initiallyClosed'");
+        out.println("        ) {");
+        out.println("            if(kid.style.display == 'none') {");
+        out.println("                kid.style.display = 'block';");
+        out.println("                openedKids = true;");
+        out.println("            } else {");
+        out.println("                kid.style.display = 'none';");
+        out.println("                closedKids = true;");
+        out.println("            }");
+        out.println("        }");
+        out.println("    }");
+        out.println("    ");
+        out.println("    if(openedKids) {");
+        out.println("        target.style.opacity = 1.0;");
+        out.println("    } else if (closedKids) {");
+        out.println("        target.style.opacity = 0.25;");
+        out.println("    }");
+        out.println("}");
+        out.println("</SCRIPT>");
+
         out.println("<STYLE>");
         out.println("DIV.log {");
         out.println("    border-width: thin;");

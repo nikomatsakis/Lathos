@@ -22,7 +22,7 @@ public class UserPage implements Page {
 
 	@Override
 	public synchronized void renderInPage(Output out) throws IOException {
-		out.startDiv();
+		out.startPage(this);
 		
 		if(out.topPages().contains(this)) {
 			out.startPar();
@@ -34,7 +34,7 @@ public class UserPage implements Page {
 			content.renderInPage(out);
 		}
 		
-		out.endDiv();
+		out.endPage(this);
 	}
 
 	private static void printBreadcrumbs(Page page, Output out) throws IOException {
