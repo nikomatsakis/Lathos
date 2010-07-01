@@ -18,6 +18,7 @@
     <target name="jar" depends="compile">
         <zip destfile="Lathos.jar">
             <fileset dir="bin"/>
+            <fileset dir="src"/>
             <zipgroupfileset dir="lib" includes="*.jar"/>
         </zip>
     </target>
