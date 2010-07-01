@@ -5,11 +5,14 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +28,7 @@ import com.smallcultfollowing.lathos.model.DataRenderer;
 import com.smallcultfollowing.lathos.model.LathosServer;
 import com.smallcultfollowing.lathos.model.Line;
 import com.smallcultfollowing.lathos.model.Page;
-import com.smallcultfollowing.lathos.model.PageContent;
+import com.smallcultfollowing.lathos.model.UserPage;
 
 public class LathosServlet
 extends HttpServlet
@@ -33,36 +36,40 @@ implements LathosServer
 {
 	private static final long serialVersionUID = -7831061598026617576L;
 	
+	// Accessible with or without lock:
 	private final AtomicInteger id = new AtomicInteger();
+	
+	// Only MODIFIED under lock but may be READ without lock:
+	private final ConcurrentHashMap<Page, Boolean> registeredPages = new ConcurrentHashMap<Page, Boolean>();
+	
+	// Only accessed under lock:
 	private final Map<String, List<Page>> topLevelPages = new HashMap<String, List<Page>>();
-	private DataRenderer[] customDataRenderers = new DataRenderer[0];
+	
+	// Only accessed under lock:
+	private final Map<Page, List<Page>> subpages = new HashMap<Page, List<Page>>();
+	
+	// Only MODIFIED under lock but may be READ without lock:
+	//    Contents of the array are NEVER modified once stored in this field.
+	private final AtomicReference<DataRenderer[]> customDataRenderers = new AtomicReference<DataRenderer[]>(new DataRenderer[0]);
+	
+	// We always add a special "indexPage" to start.
+	private final Page indexPage = new UserPage("index", null);
+	
+	public LathosServlet() {
+		registerPage(indexPage);
+	} 
 	
 	public synchronized void addDataRenderer(DataRenderer dr) {
-		int length = customDataRenderers.length + 1;
+		DataRenderer[] oldDataRenderers = customDataRenderers.get();
+		int length = oldDataRenderers.length + 1;
 		DataRenderer[] newDataRenderers = new DataRenderer[length];
-		System.arraycopy(customDataRenderers, 0, newDataRenderers, 0, length - 1);
+		System.arraycopy(oldDataRenderers, 0, newDataRenderers, 0, length - 1);
 		newDataRenderers[length] = dr;
-		customDataRenderers = newDataRenderers;
+		customDataRenderers.set(newDataRenderers);
 	}
 	
-	private synchronized DataRenderer[] dataRenderers() {
-		return customDataRenderers;
-	}
-	
-	@Override
-	public void addTopLevelPage(Page page) {
-		while(page.getParent() != null)
-			page = page.getParent();
-		
-		synchronized(this) {
-			List<Page> list = topLevelPages.get(page.getId());
-			if(list == null) {
-				list = new LinkedList<Page>();
-				topLevelPages.put(page.getId(), list);
-			}
-			if(!list.contains(page))
-				list.add(page);
-		}
+	public DataRenderer[] dataRenderers() {
+		return customDataRenderers.get();
 	}
 	
 	@Override
@@ -79,19 +86,44 @@ implements LathosServer
 	}
 	
 	public String url(Page page) {
+		registerPage(page);
+		
 		StringBuilder sb = new StringBuilder();
-		addURL(page, sb);
+		appendURL(page, sb);
 		return sb.toString();
 	}
 	
-	private void addURL(Page page, StringBuilder sb) {
-		if(page.getParent() != null) {
-			addURL(page.getParent(), sb);
-			sb.append("/");
-		} else {
-			// This link might not be valid unless 'page' is a TLP:
-			addTopLevelPage(page);
+	private synchronized <K> void addToList(Map<K, List<Page>> map, K key, Page page) {
+		if(registeredPages.get(page) == null) {
+			List<Page> list = map.get(key);
+			if(list == null) {
+				list = new LinkedList<Page>();
+				map.put(key, list);
+			}
+			list.add(page);
+			registeredPages.put(page, Boolean.TRUE);
 		}
+	}
+	
+	@Override
+	public void registerPage(Page page) {
+		if(registeredPages.get(page) == Boolean.TRUE)
+			return;
+		
+		if(page.getParent() == null) {
+			addToList(topLevelPages, page.getId(), page);
+		} else {
+			registerPage(page.getParent());
+			addToList(subpages, page.getParent(), page);
+		}
+	}
+	
+	private void appendURL(Page page, StringBuilder sb) {
+		if(page.getParent() != null) {
+			appendURL(page.getParent(), sb);
+		} 
+		
+		sb.append("/");
 		
 		try {
 			sb.append(URLEncoder.encode(page.getId(), "UTF-8"));
@@ -100,7 +132,7 @@ implements LathosServer
 		}
 	}
 
-	public synchronized void renderURL(String url, PrintWriter out)
+	public void renderURL(String url, PrintWriter out)
 	throws IOException
 	{
 		String[] ids = url.split("/");
@@ -119,26 +151,37 @@ implements LathosServer
 			}
 		}
 		
-		// Note: Since all URLs begin with "/", ignore first component!
-		List<Page> pages = topLevelPages.get(ids[1]);
-		int nextIndex = 2;
-		while(true) {
-			if(pages == null || pages.size() == 0) {
-				renderError(out, url, "Id #%d (%s) yields no pages.", nextIndex - 1, ids[nextIndex - 1]);
-				return;
+		List<Page> pages = new LinkedList<Page>();
+		synchronized(this) {
+			// Note: Since all URLs begin with "/", ignore first component!
+			List<Page> tlp = topLevelPages.get(ids[1]);
+			if(tlp != null)
+				pages.addAll(tlp);
+			int nextIndex = 2;
+			while(true) {
+				if(pages.size() == 0) {
+					renderError(out, url, "Id #%d (%s) yields no pages.", nextIndex - 1, ids[nextIndex - 1]);
+					return;
+				}
+				
+				if(nextIndex == ids.length)
+					break;
+				
+				List<Page> newPages = new LinkedList<Page>();
+				for(Page page : pages) {
+					List<Page> sps = subpages.get(page);
+					if(sps != null) {
+						for(Page subpage : sps) {
+							if(subpage.getId().equals(ids[nextIndex]))
+								newPages.add(subpage);
+						}
+					}
+				}
+				
+				pages = newPages;
+				nextIndex++;
 			}
-			
-			if(nextIndex == ids.length)
-				break;
-			
-			List<Page> newPages = new LinkedList<Page>();
-			for(Page page : pages) {
-				page.addSubpages(ids[nextIndex], newPages);
-			}
-			
-			pages = newPages;
-			nextIndex++;
-		} 
+		}
 		
 		HtmlOutput output = new HtmlOutput(this, pages, out);
 		
@@ -189,7 +232,7 @@ implements LathosServer
 
 	@Override
 	public Context context() {
-		return new AbstractContext(this);
+		return new AbstractContext(this, Arrays.asList(indexPage));
 	}
 
 	@Override
@@ -198,9 +241,6 @@ implements LathosServer
 			previousLine.addText((String)o);
 		} else if (o instanceof Number) {
 			previousLine.addNumber((Number)o);
-		} else if (o instanceof Page) {
-			Page p = (Page)o;
-			previousLine.addContent((Page)o);
 		} else if (o instanceof CustomOutput) {
 			previousLine.addContent((CustomOutput)o);
 		} else {
@@ -216,9 +256,19 @@ implements LathosServer
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException 
 	{
+		if(req.getRequestURI().equals("/")) {
+			resp.sendRedirect(url(indexPage));
+			return;
+		}
+		
 		PrintWriter writer = resp.getWriter();
 		renderURL(req.getRequestURI(), writer);
 		writer.close();
+	}
+
+	@Override
+	public Page getIndexPage() {
+		return indexPage;
 	}
 	
 }

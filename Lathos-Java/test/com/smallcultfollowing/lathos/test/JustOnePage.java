@@ -1,7 +1,6 @@
 package com.smallcultfollowing.lathos.test;
 
 import java.io.IOException;
-import java.util.List;
 
 import com.smallcultfollowing.lathos.context.Context;
 import com.smallcultfollowing.lathos.jetty.JettyLathos;
@@ -26,16 +25,16 @@ public class JustOnePage {
 		public void renderInPage(Output out) throws IOException {
 			out.startDiv();
 			
-			out.startLine();
+			out.startPar();
 			out.startBold();
 			out.outputText("CustomData1");
 			out.endBold();
-			out.endLine();
+			out.endPar();
 			
-			out.startLine();
+			out.startPar();
 			out.outputText("i = ");
 			out.outputText(Integer.toString(i));
-			out.endLine();
+			out.endPar();
 			
 			out.endDiv();
 		}
@@ -61,10 +60,6 @@ public class JustOnePage {
 		public void addContent(PageContent content) {
 			throw new UnsupportedOperationException();
 		}
-
-		@Override
-		public void addSubpages(String withId, List<Page> toList) {
-		}
 		
 	}
 	
@@ -75,26 +70,37 @@ public class JustOnePage {
 		LathosServer server = JettyLathos.start(8080);
 		Context ctx = server.context();
 		
-		Page index1 = makeIndex(ctx);
-		makeIndex(ctx);
+		Page topPage1 = makeTopPage(ctx);
+		Page topPage2 = makeTopPage(ctx);
 		
-		ctx.push(index1);
-		Page foo = ctx.pushChild("Foo", "This is a subpage, Foo");
-		ctx.log("Foo has some log items.");
-		ctx.pop(foo);
-		ctx.pop(index1);
+		Page bar = makeChildPage(ctx, "Bar");
+		ctx.log("You can view other ", 
+				ctx.link(topPage1, "top"), " ", ctx.link(topPage2, "pages"), 
+				", or we could ", ctx.link(bar, "link ", "directly to bar"));		
+		
+		ctx.push(topPage1);
+		Page foo = makeChildPage(ctx, "Foo");
+		ctx.log("This log entry was added after ", foo);
+		ctx.pop(topPage1);
 	}
 
-	private static Page makeIndex(Context ctx) {
-		Page index = ctx.pushTopLevel("index", "This", " is", " a", " test.");
+	private static Page makeChildPage(Context ctx, String name) {
+		Page foo = ctx.pushChild(name, "This is a subpage, ", name);
+		ctx.log(name, " has some log items.");
+		ctx.pop(foo);
+		return foo;
+	}
+
+	private static Page makeTopPage(Context ctx) {
+		Page topPage = ctx.pushTopLevel("topPage", "This", " is", " a", " test.");
 		
 		for(int i = 0; i < 3; i++) {
 			ctx.log("i = ", i, " custom = ", new CustomData1(i));
 		}
 		
-		ctx.pop(index);
+		ctx.pop(topPage);
 		
-		return index;
+		return topPage;
 	}
 
 }

@@ -1,12 +1,9 @@
-package com.smallcultfollowing.lathos.server;
+package com.smallcultfollowing.lathos.model;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.smallcultfollowing.lathos.model.Output;
-import com.smallcultfollowing.lathos.model.Page;
-import com.smallcultfollowing.lathos.model.PageContent;
 
 public class UserPage implements Page {
 	
@@ -28,9 +25,9 @@ public class UserPage implements Page {
 		out.startDiv();
 		
 		if(out.topPages().contains(this)) {
-			out.startLine();
+			out.startPar();
 			printBreadcrumbs(this, out);
-			out.endLine();
+			out.endPar();
 		}
 		
 		for(PageContent content : contents) {
@@ -71,17 +68,6 @@ public class UserPage implements Page {
 		output.startLink(this);
 		output.outputText(getId());
 		output.endLink(this);
-	}
-
-	@Override
-	public void addSubpages(String withId, List<Page> toList) {
-		for(PageContent content : contents) {
-			if(content instanceof Page) {
-				Page subpage = (Page)content;
-				if(subpage.getId().equals(withId))
-					toList.add(subpage);
-			}
-		}
 	}
 
 }

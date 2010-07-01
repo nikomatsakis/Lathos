@@ -1,5 +1,6 @@
 package com.smallcultfollowing.lathos.context;
 
+import com.smallcultfollowing.lathos.model.CustomOutput;
 import com.smallcultfollowing.lathos.model.LathosServer;
 import com.smallcultfollowing.lathos.model.Page;
 
@@ -8,8 +9,9 @@ public interface Context {
 	/** Returns the server associated with this context. */
 	LathosServer server();
 	
-	/** Creates a fresh context with no stack.  This can then be
-	 *  used on a separate thread. */
+	/** Creates a fresh context with the same stack as the
+	 *  current context.  This can then be used on a separate 
+	 *  thread. */
 	Context context();
 	
 	public String freshId();
@@ -52,5 +54,9 @@ public interface Context {
 	/** Pops top of the stack, which must equal {@code page} 
 	 *  (unless {@code page} is null). */
 	public void pop(Page page);
+	
+	/** Creates a link to {@code page} that can be used in
+	 *  {@link #log(Object...)}, etc. */
+	public CustomOutput link(Page page, Object... content);
 	
 }

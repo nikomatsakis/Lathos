@@ -50,10 +50,6 @@ public class HtmlOutput implements Output {
 	}
 
 	@Override
-	public void outputObject(Object content) {
-	}
-
-	@Override
 	public void outputText(String content) throws IOException {
 		StringEscapeUtils.escapeHtml(writer, content);
 	}
@@ -86,12 +82,12 @@ public class HtmlOutput implements Output {
 	}
 
 	@Override
-	public void startLine() throws IOException {
+	public void startPar() throws IOException {
 		writer.println("<p>");
 	}
 
 	@Override
-	public void endLine() throws IOException {
+	public void endPar() throws IOException {
 		writer.println("</p>");
 	}
 

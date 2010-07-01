@@ -7,9 +7,6 @@ public interface Output {
 
 	public List<Page> topPages();
 
-	public void outputObject(Object content)
-	throws IOException;
-	
 	public void outputText(String content)
 	throws IOException;
 	
@@ -25,10 +22,10 @@ public interface Output {
 	public void endDiv()
 	throws IOException;
 
-	public void startLine()
+	public void startPar()
 	throws IOException;
 	
-	public void endLine()
+	public void endPar()
 	throws IOException;
 
 	public void startBold()
