@@ -6,7 +6,7 @@
     </description>
 
     <target name="compile" description="compile the source " >
-        <javac srcdir="src" destdir="bin">
+        <javac srcdir="src" destdir="bin" debug="on">
             <classpath>
                 <fileset dir="lib">
                     <include name="**/*.jar"/>
