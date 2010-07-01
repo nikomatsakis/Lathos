@@ -5,6 +5,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 import com.smallcultfollowing.lathos.model.LathosServer;
+import com.smallcultfollowing.lathos.none.NoneServer;
 import com.smallcultfollowing.lathos.server.LathosServlet;
 
 public class JettyLathos {
@@ -22,6 +23,13 @@ public class JettyLathos {
         server.start();
         
         return servlet;
+	}
+	
+	public static LathosServer startConditionally(int port) throws Exception {
+		if(System.getProperty("LATHOS") == null)
+			return new NoneServer();
+		
+		return start(port);
 	}
 
 }
