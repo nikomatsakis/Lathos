@@ -1,6 +1,6 @@
 package com.smallcultfollowing.lathos.none;
 
-import com.smallcultfollowing.lathos.context.Context;
+import com.smallcultfollowing.lathos.model.Context;
 import com.smallcultfollowing.lathos.model.CustomOutput;
 import com.smallcultfollowing.lathos.model.LathosServer;
 import com.smallcultfollowing.lathos.model.Page;
@@ -62,6 +62,11 @@ public class NoneContext implements Context {
 	@Override
 	public CustomOutput link(Page page, Object... content) {
 		return NoneCustomOutput.instance;
+	}
+
+	@Override
+	public Page topPage() {
+		return server.getIndexPage();
 	}
 
 }

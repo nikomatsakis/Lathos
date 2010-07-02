@@ -2,7 +2,6 @@ package com.smallcultfollowing.lathos.model;
 
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.List;
 
 
 public class UserPage implements Page {

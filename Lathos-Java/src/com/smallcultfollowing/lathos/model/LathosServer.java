@@ -1,6 +1,5 @@
 package com.smallcultfollowing.lathos.model;
 
-import com.smallcultfollowing.lathos.context.Context;
 
 public interface LathosServer {
 	
@@ -39,5 +38,13 @@ public interface LathosServer {
 	 *  As a last resort, {@code o.toString()}
 	 *  will be used. */
 	public void addToLine(Line line, Object o);
+	
+	/** 
+	 * Blocks the current thread until the user has
+	 * indicated that the Lathos session should terminate.
+	 * 
+	 * @throws InterruptedException
+	 */
+	public void join() throws InterruptedException;
 	
 }

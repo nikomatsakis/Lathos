@@ -1,4 +1,4 @@
-package com.smallcultfollowing.lathos.server;
+package com.smallcultfollowing.lathos.http;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,24 +14,18 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringEscapeUtils;
 
-import com.smallcultfollowing.lathos.context.AbstractContext;
-import com.smallcultfollowing.lathos.context.Context;
+import com.smallcultfollowing.lathos.model.Context;
 import com.smallcultfollowing.lathos.model.CustomOutput;
 import com.smallcultfollowing.lathos.model.DataRenderer;
+import com.smallcultfollowing.lathos.model.DefaultContext;
 import com.smallcultfollowing.lathos.model.LathosServer;
 import com.smallcultfollowing.lathos.model.Line;
 import com.smallcultfollowing.lathos.model.Page;
 import com.smallcultfollowing.lathos.model.UserPage;
 
-public class LathosServlet
-extends HttpServlet
+public abstract class HttpLathosServer
 implements LathosServer 
 {
 	private static final long serialVersionUID = -7831061598026617576L;
@@ -55,7 +49,7 @@ implements LathosServer
 	// We always add a special "indexPage" to start.
 	private final Page indexPage = new UserPage("index", null);
 	
-	public LathosServlet() {
+	public HttpLathosServer() {
 		registerPage(indexPage);
 	} 
 	
@@ -202,6 +196,7 @@ implements LathosServer
         out.println("    for(var i = 0; (i < kids.length); i++) {");
         out.println("        var kid = kids[i];");
         out.println("        if(");
+        out.println("            kid.className == 'content' ||");
         out.println("            kid.className == 'log initiallyOpen' ||");
         out.println("            kid.className == 'log initiallyClosed'");
         out.println("        ) {");
@@ -250,20 +245,18 @@ implements LathosServer
 		
 		out.println("</HEAD>");
         out.println("<BODY>");
-        out.println("<DIV id='id0'>");
 
 		for(Page page : pages) {
 			page.renderInPage(output);
 		}
 		
-        out.println("</DIV");
         out.println("</BODY>");
         out.println("</HTML>");
 	}
 
 	@Override
 	public Context context() {
-		return new AbstractContext(this, Arrays.asList(indexPage));
+		return new DefaultContext(this, Arrays.asList(indexPage));
 	}
 
 	@Override
@@ -281,20 +274,6 @@ implements LathosServer
 			}
 			previousLine.addText(o.toString());
 		}
-	}
-
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException 
-	{
-		if(req.getRequestURI().equals("/")) {
-			resp.sendRedirect(url(indexPage));
-			return;
-		}
-		
-		PrintWriter writer = resp.getWriter();
-		renderURL(req.getRequestURI(), writer);
-		writer.close();
 	}
 
 	@Override

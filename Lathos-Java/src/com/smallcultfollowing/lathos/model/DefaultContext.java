@@ -1,26 +1,16 @@
-package com.smallcultfollowing.lathos.context;
+package com.smallcultfollowing.lathos.model;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.smallcultfollowing.lathos.model.CustomOutput;
-import com.smallcultfollowing.lathos.model.Line;
-import com.smallcultfollowing.lathos.model.LineImpl;
-import com.smallcultfollowing.lathos.model.Link;
-import com.smallcultfollowing.lathos.model.Page;
-import com.smallcultfollowing.lathos.model.LathosServer;
-import com.smallcultfollowing.lathos.model.Para;
-import com.smallcultfollowing.lathos.model.Title;
-import com.smallcultfollowing.lathos.model.UserPage;
 
-public class AbstractContext implements Context {
+public class DefaultContext implements Context {
 	
 	private final LathosServer server;
 	private final LinkedList<Page> stack = new LinkedList<Page>();
 	private Line previousLine;
 	
-	public AbstractContext(LathosServer server, List<Page> initialStack) {
+	public DefaultContext(LathosServer server, List<Page> initialStack) {
 		this.server = server;
 		stack.addAll(initialStack);
 	}
@@ -119,7 +109,7 @@ public class AbstractContext implements Context {
 
 	@Override
 	public Context context() {
-		return new AbstractContext(server, stack);
+		return new DefaultContext(server, stack);
 	}
 
 	@Override
@@ -127,6 +117,11 @@ public class AbstractContext implements Context {
 		Link result = new Link(page);
 		addToLine(result, content);
 		return result;
+	}
+
+	@Override
+	public Page topPage() {
+		return stack.getLast();
 	}
 
 }

@@ -1,12 +1,10 @@
-package com.smallcultfollowing.lathos.server;
+package com.smallcultfollowing.lathos.http;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -14,7 +12,7 @@ import com.smallcultfollowing.lathos.model.Output;
 import com.smallcultfollowing.lathos.model.Page;
 
 public class HtmlOutput implements Output {
-	public final LathosServlet server;
+	public final HttpLathosServer server;
 	public final List<Page> topPages;
 	public final PrintWriter writer;
 	private int maxId;
@@ -29,7 +27,7 @@ public class HtmlOutput implements Output {
 	};
 
 	public HtmlOutput(
-			LathosServlet server,
+			HttpLathosServer server,
 			List<Page> topPages, 
 			PrintWriter writer
 	) {
@@ -40,7 +38,7 @@ public class HtmlOutput implements Output {
 	}
 	
 	private String freshId() {
-		return "id"+maxId++;
+		return "id"+(maxId++);
 	}
 	
 	private String nextBackgroundColor() {
@@ -71,7 +69,8 @@ public class HtmlOutput implements Output {
 
 	@Override
 	public String startPage(Page page) throws IOException {
-		String parentId = (idStack.isEmpty() ? "" : idStack.peek());
+		// Open a <DIV> and generate a unique id for it:
+		String parentId = (idStack.isEmpty() ? "" : idStack.getLast());
 		String id = freshId();
 		String color = nextBackgroundColor();
 		writer.printf(
@@ -79,15 +78,25 @@ public class HtmlOutput implements Output {
 				id, color);
 		idStack.add(id);
 		
+		// Up-left arrow to go to parent:
 		writer.printf(
-				"<A href='#%s'>&#8689;</A>&nbsp;"+                                   // up-left arrow
-				//"<SPAN onclick='toggleId(\"%s\")'>&#9660;</SPAN>&nbsp;"+ // down arrow 
-				"<A href='#' onclick='toggleId(\"%s\")'>&#9660;</A>&nbsp;"+ // down arrow 
-				"<A href='%s'>&#9650;</A>",                                          // up arrow
-				parentId,
-				id,
-				server.url(page)
-				);
+				"<A href='#%s'>&#8689;</A>",
+				parentId
+		);
+		
+		// Down arrow to hide:
+		writer.printf(
+				"&nbsp;<SPAN onclick='toggleId(\"%s\")'>&#9660;</SPAN>",
+				id
+		);
+		
+		// Up arrow to magnify:
+		if(page != null) {
+			writer.printf(
+					"&nbsp;<A href='%s'>&#9650;</A>",
+					server.url(page)
+			);
+		}
 		
 		return id;
 	}
@@ -100,22 +109,52 @@ public class HtmlOutput implements Output {
 
 	@Override
 	public void startPar() throws IOException {
-		writer.println("<p>");
+		writer.println("<P class='content'>");
 	}
 
 	@Override
 	public void endPar() throws IOException {
-		writer.println("</p>");
+		writer.println("</P>");
 	}
 
 	@Override
 	public void startBold() throws IOException {
-		writer.print("<b>");
+		writer.print("<B class='content'>");
 	}
 
 	@Override
 	public void endBold() throws IOException {
-		writer.print("</b>");
+		writer.print("</B>");
+	}
+
+	@Override
+	public void startTable() throws IOException {
+		writer.print("<TABLE class='content'>");
+	}
+
+	@Override
+	public void startRow() throws IOException {
+		writer.print("<TR>");
+	}
+
+	@Override
+	public void startColumn() throws IOException {
+		writer.print("<TD>");
+	}
+
+	@Override
+	public void endColumn() throws IOException {
+		writer.print("</TD>");
+	}
+
+	@Override
+	public void endRow() throws IOException {
+		writer.print("</TR>");
+	}
+
+	@Override
+	public void endTable() throws IOException {
+		writer.print("</TABLE>");
 	}
 
 }

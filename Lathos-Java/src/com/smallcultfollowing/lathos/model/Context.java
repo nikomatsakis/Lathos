@@ -1,9 +1,12 @@
-package com.smallcultfollowing.lathos.context;
+package com.smallcultfollowing.lathos.model;
 
-import com.smallcultfollowing.lathos.model.CustomOutput;
-import com.smallcultfollowing.lathos.model.LathosServer;
-import com.smallcultfollowing.lathos.model.Page;
 
+/**
+ * Interface used to instrument code.
+ *   
+ * Note: Unlike most interfaces, context objects
+ * are <b>not thread-safe!</b>
+ */
 public interface Context {
 
 	/** Returns the server associated with this context. */
@@ -15,6 +18,9 @@ public interface Context {
 	Context context();
 	
 	public String freshId();
+	
+	/** Returns the page on the top of the stack. */
+	public Page topPage();
 	
 	/** Creates and pushes on the stack a top-level page.
 	 *   

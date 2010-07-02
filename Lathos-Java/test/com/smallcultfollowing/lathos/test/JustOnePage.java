@@ -3,8 +3,8 @@ package com.smallcultfollowing.lathos.test;
 import java.io.IOException;
 import java.util.Date;
 
-import com.smallcultfollowing.lathos.context.Context;
-import com.smallcultfollowing.lathos.jetty.JettyLathos;
+import com.smallcultfollowing.lathos.http.JettyLathosServer;
+import com.smallcultfollowing.lathos.model.Context;
 import com.smallcultfollowing.lathos.model.CustomOutput;
 import com.smallcultfollowing.lathos.model.DataRenderer;
 import com.smallcultfollowing.lathos.model.LathosServer;
@@ -12,7 +12,7 @@ import com.smallcultfollowing.lathos.model.Line;
 import com.smallcultfollowing.lathos.model.Output;
 import com.smallcultfollowing.lathos.model.Page;
 import com.smallcultfollowing.lathos.model.PageContent;
-import com.smallcultfollowing.lathos.model.Pages;
+import com.smallcultfollowing.lathos.model.Util;
 
 public class JustOnePage {
 	
@@ -45,7 +45,7 @@ public class JustOnePage {
 
 		@Override
 		public void renderInLine(Output output) throws IOException {
-			Pages.renderInLine(this, output);
+			Util.renderInLine(this, output);
 		}
 
 		@Override
@@ -148,7 +148,7 @@ public class JustOnePage {
 	public static void main(String[] args)
 	throws Exception
 	{
-		LathosServer server = JettyLathos.start(8080);
+		LathosServer server = JettyLathosServer.start(8080);
 		Context ctx = server.context();
 
 		// Test constructing top-level pages:

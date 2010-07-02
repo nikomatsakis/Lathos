@@ -16,6 +16,8 @@ public interface Output {
 	public void endLink(Page target)
 	throws IOException;
 
+	/** Starts a sub-page or division of a page.
+	 *  {@code page} may be {@code null}! */
 	public String startPage(Page page)
 	throws IOException;
 
@@ -33,5 +35,24 @@ public interface Output {
 	
 	public void endBold()
 	throws IOException;
+
+	public void startTable()
+	throws IOException;
+	
+	public void startRow()
+	throws IOException;
+	
+	public void startColumn()
+	throws IOException;
+	
+	public void endColumn()
+	throws IOException;
+	
+	public void endRow()
+	throws IOException;
+	
+	public void endTable()
+	throws IOException;
+	
 
 }
