@@ -48,6 +48,11 @@ public interface Context {
 	/** Given a page, pushes it onto the stack. */
 	public void push(Page page);
 	
+	/** Pushes a dummy page onto the stack which disables all
+	  * logging until it is popped, or a top-level page is
+	  * pushed in its stead. */   
+	public void pushDisabledPage();
+	
 	/** Embeds top of stack into {@code page}. */
 	public void embedIn(Page page);
 	

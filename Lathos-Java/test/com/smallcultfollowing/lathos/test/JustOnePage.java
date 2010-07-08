@@ -12,6 +12,7 @@ import com.smallcultfollowing.lathos.model.Line;
 import com.smallcultfollowing.lathos.model.Output;
 import com.smallcultfollowing.lathos.model.Page;
 import com.smallcultfollowing.lathos.model.PageContent;
+import com.smallcultfollowing.lathos.model.ThrowableDataRenderer;
 import com.smallcultfollowing.lathos.model.Util;
 
 public class JustOnePage {
@@ -27,25 +28,17 @@ public class JustOnePage {
 
 		@Override
 		public void renderInPage(Output out) throws IOException {
-			out.startPage(this);
-			
-			out.startPar();
-			out.startBold();
-			out.outputText("CustomData1");
-			out.endBold();
-			out.endPar();
-			
-			out.startPar();
-			out.outputText("i = ");
-			out.outputText(Integer.toString(i));
-			out.endPar();
-			
-			out.endPage(this);
+			Util.reflectivePage(this, out);
 		}
 
 		@Override
 		public void renderInLine(Output output) throws IOException {
 			Util.renderInLine(this, output);
+		}
+		
+		@Override
+		public String toString() {
+			return getId();
 		}
 
 		@Override
@@ -149,6 +142,7 @@ public class JustOnePage {
 	throws Exception
 	{
 		LathosServer server = JettyLathosServer.start(8080);
+		server.addDataRenderer(new ThrowableDataRenderer());
 		Context ctx = server.context();
 
 		// Test constructing top-level pages:
@@ -161,6 +155,9 @@ public class JustOnePage {
 				ctx.link(topPage1, "top"), " ", ctx.link(topPage2, "pages"), 
 				", or we could ", ctx.link(bar, "link ", "directly to bar"));
 		
+		// Test pages of custom type:
+		ctx.log("Subtypes of page are easy to embed: ", new CustomData1(22));
+		
 		// Test custom rendering::
 		SomeClass renderable1 = new SomeClass("Albert Einstein", "One smart dude.");	
 		SomeClass renderable2 = new SomeClass("George Bush", "Not so much.");
@@ -171,6 +168,10 @@ public class JustOnePage {
 		// Test fall back to string:
 		ctx.log("Unknown objects just use toString: ", new Date());
 		
+		// Test the built-in throwable render:
+		UnsupportedOperationException exc = new UnsupportedOperationException(new ClassCastException());
+		ctx.log("Throwable objects have built-in support: ", exc);
+
 		// Test pushing an unrelated page and adding to it later:
 		ctx.push(topPage1);
 		Page foo = makeChildPage(ctx, "Foo");

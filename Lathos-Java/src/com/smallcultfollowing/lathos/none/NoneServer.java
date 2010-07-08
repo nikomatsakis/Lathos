@@ -8,7 +8,7 @@ import com.smallcultfollowing.lathos.model.Page;
 
 public class NoneServer implements LathosServer {
 	
-	Page indexPage = new NonePage();
+	Page indexPage = NonePage.Page;
 
 	@Override
 	public Page getIndexPage() {

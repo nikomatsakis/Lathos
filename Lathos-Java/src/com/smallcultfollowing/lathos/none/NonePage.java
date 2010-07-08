@@ -7,6 +7,8 @@ import com.smallcultfollowing.lathos.model.Page;
 import com.smallcultfollowing.lathos.model.PageContent;
 
 public class NonePage implements Page {
+	
+	public static final NonePage Page = new NonePage();
 
 	@Override
 	public void renderInPage(Output out) throws IOException {

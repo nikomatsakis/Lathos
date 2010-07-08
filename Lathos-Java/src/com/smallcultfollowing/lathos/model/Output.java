@@ -10,6 +10,9 @@ public interface Output {
 	public void outputText(String content)
 	throws IOException;
 	
+	public void outputObject(Object content)
+	throws IOException;
+	
 	public void startLink(Page target)
 	throws IOException;
 

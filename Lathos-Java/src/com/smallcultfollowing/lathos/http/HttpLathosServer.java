@@ -267,6 +267,8 @@ implements LathosServer
 			previousLine.addNumber((Number)o);
 		} else if (o instanceof CustomOutput) {
 			previousLine.addContent((CustomOutput)o);
+		} else if (o == null) {
+			previousLine.addText("(null)");
 		} else {
 			for(DataRenderer dr : dataRenderers()) {
 				if(dr.addToLine(previousLine, o))

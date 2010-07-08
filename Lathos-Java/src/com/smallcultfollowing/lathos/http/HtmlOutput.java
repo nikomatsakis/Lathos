@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
+import com.smallcultfollowing.lathos.model.LineImpl;
 import com.smallcultfollowing.lathos.model.Output;
 import com.smallcultfollowing.lathos.model.Page;
 
@@ -155,6 +156,13 @@ public class HtmlOutput implements Output {
 	@Override
 	public void endTable() throws IOException {
 		writer.print("</TABLE>");
+	}
+
+	@Override
+	public void outputObject(Object content) throws IOException {
+		LineImpl line = new LineImpl();
+		server.addToLine(line, content);
+		line.renderInLine(this);
 	}
 
 }

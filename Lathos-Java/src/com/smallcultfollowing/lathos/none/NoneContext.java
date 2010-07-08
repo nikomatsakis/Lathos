@@ -7,9 +7,9 @@ import com.smallcultfollowing.lathos.model.Page;
 
 public class NoneContext implements Context {
 	
-	public final NoneServer server;
+	public final LathosServer server;
 	
-	public NoneContext(NoneServer server) {
+	public NoneContext(LathosServer server) {
 		super();
 		this.server = server;
 	}
@@ -31,12 +31,12 @@ public class NoneContext implements Context {
 
 	@Override
 	public Page pushTopLevel(String id, Object... title) {
-		return server.getIndexPage();
+		return NonePage.Page;
 	}
 
 	@Override
 	public Page pushChild(String id, Object... title) {
-		return server.getIndexPage();
+		return NonePage.Page;
 	}
 
 	@Override
@@ -66,7 +66,11 @@ public class NoneContext implements Context {
 
 	@Override
 	public Page topPage() {
-		return server.getIndexPage();
+		return NonePage.Page;
+	}
+
+	@Override
+	public void pushDisabledPage() {
 	}
 
 }

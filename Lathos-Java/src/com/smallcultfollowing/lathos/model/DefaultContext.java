@@ -3,6 +3,8 @@ package com.smallcultfollowing.lathos.model;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.smallcultfollowing.lathos.none.NonePage;
+
 
 public class DefaultContext implements Context {
 	
@@ -40,17 +42,31 @@ public class DefaultContext implements Context {
 	}
 	
 	@Override
+	public void pushDisabledPage() {
+		push(NonePage.Page);
+	}
+	
+	@Override
 	public Page pushChild(String id, Object... title) {
 		if(stack.isEmpty())
 			return pushTopLevel(id, title);
 		
-		id = supplyDefault(id);
-		Page page = new UserPage(id, stack.getLast());
-		stack.add(page);
-		
-		addTitle(title);
-		
-		return page;
+		// This is a bit hokey, but the idea is to 
+		// propagate the "NonePage" rather than create
+		// sub-pages of it:
+		Page topPage = stack.getLast();
+		if(topPage != NonePage.Page) {
+			id = supplyDefault(id);
+			Page page = new UserPage(id, topPage);
+			stack.add(page);
+			
+			addTitle(title);
+			
+			return page;
+		} else {
+			stack.add(NonePage.Page);
+			return NonePage.Page;
+		}
 	}
 
 	private void addTitle(Object[] contents) {
@@ -67,7 +83,10 @@ public class DefaultContext implements Context {
 
 	@Override
 	public void embedIn(Page page) {
-		page.addContent(stack.getLast());
+		Page topPage = stack.getLast();
+		if(topPage != NonePage.Page) {
+			page.addContent(topPage);
+		}
 	}
 
 	@Override
