@@ -1,4 +1,4 @@
-package com.smallcultfollowing.lathos.model;
+package com.smallcultfollowing.lathos;
 
 
 public interface LathosServer {
@@ -14,9 +14,6 @@ public interface LathosServer {
 	 *  but for a top-level page it can be needed. */
 	public void registerPage(Page page);
 	
-	/** Yields a unique id each time it is called. */
-	public String freshId();
-
 	/** Returns a fresh context whose stack consists only
 	 *  of the "main" or index page. */
 	public Context context();

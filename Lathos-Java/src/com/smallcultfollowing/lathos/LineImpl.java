@@ -1,4 +1,4 @@
-package com.smallcultfollowing.lathos.model;
+package com.smallcultfollowing.lathos;
 
 import java.io.IOException;
 import java.util.LinkedList;

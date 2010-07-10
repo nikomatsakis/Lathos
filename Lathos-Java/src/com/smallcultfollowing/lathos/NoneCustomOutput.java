@@ -1,9 +1,7 @@
-package com.smallcultfollowing.lathos.none;
+package com.smallcultfollowing.lathos;
 
 import java.io.IOException;
 
-import com.smallcultfollowing.lathos.model.CustomOutput;
-import com.smallcultfollowing.lathos.model.Output;
 
 public class NoneCustomOutput implements CustomOutput {
 	

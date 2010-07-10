@@ -1,4 +1,4 @@
-package com.smallcultfollowing.lathos.model;
+package com.smallcultfollowing.lathos;
 
 import java.io.IOException;
 
@@ -29,14 +29,14 @@ public class ThrowableDataRenderer implements DataRenderer {
 				}
 				
 				out.startTable();
-				Util.row(out, "Class", t.getClass().getName());
-				Util.row(out, "Message", t.getMessage());
+				Lathos.row(out, "Class", t.getClass().getName());
+				Lathos.row(out, "Message", t.getMessage());
 				out.endTable();
 				
 				out.startPage(null);
 				out.startTable();
 				for(StackTraceElement elem : t.getStackTrace()) {
-					Util.row(out, elem.toString());
+					Lathos.row(out, elem.toString());
 				}
 				out.endTable();
 				out.endPage(null);
@@ -53,7 +53,7 @@ public class ThrowableDataRenderer implements DataRenderer {
 
 		@Override
 		public void renderInLine(Output output) throws IOException {
-			Util.renderInLine(this, output);
+			Lathos.renderInLine(this, output);
 		}
 		
 		@Override

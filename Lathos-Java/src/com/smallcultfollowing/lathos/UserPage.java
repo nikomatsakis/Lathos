@@ -1,4 +1,4 @@
-package com.smallcultfollowing.lathos.model;
+package com.smallcultfollowing.lathos;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -12,7 +12,7 @@ public class UserPage implements Page {
 	
 	public UserPage(String id, Page parent) {
 		super();
-		this.id = id;
+		this.id = (id == null ? Lathos.defaultId(this) : id);
 		this.parent = parent;
 		
 		if(parent != null)

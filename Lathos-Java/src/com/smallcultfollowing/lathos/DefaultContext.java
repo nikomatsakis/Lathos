@@ -1,9 +1,8 @@
-package com.smallcultfollowing.lathos.model;
+package com.smallcultfollowing.lathos;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import com.smallcultfollowing.lathos.none.NonePage;
 
 
 public class DefaultContext implements Context {
@@ -17,12 +16,6 @@ public class DefaultContext implements Context {
 		stack.addAll(initialStack);
 	}
 	
-	private String supplyDefault(String id) {
-		if(id != null)
-			return id;
-		return freshId();
-	}
-	
 	private void addToLine(Line line, Object... objects) {
 		for(Object o : objects) 
 			server.addToLine(line, o);
@@ -30,15 +23,8 @@ public class DefaultContext implements Context {
 
 	@Override
 	public Page pushTopLevel(String id, Object... title) {
-		id = supplyDefault(id);
-		
-		Page page = new UserPage(id, null);
-		stack.add(page);
-		server.registerPage(page);
-				
-		addTitle(title);
-		
-		return page;
+		Page page = Lathos.topLevelPage(server, id, title);
+		return push(page);
 	}
 	
 	@Override
@@ -47,38 +33,29 @@ public class DefaultContext implements Context {
 	}
 	
 	@Override
-	public Page pushChild(String id, Object... title) {
+	public Page pushLinkedChild(String id, Object... title) {
 		if(stack.isEmpty())
 			return pushTopLevel(id, title);
-		
-		// This is a bit hokey, but the idea is to 
-		// propagate the "NonePage" rather than create
-		// sub-pages of it:
 		Page topPage = stack.getLast();
-		if(topPage != NonePage.Page) {
-			id = supplyDefault(id);
-			Page page = new UserPage(id, topPage);
-			stack.add(page);
-			
-			addTitle(title);
-			
-			return page;
-		} else {
-			stack.add(NonePage.Page);
-			return NonePage.Page;
-		}
-	}
-
-	private void addTitle(Object[] contents) {
-		Title title = new Title();
-		previousLine = title;
-		stack.getLast().addContent(title);
-		append(contents);
+		Page subPage = Lathos.newPage(server, topPage, id, title);
+		link(subPage, title);
+		return push(subPage);
 	}
 
 	@Override
-	public void push(Page page) {
+	public Page pushEmbeddedChild(String id, Object... title) {
+		if(stack.isEmpty())
+			return pushTopLevel(id, title);
+		Page topPage = stack.getLast();
+		Page subPage = Lathos.newPage(server, topPage, id, title);
+		topPage.addContent(subPage);
+		return push(subPage);
+	}
+	
+	@Override
+	public Page push(Page page) {
 		stack.add(page);
+		return page;
 	}
 
 	@Override
@@ -114,11 +91,6 @@ public class DefaultContext implements Context {
 		}
 		
 		stack.removeLast();
-	}
-
-	@Override
-	public String freshId() {
-		return server.freshId();
 	}
 
 	@Override

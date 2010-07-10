@@ -1,4 +1,4 @@
-package com.smallcultfollowing.lathos.http;
+package com.smallcultfollowing.lathos;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,9 +8,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
-import com.smallcultfollowing.lathos.model.LineImpl;
-import com.smallcultfollowing.lathos.model.Output;
-import com.smallcultfollowing.lathos.model.Page;
 
 public class HtmlOutput implements Output {
 	public final HttpLathosServer server;

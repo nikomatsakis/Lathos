@@ -1,10 +1,7 @@
-package com.smallcultfollowing.lathos.none;
+package com.smallcultfollowing.lathos;
 
 import java.io.IOException;
 
-import com.smallcultfollowing.lathos.model.Output;
-import com.smallcultfollowing.lathos.model.Page;
-import com.smallcultfollowing.lathos.model.PageContent;
 
 public class NonePage implements Page {
 	

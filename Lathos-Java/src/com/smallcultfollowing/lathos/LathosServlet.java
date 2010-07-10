@@ -1,4 +1,4 @@
-package com.smallcultfollowing.lathos.http;
+package com.smallcultfollowing.lathos;
 
 import java.io.IOException;
 import java.io.PrintWriter;

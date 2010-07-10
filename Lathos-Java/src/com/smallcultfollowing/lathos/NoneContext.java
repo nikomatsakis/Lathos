@@ -1,12 +1,9 @@
-package com.smallcultfollowing.lathos.none;
+package com.smallcultfollowing.lathos;
 
-import com.smallcultfollowing.lathos.model.Context;
-import com.smallcultfollowing.lathos.model.CustomOutput;
-import com.smallcultfollowing.lathos.model.LathosServer;
-import com.smallcultfollowing.lathos.model.Page;
 
 public class NoneContext implements Context {
-	
+	public static final NoneContext Context = new NoneContext(NoneServer.Server);
+
 	public final LathosServer server;
 	
 	public NoneContext(LathosServer server) {
@@ -25,22 +22,23 @@ public class NoneContext implements Context {
 	}
 
 	@Override
-	public String freshId() {
-		return server.freshId();
-	}
-
-	@Override
 	public Page pushTopLevel(String id, Object... title) {
 		return NonePage.Page;
 	}
 
 	@Override
-	public Page pushChild(String id, Object... title) {
+	public Page pushLinkedChild(String id, Object... title) {
 		return NonePage.Page;
 	}
 
 	@Override
-	public void push(Page page) {
+	public Page pushEmbeddedChild(String id, Object... title) {
+		return NonePage.Page;
+	}
+
+	@Override
+	public Page push(Page page) {
+		return page;
 	}
 
 	@Override

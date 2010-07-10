@@ -1,4 +1,4 @@
-package com.smallcultfollowing.lathos.model;
+package com.smallcultfollowing.lathos;
 
 public interface Line extends CustomOutput {
 	public void addContent(CustomOutput content);

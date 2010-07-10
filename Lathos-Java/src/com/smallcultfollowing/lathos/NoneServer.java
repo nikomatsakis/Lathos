@@ -1,12 +1,8 @@
-package com.smallcultfollowing.lathos.none;
+package com.smallcultfollowing.lathos;
 
-import com.smallcultfollowing.lathos.model.Context;
-import com.smallcultfollowing.lathos.model.DataRenderer;
-import com.smallcultfollowing.lathos.model.LathosServer;
-import com.smallcultfollowing.lathos.model.Line;
-import com.smallcultfollowing.lathos.model.Page;
 
 public class NoneServer implements LathosServer {
+	public static final NoneServer Server = new NoneServer();
 	
 	Page indexPage = NonePage.Page;
 
@@ -17,11 +13,6 @@ public class NoneServer implements LathosServer {
 
 	@Override
 	public void registerPage(Page page) {
-	}
-
-	@Override
-	public String freshId() {
-		return "none";
 	}
 
 	@Override

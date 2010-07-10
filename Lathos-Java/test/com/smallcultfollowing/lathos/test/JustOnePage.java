@@ -1,23 +1,30 @@
 package com.smallcultfollowing.lathos.test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import com.smallcultfollowing.lathos.http.JettyLathosServer;
-import com.smallcultfollowing.lathos.model.Context;
-import com.smallcultfollowing.lathos.model.CustomOutput;
-import com.smallcultfollowing.lathos.model.DataRenderer;
-import com.smallcultfollowing.lathos.model.LathosServer;
-import com.smallcultfollowing.lathos.model.Line;
-import com.smallcultfollowing.lathos.model.Output;
-import com.smallcultfollowing.lathos.model.Page;
-import com.smallcultfollowing.lathos.model.PageContent;
-import com.smallcultfollowing.lathos.model.ThrowableDataRenderer;
-import com.smallcultfollowing.lathos.model.Util;
+import com.smallcultfollowing.lathos.Context;
+import com.smallcultfollowing.lathos.CustomOutput;
+import com.smallcultfollowing.lathos.DataRenderer;
+import com.smallcultfollowing.lathos.Ignore;
+import com.smallcultfollowing.lathos.JettyLathosServer;
+import com.smallcultfollowing.lathos.LathosServer;
+import com.smallcultfollowing.lathos.Line;
+import com.smallcultfollowing.lathos.Output;
+import com.smallcultfollowing.lathos.Page;
+import com.smallcultfollowing.lathos.PageContent;
+import com.smallcultfollowing.lathos.PageSubcontent;
+import com.smallcultfollowing.lathos.ThrowableDataRenderer;
+import com.smallcultfollowing.lathos.Lathos;
 
 public class JustOnePage {
 	
 	public static class CustomData1 implements Page {
+		
+		@Ignore @PageSubcontent
+		private final List<PageContent> contents = new ArrayList<PageContent>();
 		
 		public final int i;
 		
@@ -27,13 +34,13 @@ public class JustOnePage {
 		}
 
 		@Override
-		public void renderInPage(Output out) throws IOException {
-			Util.reflectivePage(this, out);
+		public synchronized void renderInPage(Output out) throws IOException {
+			Lathos.reflectivePage(this, out);
 		}
 
 		@Override
-		public void renderInLine(Output output) throws IOException {
-			Util.renderInLine(this, output);
+		public synchronized void renderInLine(Output output) throws IOException {
+			Lathos.renderInLine(this, output);
 		}
 		
 		@Override
@@ -54,8 +61,8 @@ public class JustOnePage {
 		}
 
 		@Override
-		public void addContent(PageContent content) {
-			throw new UnsupportedOperationException();
+		public synchronized void addContent(PageContent content) {
+			contents.add(content);
 		}
 		
 	}
@@ -156,7 +163,11 @@ public class JustOnePage {
 				", or we could ", ctx.link(bar, "link ", "directly to bar"));
 		
 		// Test pages of custom type:
-		ctx.log("Subtypes of page are easy to embed: ", new CustomData1(22));
+		CustomData1 twentyTwo = new CustomData1(22);
+		ctx.log("Subtypes of page are easy to embed: ", twentyTwo);
+		ctx.push(twentyTwo);
+		ctx.log("And they can even add subcontent of their own.");
+		ctx.pop(twentyTwo);		
 		
 		// Test custom rendering::
 		SomeClass renderable1 = new SomeClass("Albert Einstein", "One smart dude.");	
@@ -180,7 +191,7 @@ public class JustOnePage {
 	}
 
 	private static Page makeChildPage(Context ctx, String name) {
-		Page foo = ctx.pushChild(name, "This is a subpage, ", name);
+		Page foo = ctx.pushEmbeddedChild(name, "This is a subpage, ", name);
 		ctx.log(name, " has some log items.");
 		ctx.pop(foo);
 		return foo;

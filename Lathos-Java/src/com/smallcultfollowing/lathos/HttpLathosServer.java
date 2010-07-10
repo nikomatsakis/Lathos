@@ -1,4 +1,4 @@
-package com.smallcultfollowing.lathos.http;
+package com.smallcultfollowing.lathos;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,27 +11,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
-import com.smallcultfollowing.lathos.model.Context;
-import com.smallcultfollowing.lathos.model.CustomOutput;
-import com.smallcultfollowing.lathos.model.DataRenderer;
-import com.smallcultfollowing.lathos.model.DefaultContext;
-import com.smallcultfollowing.lathos.model.LathosServer;
-import com.smallcultfollowing.lathos.model.Line;
-import com.smallcultfollowing.lathos.model.Page;
-import com.smallcultfollowing.lathos.model.UserPage;
 
 public abstract class HttpLathosServer
 implements LathosServer 
 {
 	private static final long serialVersionUID = -7831061598026617576L;
-	
-	// Accessible with or without lock:
-	private final AtomicInteger id = new AtomicInteger();
 	
 	// Only MODIFIED under lock but may be READ without lock:
 	private final ConcurrentHashMap<Page, Boolean> registeredPages = new ConcurrentHashMap<Page, Boolean>();
@@ -64,12 +52,6 @@ implements LathosServer
 	
 	public DataRenderer[] dataRenderers() {
 		return customDataRenderers.get();
-	}
-	
-	@Override
-	public String freshId() {
-		int i = id.getAndIncrement();
-		return "page" + Integer.toHexString(i);
 	}
 	
 	private void renderError(PrintWriter out, String url, String desc, Object... args) throws IOException {

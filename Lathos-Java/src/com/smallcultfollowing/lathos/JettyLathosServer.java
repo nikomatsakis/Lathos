@@ -1,11 +1,9 @@
-package com.smallcultfollowing.lathos.http;
+package com.smallcultfollowing.lathos;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-import com.smallcultfollowing.lathos.model.LathosServer;
-import com.smallcultfollowing.lathos.none.NoneServer;
 
 public class JettyLathosServer extends HttpLathosServer {
 	private static final long serialVersionUID = -6551558762231802620L;
