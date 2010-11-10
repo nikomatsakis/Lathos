@@ -3,12 +3,16 @@ package com.smallcultfollowing.lathos.test;
 import com.smallcultfollowing.lathos.Context;
 import com.smallcultfollowing.lathos.Lathos;
 import com.smallcultfollowing.lathos.LathosServer;
+import com.smallcultfollowing.lathos.Line;
 
 public class RunServer
 {
     public static void main(String[] args) throws Exception
     {
         LathosServer server = Lathos.serverOnPort(8080);
+        
+        TestSubst testSubst = new TestSubst("subst-from", "subst-to");
+        server.addSubstitutionFilter(testSubst);
         
         // Load up the index page:
         Context ctx = server.context();
@@ -18,6 +22,12 @@ public class RunServer
         server.addRootPage(test0);
         test0.deref0 = new ReflectiveTest("Deref0");
         test0.deref1 = new ReflectiveTest("Deref1");
+        
+        Line line = ctx.log("Second line, with test0: ", test0);
+        ctx.log("Third line, deref0: ", test0.deref0);
+        line.addObjectsToLine(" deref1: ", test0.deref1);
+        
+        ctx.log("Testing substitution (should say subst-to): ", "subst-from");
         
         server.join();
     }

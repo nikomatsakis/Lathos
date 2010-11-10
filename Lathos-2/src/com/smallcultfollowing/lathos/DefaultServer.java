@@ -14,9 +14,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 public abstract class DefaultServer
     implements LathosServer
 {
-    private volatile ObjectSubst[] substs = null;
-    private volatile int substCount = 0;
-
+    private volatile ObjectSubst[] substs = new ObjectSubst[0];
     private final List<ObjectRenderer> renderers = new ArrayList<ObjectRenderer>();
     private final Map<String, RootPage> rootPages = new LinkedHashMap<String, RootPage>();
     private final IndexPage indexPage = new IndexPage();
@@ -39,10 +37,8 @@ public abstract class DefaultServer
         // substs array, but the first "substCount" entries are always
         // the same as the array that was valid for the "substCount" we
         // read.
-        int substCount = this.substCount;
         ObjectSubst[] substs = this.substs;
-
-        for (int i = 0; i < substCount; i++) {
+        for (int i = 0; i < substs.length; i++) {
             obj = substs[i].substitute(obj);
         }
 
@@ -52,19 +48,9 @@ public abstract class DefaultServer
     @Override
     public synchronized void addSubstitutionFilter(ObjectSubst subst)
     {
-        if (substCount + 1 < substs.length) {
-            substs[substCount] = subst;
-        } else {
-            ObjectSubst[] newSubsts = Arrays.copyOf(substs, substs.length * 2);
-            newSubsts[substs.length] = subst;
-
-            // Important: fully initialize newSubsts before "publishing" it.
-            substs = newSubsts;
-        }
-
-        // Note: it is important that we write substCount *after* writing to
-        // substs and its contents.
-        substCount = substCount + 1;
+        ObjectSubst[] newSubsts = Arrays.copyOf(substs, substs.length + 1);
+        newSubsts[substs.length] = subst;
+        substs = newSubsts;
     }
 
     @Override
@@ -76,7 +62,7 @@ public abstract class DefaultServer
             if (renderer.renderObject(out, link, obj))
                 return;
         }
-        
+
         if (obj == null) {
             out.text("null");
             return;
