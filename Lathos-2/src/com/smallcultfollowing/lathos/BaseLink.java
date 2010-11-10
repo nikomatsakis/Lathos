@@ -18,7 +18,7 @@ public class BaseLink
         super();
         this.names = Arrays.copyOf(names, length);
     }
-
+    
     @Override
     public void appendUrlString(StringBuilder sb)
     {
@@ -27,6 +27,12 @@ public class BaseLink
             sb.append("/");
         }
         sb.append(names[names.length - 1]);
+    }
+
+    @Override
+    public boolean isValid()
+    {
+        return true;
     }
 
 }

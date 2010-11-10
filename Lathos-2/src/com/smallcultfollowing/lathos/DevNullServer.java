@@ -70,4 +70,14 @@ public class DevNullServer
         return Collections.emptyList();
     }
 
+    @Override
+    public void join()
+    {
+    }
+
+    @Override
+    public void stop() throws Exception
+    {
+    }
+
 }

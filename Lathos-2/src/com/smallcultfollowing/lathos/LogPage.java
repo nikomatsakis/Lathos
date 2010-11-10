@@ -1,20 +1,21 @@
 package com.smallcultfollowing.lathos;
 
-import static org.rendersnake.AttributesFactory.href;
-
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class LogPage
-    implements ExtensiblePage
+    implements ExtensiblePage, RootPage
 {
-    protected final String name;
+    private final String name;
     private final Map<String, Page> subpages = new LinkedHashMap<String, Page>();
     
     public LogPage(String name)
     {
         super();
+        if(name == null) {
+            name = String.format("<LogPage:%02x>", System.identityHashCode(this) % 64);
+        }
         this.name = name;
     }
 
@@ -40,9 +41,9 @@ public class LogPage
     @Override
     public void renderAsLine(Output out, Link link) throws IOException
     {
-        out.a(href(Lathos.toString(link)));
+        out.a(link);
         out.text(name);
-        out._a();
+        out._a(link);
     }
 
     @Override
@@ -52,6 +53,12 @@ public class LogPage
             id = "page" + subpages.size();
         }
         subpages.put(id, page);
+    }
+
+    @Override
+    public String rootPageName()
+    {
+        return name;
     }
 
 }

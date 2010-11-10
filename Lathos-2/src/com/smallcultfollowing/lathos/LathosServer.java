@@ -75,4 +75,10 @@ public interface LathosServer
     /** Process the URL {@code url} and writes the output 
      *  to {@code writer}. */
     public void renderURL(String url, Writer writer) throws IOException;
+    
+    /** Waits until the server stops. */
+    public void join();
+    
+    /** Stops the server. */
+    public void stop() throws Exception;
 }

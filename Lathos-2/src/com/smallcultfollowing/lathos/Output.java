@@ -6,6 +6,7 @@ import java.io.Writer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.rendersnake.AttributesFactory;
 import org.rendersnake.HtmlCanvas;
 
 public class Output
@@ -51,5 +52,23 @@ public class Output
     public void renderObject(Link link, Object obj) throws IOException
     {
         server.renderObject(this, link, obj);
+    }
+
+    public Output a(Link link) throws IOException
+    {
+        if(link != null && link.isValid()) {
+            StringBuilder sb = new StringBuilder();
+            link.appendUrlString(sb);
+            a(AttributesFactory.href(sb.toString()));
+        }
+        return this;
+    }
+    
+    public Output _a(Link link) throws IOException
+    {
+        if(link != null && link.isValid()) {
+            _a();
+        }
+        return this;
     }
 }

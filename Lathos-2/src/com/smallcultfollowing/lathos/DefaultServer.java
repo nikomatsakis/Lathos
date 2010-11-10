@@ -11,7 +11,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
-public class DefaultServer
+public abstract class DefaultServer
     implements LathosServer
 {
     private volatile ObjectSubst[] substs = null;
@@ -20,9 +20,10 @@ public class DefaultServer
     private final List<ObjectRenderer> renderers = new ArrayList<ObjectRenderer>();
     private final Map<String, RootPage> rootPages = new LinkedHashMap<String, RootPage>();
     private final IndexPage indexPage = new IndexPage();
-    
-    DefaultServer() 
+
+    DefaultServer()
     {
+        addRootPage(indexPage);
     }
 
     @Override
@@ -67,15 +68,21 @@ public class DefaultServer
     }
 
     @Override
-    public synchronized void renderObject(Output out, Link link, Object obj) throws IOException
+    public synchronized void renderObject(Output out, Link link, Object obj)
+            throws IOException
     {
-        for(int i = renderers.size() - 1; i >= 0; i--) {
+        for (int i = renderers.size() - 1; i >= 0; i--) {
             ObjectRenderer renderer = renderers.get(i);
             if (renderer.renderObject(out, link, obj))
                 return;
         }
+        
+        if (obj == null) {
+            out.text("null");
+            return;
+        }
 
-        if(obj instanceof Debugable) {
+        if (obj instanceof Debugable) {
             ((Debugable) obj).renderAsLine(out, link);
             return;
         }
@@ -94,7 +101,7 @@ public class DefaultServer
     {
         rootPages.put(page.rootPageName(), page);
     }
-    
+
     @Override
     public Collection<RootPage> rootPages()
     {
@@ -127,7 +134,7 @@ public class DefaultServer
                 StringEscapeUtils.escapeHtml(String.format(desc, args))));
         out.write("</body></html>");
     }
-    
+
     @Override
     public synchronized void renderURL(String url, Writer writer)
             throws IOException
@@ -135,58 +142,71 @@ public class DefaultServer
         Output out = new Output(this, writer);
         out.html();
         out.body();
-        
+
+        if (url.startsWith("/")) {
+            url = url.substring(1);
+        }
+
         if (url.equals("")) {
             renderObjectAsPage(out, new BaseLink(indexPage), indexPage);
         } else {
             String[] names = url.split("/");
 
-            // Try to dereference the URL pages.  This is kind of
+            // Try to dereference the URL pages. This is kind of
             // grungy, but the idea is to retain the last valid
             // object we found ("object") and the last index we tried ("i").
             int i = 0;
             Object result = rootPages.get(names[0]);
-            while(result != null && i < names.length) {
-                // Index i is invalid, previous index cannot be deref: 
-                if(!(result instanceof Page)) {
-                    break;
+            if (result != null) {
+                i = 1;
+                while (result != null && i < names.length) {
+                    // Index i is invalid, previous index cannot be deref:
+                    if (!(result instanceof Page)) {
+                        break;
+                    }
+
+                    // Lookup index i:
+                    Page resultPage = (Page) result;
+                    Object nextObject = resultPage.derefPage(names[i]);
+
+                    // Index i is invalid: Nothing with that name.
+                    if (nextObject == null) {
+                        break;
+                    }
+
+                    // Index i is valid, store it in result and increment "i".
+                    result = nextObject;
+                    i++;
                 }
-                
-                // Lookup index i:
-                Page resultPage = (Page) result;
-                Object nextObject = resultPage.derefPage(names[i]);
-                
-                // Index i is invalid: Nothing with that name.
-                if(nextObject == null) {
-                    break;
-                }
-                
-                // Index i is valid, store it in result and increment "i".
-                result = nextObject;
-                i++;
             }
 
             // Successfully deref'd all pages:
-            if(result == null) {
+            if (result == null) {
                 // Completely bogus URL.
-                renderError(writer, url, "No root page %s, display index", names[0]);
+                renderError(writer, url, "No root page %s, display index",
+                        names[0]);
                 renderObjectAsPage(out, new BaseLink(indexPage), indexPage);
             } else {
                 if (i != names.length) {
-                    renderError(writer, url, "Failed to dereference #%d (%s), display last valid object.", i, names[i]);
+                    renderError(
+                            writer,
+                            url,
+                            "Failed to dereference #%d (%s), display last valid object.",
+                            i, names[i]);
                 }
                 renderObjectAsPage(out, new BaseLink(names, i), result);
             }
         }
-    
+
         out._body();
         out._html();
     }
 
     @Override
-    public void renderObjectAsPage(Output out, Link link, Object obj) throws IOException
+    public void renderObjectAsPage(Output out, Link link, Object obj)
+            throws IOException
     {
-        if(obj instanceof Page) {
+        if (obj instanceof Page) {
             Page page = (Page) obj;
             page.renderAsPage(out, link);
         } else {

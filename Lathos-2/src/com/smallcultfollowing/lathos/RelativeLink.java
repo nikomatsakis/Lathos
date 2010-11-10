@@ -20,4 +20,10 @@ public class RelativeLink
         sb.append("/");
         sb.append(next);
     }
+
+    @Override
+    public boolean isValid()
+    {
+        return base != null && base.isValid();
+    }
 }

@@ -21,4 +21,10 @@ public class IndexLink
         sb.append(index);
     }
 
+    @Override
+    public boolean isValid()
+    {
+        return base != null && base.isValid();
+    }
+
 }

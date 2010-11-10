@@ -11,4 +11,8 @@ public interface ObjectRenderer
      *  renderer. */ 
     public boolean renderObject(Output out, Link link, Object obj)
     throws IOException;
+
+    /** @see #renderObject(Output, Link, Object) */
+    public boolean renderObjectAsPage(Output out, Link link, Object obj)
+    throws IOException;
 }

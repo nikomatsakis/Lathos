@@ -4,7 +4,6 @@ import java.io.IOException;
 
 public class IndexPage
     extends LogPage
-    implements RootPage
 {
     public IndexPage()
     {
@@ -28,11 +27,4 @@ public class IndexPage
         out.h2().text("Log Messages")._h2();
         super.renderAsPage(out, link);
     }
-
-    @Override
-    public String rootPageName()
-    {
-        return name;
-    }
-
 }
