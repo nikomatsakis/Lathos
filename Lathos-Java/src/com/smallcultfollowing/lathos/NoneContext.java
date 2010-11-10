@@ -46,7 +46,8 @@ public class NoneContext implements Context {
 	}
 
 	@Override
-	public void log(Object... line) {
+	public Line log(Object... line) {
+		return NoneLine.Line;
 	}
 
 	@Override
@@ -69,6 +70,10 @@ public class NoneContext implements Context {
 
 	@Override
 	public void pushDisabledPage() {
+	}
+
+	@Override
+	public void append(Line line, Object... contents) {		
 	}
 
 }

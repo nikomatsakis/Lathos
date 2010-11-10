@@ -21,6 +21,8 @@ implements LathosServer
 {
 	private static final long serialVersionUID = -7831061598026617576L;
 	
+	private int maxOutputObjectDepth = 15;
+	
 	// Only MODIFIED under lock but may be READ without lock:
 	private final ConcurrentHashMap<Page, Boolean> registeredPages = new ConcurrentHashMap<Page, Boolean>();
 	
@@ -48,6 +50,14 @@ implements LathosServer
 		System.arraycopy(oldDataRenderers, 0, newDataRenderers, 0, length - 1);
 		newDataRenderers[length - 1] = dr;
 		customDataRenderers.set(newDataRenderers);
+	}
+	
+	/** 
+	 * Sets the maximum numbers of times that {@link Output#outputObject(Object)} will
+	 * recurse. This HELPS to prevent cycles when generating pages but also just helps to
+	 * prevent huge print-outs. */
+	public synchronized void setMaximumOutputObjectDepth(int depth) {
+		maxOutputObjectDepth = depth;
 	}
 	
 	public DataRenderer[] dataRenderers() {
@@ -159,7 +169,7 @@ implements LathosServer
 			}
 		}
 		
-		HtmlOutput output = new HtmlOutput(this, pages, out);
+		HtmlOutput output = new HtmlOutput(this, pages, out, maxOutputObjectDepth);
 		
 		out.println("<HTML>");
 		out.println("<HEAD>");

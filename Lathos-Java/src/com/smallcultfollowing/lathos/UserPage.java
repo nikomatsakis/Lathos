@@ -14,9 +14,6 @@ public class UserPage implements Page {
 		super();
 		this.id = (id == null ? Lathos.defaultId(this) : id);
 		this.parent = parent;
-		
-		if(parent != null)
-			parent.addContent(this);
 	}
 
 	@Override

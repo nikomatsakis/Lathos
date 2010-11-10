@@ -31,6 +31,7 @@ public class ThrowableDataRenderer implements DataRenderer {
 				out.startTable();
 				Lathos.row(out, "Class", t.getClass().getName());
 				Lathos.row(out, "Message", t.getMessage());
+				Lathos.row(out, "Object", t);
 				out.endTable();
 				
 				out.startPage(null);

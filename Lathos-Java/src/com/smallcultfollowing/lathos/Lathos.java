@@ -16,11 +16,23 @@ public class Lathos {
 	}
 
 	/** 
-	 * Current context for this thread, or {@link NoneContext#Context} if not yet set. */  
+	 * Current context for this thread, or 
+	 * {@link NoneContext#Context} if not yet set. */  
 	public static Context contextOrNone() {
 		Context ctx = context();
 		if(ctx == null)
 			return NoneContext.Context;
+		return ctx;
+	}
+
+	/** 
+	 * Returns a fresh context writing to page.  If there is no
+	 * current context for the thread, returns 
+	 * {@link NoneContext#Context}. */
+	public static Context context(Page page) {
+		LathosServer server = contextOrNone().server();
+		Context ctx = server.context();
+		ctx.push(page);
 		return ctx;
 	}
 
@@ -244,6 +256,27 @@ public class Lathos {
 			}
 		}
 		output.endTable();
+	}
+
+	/** 
+	 * Creates a paragraph with the given contents and adds it to {@code addToPage}.
+	 * After the paragraph is created you can append additional content by 
+	 * invoking {@link LathosServer#addToLine(Line, Object)} or
+	 * the methods of {@link Line}.
+	 *  
+	 * @param server to use for rendering contents
+	 * @param addToPage page to add paragraph to (or null)
+	 * @param contents objects to add to the line */
+	public static Para para(LathosServer server, Page addToPage, Object... contents) {
+		Para para = new Para();
+		
+		for(Object o : contents)
+			server.addToLine(para, o);
+		
+		if(addToPage != null)
+			addToPage.addContent(para);
+
+		return para;
 	}
 
 }

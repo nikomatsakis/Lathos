@@ -10,7 +10,7 @@ public class JettyLathosServer extends HttpLathosServer {
 	private final Server jettyServer;
 	
 	public JettyLathosServer(int port) throws Exception {
-		jettyServer = new Server(8080);
+		jettyServer = new Server(port);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
         jettyServer.setHandler(context);
@@ -29,11 +29,17 @@ public class JettyLathosServer extends HttpLathosServer {
 		return start(port);
 	}
 	
+	@Override
 	public void join() {
 		try {
 			jettyServer.join();
 		} catch (InterruptedException e) {
 		}
+	}
+	
+	@Override
+	public void stop() throws Exception {
+		jettyServer.stop();
 	}
 
 }

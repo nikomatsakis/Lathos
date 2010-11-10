@@ -16,6 +16,9 @@ public class HtmlOutput implements Output {
 	private int maxId;
 	private int currentColor;
 	private LinkedList<String> idStack = new LinkedList<String>();
+	private int outputObjectDepth = 0;
+	
+	private final int maxOutputObjectDepth;
 	
 	private final String[] backgroundColors = new String[] {	    "E6FAFF",
 	    "B2B091",
@@ -27,12 +30,14 @@ public class HtmlOutput implements Output {
 	public HtmlOutput(
 			HttpLathosServer server,
 			List<Page> topPages, 
-			PrintWriter writer
+			PrintWriter writer,
+			int maxOutputObjectDepth
 	) {
 		super();
 		this.server = server;
 		this.topPages = Collections.unmodifiableList(topPages);
 		this.writer = writer;
+		this.maxOutputObjectDepth = maxOutputObjectDepth;
 	}
 	
 	private String freshId() {
@@ -137,7 +142,7 @@ public class HtmlOutput implements Output {
 
 	@Override
 	public void startColumn() throws IOException {
-		writer.print("<TD>");
+		writer.print("<TD valign='top' align='left'>");
 	}
 
 	@Override
@@ -157,9 +162,33 @@ public class HtmlOutput implements Output {
 
 	@Override
 	public void outputObject(Object content) throws IOException {
-		LineImpl line = new LineImpl();
-		server.addToLine(line, content);
-		line.renderInLine(this);
+		if(outputObjectDepth > maxOutputObjectDepth) {
+			writer.print("<i>omitted</i>");
+		} else {
+			// when printing cycle data structures, we often
+			// encounter infinite loops here.  of course, this
+			// doesn't solve the problem altogether, but it
+			// detects a common case.
+			
+			outputObjectDepth++;
+			try {
+				LineImpl line = new LineImpl();
+				server.addToLine(line, content);
+				line.renderInLine(this);
+			} finally {
+				outputObjectDepth--;
+			}
+		}
+	}
+
+	@Override
+	public void startPre() throws IOException {
+		writer.print("<pre>");
+	}
+
+	@Override
+	public void endPre() throws IOException {
+		writer.print("</pre>");
 	}
 
 }

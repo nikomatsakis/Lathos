@@ -32,4 +32,8 @@ public class NoneServer implements LathosServer {
 	public void join() {
 	}
 
+	@Override
+	public void stop() {
+	}
+
 }

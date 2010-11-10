@@ -73,12 +73,17 @@ public interface Context {
 	public void embedIn(Page page);
 	
 	/** 
-	 * Adds new line with {@code line} contents to top of stack. */
-	public void log(Object... line);
+	 * Adds new line with {@code contents} contents to top of stack. */
+	public Line log(Object... contents);
 	
 	/** 
-	 * Appends {@code line} to the last logged line of top of stack. */
-	public void append(Object... line);
+	 * Appends {@code contents} to the last logged line of top of stack. */
+	public void append(Object... contents);
+	
+	/** 
+	 * Appends {@code contents} to the line {@code line}, which was 
+	 * generally returned from {@link #log(Object...)}. */
+	public void append(Line line, Object... contents);
 	
 	/** 
 	 * Pops top of the stack, which must equal {@code page} 

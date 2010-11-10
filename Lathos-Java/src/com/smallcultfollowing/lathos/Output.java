@@ -33,6 +33,12 @@ public interface Output {
 	public void endPar()
 	throws IOException;
 
+	public void startPre()
+	throws IOException;
+	
+	public void endPre()
+	throws IOException;
+
 	public void startBold()
 	throws IOException;
 	

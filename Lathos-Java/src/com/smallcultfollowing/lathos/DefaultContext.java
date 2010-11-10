@@ -38,7 +38,8 @@ public class DefaultContext implements Context {
 			return pushTopLevel(id, title);
 		Page topPage = stack.getLast();
 		Page subPage = Lathos.newPage(server, topPage, id, title);
-		link(subPage, title);
+		log(link(subPage, "\u25B2"));
+		append(title);
 		return push(subPage);
 	}
 
@@ -67,16 +68,19 @@ public class DefaultContext implements Context {
 	}
 
 	@Override
-	public void log(Object... contents) {
-		Para para = new Para();
-		previousLine = para;
-		stack.getLast().addContent(para);
-		append(contents);
+	public Line log(Object... contents) {
+		previousLine = Lathos.para(server, stack.getLast(), contents);
+		return previousLine;
 	}
 
 	@Override
 	public void append(Object... contents) {
 		addToLine(previousLine, contents);
+	}
+
+	@Override
+	public void append(Line line, Object... contents) {
+		addToLine(line, contents);
 	}
 
 	@Override

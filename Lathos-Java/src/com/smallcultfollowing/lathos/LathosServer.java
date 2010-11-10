@@ -44,4 +44,11 @@ public interface LathosServer {
 	 */
 	public void join() throws InterruptedException;
 	
+	/**
+	 * Stops the server.
+	 * 
+	 * @throws Exception
+	 */
+	public void stop() throws Exception;
+	
 }

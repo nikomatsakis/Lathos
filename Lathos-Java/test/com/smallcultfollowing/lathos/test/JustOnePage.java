@@ -21,6 +21,16 @@ import com.smallcultfollowing.lathos.Lathos;
 
 public class JustOnePage {
 	
+	public static class CreepyCyclic implements CustomOutput {
+
+		@Override
+		public void renderInLine(Output output) throws IOException {
+			output.outputText("Cyclic(");
+			output.outputObject(this);
+			output.outputText(")");
+		}
+	}
+	
 	public static class CustomData1 implements Page {
 		
 		@Ignore @PageSubcontent
@@ -148,7 +158,7 @@ public class JustOnePage {
 	public static void main(String[] args)
 	throws Exception
 	{
-		LathosServer server = JettyLathosServer.start(8080);
+		LathosServer server = JettyLathosServer.start(8082);
 		server.addDataRenderer(new ThrowableDataRenderer());
 		Context ctx = server.context();
 
@@ -188,6 +198,12 @@ public class JustOnePage {
 		Page foo = makeChildPage(ctx, "Foo");
 		ctx.log("This log entry was added after ", foo);
 		ctx.pop(topPage1);
+		
+		ctx.log("We try to detect cycles in inline data: ", new CreepyCyclic());
+		
+		ctx.pushLinkedChild(null, "This subpage should be linked, not embedded.");
+		ctx.log("Hi.");
+		ctx.pop(null);
 	}
 
 	private static Page makeChildPage(Context ctx, String name) {
