@@ -32,6 +32,7 @@ public class RunServer
         ConsPair d1 = new ConsPair("d1", new ConsPair("d2", null));
         ctx.log("This object, ", d1, " is not modified in any way.  It should be clickable though.");
 
+        ctx.log("LinkCacheTest: ", new LinkCacheTest());
         
         ctx.log("Don't forget to try the url /static/", StaticTest.class.getName());
         

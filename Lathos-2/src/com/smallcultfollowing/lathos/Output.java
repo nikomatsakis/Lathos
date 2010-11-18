@@ -44,6 +44,17 @@ public class Output
         }
     });
 
+    /**
+     * Renders the object {@code obj}, creating a default link for it via
+     * {@link LathosServer#defaultLink(Object)}
+     */
+    public void renderObject(Object obj) throws IOException
+    {
+        Link link = server.defaultLink(obj);
+        server.renderObject(this, link, obj);
+    }
+
+    /** Renders the object {@code obj}, using the link {@code link} */
     public void renderObject(Link link, Object obj) throws IOException
     {
         server.renderObject(this, link, obj);

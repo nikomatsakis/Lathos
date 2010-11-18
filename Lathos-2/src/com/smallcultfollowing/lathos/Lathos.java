@@ -8,13 +8,16 @@ public abstract class Lathos
     private static ThreadLocal<Context> currentContext = new ThreadLocal<Context>();
 
     /**
-     * Starts an Lathos Server using HTTP on port {@code port}, using the
-     * default web server (currently Jetty). If port is 0, returns a
-     * {@code DevNullServer}.
+     * Starts and returns a "batteries included" Lathos HTTP server on port
+     * {@code port}, using the default web server (currently Jetty). If port is
+     * 0, returns a {@code DevNullServer}.
      */
     public static LathosServer serverOnPort(int port) throws Exception
     {
-        return JettyServer.start(port);
+        LathosServer server = JettyServer.start(port);
+        server.addRootPage(new StaticPage());
+        server.setLinkCache(new LinkCache(10000));
+        return server;
     }
 
     public static Context context()

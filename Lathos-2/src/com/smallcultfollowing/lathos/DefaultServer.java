@@ -10,31 +10,46 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.rendersnake.AttributesFactory;
 
 public abstract class DefaultServer
     implements LathosServer
 {
+    // Configuration keys:
+    private static final String includeStaticPage = "includeStaticPage";
+    
     private volatile ObjectSubst[] substs = new ObjectSubst[0];
     private final List<ObjectRenderer> renderers = new ArrayList<ObjectRenderer>();
     private final Map<String, RootPage> rootPages = new LinkedHashMap<String, RootPage>();
     private final IndexPage indexPage = new IndexPage();
+    private LinkCache linkCache = null;
 
-    /** Equivalent to {@code this(true)} */
+    /** Equivalent to {@code this(true, 10000)} */
     DefaultServer()
     {
-        this(true);
-    }
-
-    /** 
-     * Create a default server.
-     * 
-     * @param includeStaticPage if true, adds an instance of {@link StaticPage} as a root page */
-    DefaultServer(boolean includeStaticPage)
-    {
         addRootPage(indexPage);
-        if(includeStaticPage)
-            addRootPage(new StaticPage());
+    }
+    
+    @Override
+    public synchronized void setLinkCache(LinkCache aLinkCache)
+    {
+        if(linkCache != null) {
+            removeRootPage(linkCache);
+        }
+        
+        linkCache = aLinkCache;
+        
+        if(linkCache != null) {
+            addRootPage(linkCache);
+        }
+    }
+    
+    @Override
+    public synchronized Link defaultLink(Object obj)
+    {
+        if(linkCache == null)
+            return null;
+        
+        return linkCache.makeLink(obj);
     }
 
     @Override
@@ -98,6 +113,13 @@ public abstract class DefaultServer
     public synchronized void addRenderer(ObjectRenderer render)
     {
         renderers.add(render);
+    }
+    
+    @Override
+    public synchronized void removeRootPage(RootPage page)
+    {
+        if(rootPages.get(page.rootPageName()) == page)
+            rootPages.remove(page.rootPageName());
     }
 
     @Override
@@ -223,5 +245,5 @@ public abstract class DefaultServer
     {
         return indexPage;
     }
-
+    
 }

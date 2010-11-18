@@ -80,4 +80,20 @@ public class DevNullServer
     {
     }
 
+    @Override
+    public void setLinkCache(LinkCache linkCache)
+    {
+    }
+
+    @Override
+    public Link defaultLink(Object obj)
+    {
+        return null;
+    }
+
+    @Override
+    public void removeRootPage(RootPage page)
+    {
+    }
+
 }
