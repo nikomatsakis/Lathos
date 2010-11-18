@@ -129,6 +129,17 @@ public abstract class Lathos
         return null;
     }
 
+    public static void headerRow(Output out, Object... columns) throws IOException
+    {
+        out.tr();
+        for (Object column : columns) {
+            out.th();
+            out.renderObject(null, column);
+            out._th();
+        }
+        out._tr();
+    }
+
     public static void row(Output out, Object... columns) throws IOException
     {
         out.tr();
