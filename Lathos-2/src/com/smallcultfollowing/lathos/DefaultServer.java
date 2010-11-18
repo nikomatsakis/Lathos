@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.rendersnake.AttributesFactory;
 
 public abstract class DefaultServer
     implements LathosServer
@@ -80,12 +81,17 @@ public abstract class DefaultServer
             return;
         }
 
-        if (obj instanceof Debugable) {
-            ((Debugable) obj).renderAsLine(out, link);
+        if (obj instanceof Page) {
+            ((Page) obj).renderAsLine(out, link);
+            return;
+        }
+        
+        if (obj instanceof String || obj instanceof Number) {
+            out.text(obj.toString());
             return;
         }
 
-        out.text(obj.toString());
+        Lathos.reflectiveRenderAsLine(obj, out, link);
     }
 
     @Override
@@ -158,14 +164,14 @@ public abstract class DefaultServer
             if (result != null) {
                 i = 1;
                 while (result != null && i < names.length) {
-                    // Index i is invalid, previous index cannot be deref:
-                    if (!(result instanceof Page)) {
-                        break;
-                    }
-
                     // Lookup index i:
-                    Page resultPage = (Page) result;
-                    Object nextObject = resultPage.derefPage(names[i]);
+                    Object nextObject;
+                    if (result instanceof Page) {
+                        Page resultPage = (Page) result;
+                        nextObject = resultPage.derefPage(names[i]);
+                    } else {
+                        nextObject = Lathos.reflectiveDerefPage(result, names[i]);
+                    }
 
                     // Index i is invalid: Nothing with that name.
                     if (nextObject == null) {
@@ -208,7 +214,7 @@ public abstract class DefaultServer
             Page page = (Page) obj;
             page.renderAsPage(out, link);
         } else {
-            renderObject(out, link, obj);
+            Lathos.reflectiveRenderAsPage(obj, out, link);
         }
     }
 

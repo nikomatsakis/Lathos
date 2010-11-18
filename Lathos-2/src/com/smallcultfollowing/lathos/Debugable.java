@@ -4,5 +4,4 @@ import java.io.IOException;
 
 public interface Debugable
 {
-    public void renderAsLine(Output out, Link link) throws IOException;
 }

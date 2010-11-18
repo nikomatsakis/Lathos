@@ -6,13 +6,15 @@ import java.lang.reflect.Field;
 public abstract class Lathos
 {
     private static ThreadLocal<Context> currentContext = new ThreadLocal<Context>();
-    
-    /** Starts an Lathos Server using HTTP on port {@code port}, using
-     *  the default web server (currently Jetty). 
-     *  If port is 0, returns a {@code DevNullServer}. */
-    public static LathosServer serverOnPort(int port) throws Exception 
+
+    /**
+     * Starts an Lathos Server using HTTP on port {@code port}, using the
+     * default web server (currently Jetty). If port is 0, returns a
+     * {@code DevNullServer}.
+     */
+    public static LathosServer serverOnPort(int port) throws Exception
     {
-        return JettyServer.start(port); 
+        return JettyServer.start(port);
     }
 
     public static Context context()
@@ -55,10 +57,13 @@ public abstract class Lathos
         return context().log(objs);
     }
 
-    /** Emits a table containing all fields of {@code page} and their values.
-     *  Fields annotated with {@link Ignore} will not be printed. */
-    public static void reflectiveRenderAsPage(Page page, Output out, Link link)
-            throws IOException
+    /**
+     * Emits a table containing all fields of {@code page} and their values.
+     * Fields annotated with {@link Ignore} will not be printed. This is the
+     * method which is used to render an object as a page by default, unless the
+     * object implements the interface {@link Page}.
+     */
+    public static void reflectiveRenderAsPage(Object page, Output out, Link link) throws IOException
     {
         out.table();
 
@@ -75,7 +80,7 @@ public abstract class Lathos
 
                 fld.setAccessible(true);
                 out.tr();
-                
+
                 Link fldLink = new RelativeLink(link, fld.getName());
 
                 out.td();
@@ -96,12 +101,17 @@ public abstract class Lathos
             }
             cls = cls.getSuperclass();
         }
-        
+
         out._table();
 
     }
 
-    public static Object reflectiveDerefPage(Page parentPage, String link)
+    /**
+     * Reflectively dereferences a link from this object by looking for a field
+     * with that name. This is the method which is used to deref an object by
+     * default, unless the object implements the interface {@link Page}.
+     */
+    public static Object reflectiveDerefPage(Object parentPage, String link)
     {
         Class<?> cls = parentPage.getClass();
         while (cls != Object.class) {
@@ -122,7 +132,7 @@ public abstract class Lathos
     public static void row(Output out, Object... columns) throws IOException
     {
         out.tr();
-        for(Object column : columns) {
+        for (Object column : columns) {
             out.td();
             out.renderObject(null, column);
             out._td();
@@ -130,10 +140,13 @@ public abstract class Lathos
         out._tr();
     }
 
-    public static void reflectiveRenderAsLine(
-            Object obj,
-            Output out,
-            Link link) throws IOException
+    /**
+     * Reflectively renders an object as a link by by using its
+     * {@link Object#toString()} value. This is the method which is used to
+     * render an object by default, unless the object implements the interface
+     * {@link Page}.
+     */
+    public static void reflectiveRenderAsLine(Object obj, Output out, Link link) throws IOException
     {
         out.a(link);
         out.text(obj.toString());
