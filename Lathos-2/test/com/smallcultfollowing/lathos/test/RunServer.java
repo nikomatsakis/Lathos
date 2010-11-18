@@ -29,6 +29,8 @@ public class RunServer
         
         ctx.log("Testing substitution (should say subst-to): ", "subst-from");
         
+        ctx.log("Don't forget to try the url /static/", StaticTest.class.getName());
+        
         server.join();
     }
 }

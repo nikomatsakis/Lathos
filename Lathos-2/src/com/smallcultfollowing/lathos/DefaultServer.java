@@ -19,9 +19,21 @@ public abstract class DefaultServer
     private final Map<String, RootPage> rootPages = new LinkedHashMap<String, RootPage>();
     private final IndexPage indexPage = new IndexPage();
 
+    /** Equivalent to {@code this(true)} */
     DefaultServer()
     {
+        this(true);
+    }
+
+    /** 
+     * Create a default server.
+     * 
+     * @param includeStaticPage if true, adds an instance of {@link StaticPage} as a root page */
+    DefaultServer(boolean includeStaticPage)
+    {
         addRootPage(indexPage);
+        if(includeStaticPage)
+            addRootPage(new StaticPage());
     }
 
     @Override

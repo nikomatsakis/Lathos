@@ -22,6 +22,7 @@ public class BaseLink
     @Override
     public void appendUrlString(StringBuilder sb)
     {
+        sb.append("/");
         for(int i = 0; i < names.length - 1; i++) {
             sb.append(names[i]);
             sb.append("/");

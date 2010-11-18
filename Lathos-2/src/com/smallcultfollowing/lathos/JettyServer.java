@@ -8,8 +8,13 @@ public class JettyServer
 extends DefaultServer
 {
     private final Server jettyServer;
-    
+
     public JettyServer(int port) throws Exception {
+        this(port, true);
+    }
+
+    public JettyServer(int port, boolean includeStaticPage) throws Exception {
+        super(includeStaticPage);
         jettyServer = new Server(port);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");

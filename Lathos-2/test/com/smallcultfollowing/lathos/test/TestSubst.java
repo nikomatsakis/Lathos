@@ -18,7 +18,7 @@ public class TestSubst
     @Override
     public Object substitute(Object obj)
     {
-        if(obj == from)
+        if(obj.equals(from))
             return to;
         return obj;
     }
