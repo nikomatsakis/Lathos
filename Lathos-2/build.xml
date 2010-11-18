@@ -1,0 +1,31 @@
+<project name="Lathos" default="jar" basedir=".">
+    <description>
+        Creates a single .JAR file containing all
+        dependencies to run Lathos with a built-in
+        web server (Jetty).
+    </description>
+
+    <target name="compile" description="compile the source" >
+        <javac srcdir="src" destdir="bin" debug="on">
+            <classpath>
+                <fileset dir="lib">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile">
+        <zip destfile="Lathos.jar">
+            <fileset dir="bin"/>
+            <fileset dir="src"/>
+            <zipgroupfileset dir="lib" includes="*.jar"/>
+        </zip>
+    </target>
+    
+    <target name="clean">
+        <delete>
+            <fileset dir="bin"/>
+        </delete>
+    </target>
+</project>
