@@ -27,4 +27,14 @@ public class IndexLink
         return base != null && base.isValid();
     }
 
+    public static int parseIndexLink(String link) throws InvalidDeref {
+        try {
+            int idx = Integer.parseInt(link);
+            if (idx < 0) throw InvalidDeref.instance;
+            return idx;
+        } catch (NumberFormatException e) {
+            throw InvalidDeref.instance;
+        }
+    }
+    
 }

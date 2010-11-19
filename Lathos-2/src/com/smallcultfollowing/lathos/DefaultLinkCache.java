@@ -60,9 +60,15 @@ public class DefaultLinkCache
     }
 
     @Override
-    public Object derefPage(String link)
+    public Object derefPage(String link) throws InvalidDeref
     {
-        long id = Long.parseLong(link);
+        long id;
+        try {
+            id = Long.parseLong(link);
+        } catch (NumberFormatException e) {
+            return Lathos.reflectiveDerefPage(this, link);
+        }
+        
         if(linkRecords != null) {
             int index = (int)(id % linkRecords.length);
             LinkRecord lr = linkRecords[index];

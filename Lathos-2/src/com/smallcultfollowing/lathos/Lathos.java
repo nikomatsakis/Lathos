@@ -29,8 +29,9 @@ public abstract class Lathos
         server.setLinkCache(new DefaultLinkCache(10000));
         server.addRenderer(new ReflectiveRenderer());
         server.addRenderer(new ConstantRenderer());
-        server.addRenderer(new PageRenderer());
         server.addRenderer(new ThrowableRenderer());
+        server.addRenderer(new CollectionRenderer());
+        server.addRenderer(new PageRenderer());
     }
 
     public static Context context()
@@ -134,14 +135,17 @@ public abstract class Lathos
     {
         Class<?> cls = parentPage.getClass();
         while (cls != Object.class) {
-            for (java.lang.reflect.Field fld : cls.getFields()) {
-                if (fld.getName().equals(link)) {
-                    try {
-                        return fld.get(parentPage);
-                    } catch (Exception e) {
-                        return e;
-                    }
+            Field fld;
+            try {
+                fld = cls.getDeclaredField(link);
+                fld.setAccessible(true);
+                try {
+                    return fld.get(parentPage);
+                } catch (Exception e) {
+                    return e;
                 }
+            } catch (SecurityException e1) {
+            } catch (NoSuchFieldException e1) {
             }
             cls = cls.getSuperclass();
         }
@@ -153,7 +157,7 @@ public abstract class Lathos
         out.tr();
         for (Object column : columns) {
             out.th();
-            out.obj(null, column);
+            out.obj(column);
             out._th();
         }
         out._tr();
@@ -164,7 +168,7 @@ public abstract class Lathos
         out.tr();
         for (Object column : columns) {
             out.td();
-            out.obj(null, column);
+            out.obj(column);
             out._td();
         }
         out._tr();

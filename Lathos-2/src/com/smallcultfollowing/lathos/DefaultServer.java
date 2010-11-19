@@ -23,6 +23,7 @@ public abstract class DefaultServer
     /** Equivalent to {@code this(true, 10000)} */
     DefaultServer()
     {
+        addRootPage(indexPage);
     }
     
     @Override
@@ -81,6 +82,11 @@ public abstract class DefaultServer
     public synchronized void renderObjectSummary(Output out, Link link, Object obj)
             throws IOException
     {
+        if (obj == null) {
+            out.text("null");
+            return;
+        }
+        
         for (int i = renderers.size() - 1; i >= 0; i--) {
             ObjectRenderer renderer = renderers.get(i);
             if (renderer.renderObjectSummary(obj, out, link))
@@ -88,11 +94,9 @@ public abstract class DefaultServer
         }
 
         // Bare-bones default behavior:
-        if (obj == null) {
-            out.text("null");
-        } else {
-            out.text(obj.toString());
-        }
+        out.a(link);
+        out.text(obj.toString());
+        out._a(link);
     }
 
     @Override

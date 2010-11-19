@@ -1,5 +1,12 @@
 package com.smallcultfollowing.lathos.test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.smallcultfollowing.lathos.Context;
 import com.smallcultfollowing.lathos.Lathos;
 import com.smallcultfollowing.lathos.LathosServer;
@@ -31,6 +38,26 @@ public class RunServer
         
         ConsPair d1 = new ConsPair("d1", new ConsPair("d2", null));
         ctx.log("This object, ", d1, " is not modified in any way.  It should be clickable though.");
+        
+        Object[] aShortArray = new Object[] { 1, d1 };
+        Object[] aLongArray = new Object[] { 1, 2, 3, d1, 5, 6, 7 };
+        
+        List<Object> aList = new ArrayList<Object>();
+        aList.add("Some");
+        aList.add("Entries");
+        aList.add(d1);
+        
+        Map<String, Object> aMap = new LinkedHashMap<String, Object>();
+        aMap.put("Apples", "Oranges");
+        aMap.put("Bananas", "Cocunuts");
+        aMap.put("ConsPair", d1);
+        aMap.put("Pumpkins", "Squash");
+        
+        ctx.log("Java collections should behave well.");
+        ctx.log("Short array: ", aShortArray);
+        ctx.log("Long array: ", aLongArray);
+        ctx.log("Lists: ", aList);
+        ctx.log("Maps: ", aMap);
 
         ctx.log("LinkCacheTest: ", new LinkCacheTest());
         

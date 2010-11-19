@@ -45,16 +45,12 @@ public class ArrayLine
     }
 
     @Override
-    public Object derefPage(String link)
+    public Object derefPage(String link) throws InvalidDeref
     {
-        try {
-            int i = Integer.parseInt(link);
-            if(i >= 0 && i < objs.length)
-                return objs[i];
-            return null;            
-        } catch (NumberFormatException err){
-            return null;
-        }
+        int i = IndexLink.parseIndexLink(link);
+        if(i >= 0 && i < objs.length)
+            return objs[i];
+        throw InvalidDeref.instance;
     }
 
 }
