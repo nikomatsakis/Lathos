@@ -6,7 +6,7 @@ public class DevNullLine
     public static final DevNullLine instance = new DevNullLine();
 
     @Override
-    public void renderAsLine(Output out, Link link)
+    public void renderSummary(Output out, Link link)
     {
     }
 
@@ -16,7 +16,7 @@ public class DevNullLine
     }
 
     @Override
-    public void renderAsPage(Output out, Link link)
+    public void renderDetails(Output out, Link link)
     {
     }
 

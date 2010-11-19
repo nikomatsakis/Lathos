@@ -15,9 +15,22 @@ public abstract class Lathos
     public static LathosServer serverOnPort(int port) throws Exception
     {
         LathosServer server = JettyServer.start(port);
-        server.addRootPage(new StaticPage());
-        server.setLinkCache(new LinkCache(10000));
+        setupServer(server);
         return server;
+    }
+
+    /**
+     * Performs the standard setup for a server, adding default object
+     * renders, a link cache, and other goodies. 
+     */
+    public static void setupServer(LathosServer server)
+    {
+        server.addRootPage(new StaticPage());
+        server.setLinkCache(new DefaultLinkCache(10000));
+        server.addRenderer(new ReflectiveRenderer());
+        server.addRenderer(new ConstantRenderer());
+        server.addRenderer(new PageRenderer());
+        server.addRenderer(new ThrowableRenderer());
     }
 
     public static Context context()
@@ -66,7 +79,7 @@ public abstract class Lathos
      * method which is used to render an object as a page by default, unless the
      * object implements the interface {@link Page}.
      */
-    public static void reflectiveRenderAsPage(Object page, Output out, Link link) throws IOException
+    public static void reflectiveRenderDetails(Object page, Output out, Link link) throws IOException
     {
         out.table();
 
@@ -93,10 +106,10 @@ public abstract class Lathos
                 out.td();
                 try {
                     Object value = fld.get(page);
-                    out.renderObject(fldLink, value);
+                    out.obj(fldLink, value);
                 } catch (Exception e) {
                     out.text("Failed to access: ");
-                    out.renderObject(fldLink, e);
+                    out.obj(fldLink, e);
                 }
                 out._td();
 
@@ -113,8 +126,11 @@ public abstract class Lathos
      * Reflectively dereferences a link from this object by looking for a field
      * with that name. This is the method which is used to deref an object by
      * default, unless the object implements the interface {@link Page}.
+     * 
+     * Returns {@link Lathos#invalidDeref}
+     * @throws InvalidDeref if there is no field {@code link}
      */
-    public static Object reflectiveDerefPage(Object parentPage, String link)
+    public static Object reflectiveDerefPage(Object parentPage, String link) throws InvalidDeref
     {
         Class<?> cls = parentPage.getClass();
         while (cls != Object.class) {
@@ -129,7 +145,7 @@ public abstract class Lathos
             }
             cls = cls.getSuperclass();
         }
-        return null;
+        throw InvalidDeref.instance;
     }
 
     public static void headerRow(Output out, Object... columns) throws IOException
@@ -137,7 +153,7 @@ public abstract class Lathos
         out.tr();
         for (Object column : columns) {
             out.th();
-            out.renderObject(null, column);
+            out.obj(null, column);
             out._th();
         }
         out._tr();
@@ -148,7 +164,7 @@ public abstract class Lathos
         out.tr();
         for (Object column : columns) {
             out.td();
-            out.renderObject(null, column);
+            out.obj(null, column);
             out._td();
         }
         out._tr();
@@ -160,7 +176,7 @@ public abstract class Lathos
      * render an object by default, unless the object implements the interface
      * {@link Page}.
      */
-    public static void reflectiveRenderAsLine(Object obj, Output out, Link link) throws IOException
+    public static void reflectiveRenderSummary(Object obj, Output out, Link link) throws IOException
     {
         out.a(link);
         out.text(obj.toString());

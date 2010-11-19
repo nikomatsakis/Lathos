@@ -31,17 +31,17 @@ public class ArrayLine
     }
 
     @Override
-    public synchronized void renderAsLine(Output out, Link link) throws IOException
+    public synchronized void renderSummary(Output out, Link link) throws IOException
     {
         for(int i = 0, c = objs.length; i < c; i++) {
-            out.renderObject(new IndexLink(link, i), objs[i]);            
+            out.obj(new IndexLink(link, i), objs[i]);            
         }
     }
 
     @Override
-    public void renderAsPage(Output out, Link link) throws IOException
+    public void renderDetails(Output out, Link link) throws IOException
     {
-        renderAsLine(out, link);
+        renderSummary(out, link);
     }
 
     @Override

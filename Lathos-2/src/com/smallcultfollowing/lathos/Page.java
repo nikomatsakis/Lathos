@@ -2,30 +2,25 @@ package com.smallcultfollowing.lathos;
 
 import java.io.IOException;
 
+/**
+ * Marker interface used by the {@link PageRenderer} (installed by the default
+ * setup server routine) to denote pages that can render themselves.
+ * 
+ * @see PageRenderer
+ * @see Lathos#setupServer(LathosServer)
+ */
 public interface Page
 {
-    /**
-     * Renders a link to this page onto {@code out}.  The link
-     * {@code link}, if non-null, leads to this object.
-     * 
-     * Typically looks like:
-     * <pre>
-     * out.a(link);
-     * out.text(...);
-     * out._a(link);
-     * </pre>
-     * 
-     * @see Lathos#reflectiveRenderAsLine(Object, Output, Link)
-     */
-    public void renderAsLine(Output out, Link link) throws IOException;
+    /** @see ObjectRenderer#renderObjectSummary(Object, Output, Link) */
+    public void renderSummary(Output out, Link link) throws IOException;
 
     /**
      * Renders the contents of this page. The standard page header and footer
      * will already have been emitted.
      * 
-     * @see Lathos#reflectiveRenderAsPage(Page, Output, Link)
+     * @see Lathos#reflectiveRenderDetails(Page, Output, Link)
      */
-    public void renderAsPage(Output out, Link link) throws IOException;
+    public void renderDetails(Output out, Link link) throws IOException;
 
     /**
      * Dereferences a relative link to yield the next step. For example, if
@@ -35,7 +30,10 @@ public interface Page
      * casted to {@link Page} and have {@link #derefPage(String)} invoked with
      * "d" as argument.
      * 
+     * @throws InvalidDeref
+     *             if link cannot be dereferenced to an Object
+     *             
      * @see Lathos#reflectiveDerefPage(Page, String)
      */
-    public Object derefPage(String link);
+    public Object derefPage(String link) throws InvalidDeref;
 }

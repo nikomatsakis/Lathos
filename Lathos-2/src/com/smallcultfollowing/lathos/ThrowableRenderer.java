@@ -6,7 +6,7 @@ public class ThrowableRenderer
     implements ObjectRenderer
 {
     @Override
-    public boolean renderObject(Output out, Link link, Object obj)
+    public boolean renderObjectSummary(Object obj, Output out, Link link)
             throws IOException
     {
         if (obj instanceof Throwable) {
@@ -17,17 +17,17 @@ public class ThrowableRenderer
     }
 
     @Override
-    public boolean renderObjectAsPage(Output out, Link link, Object obj)
+    public boolean renderObjectDetails(Object obj, Output out, Link link)
             throws IOException
     {
         if(obj instanceof Throwable) {
-            renderAsPage(out, link, (Throwable)obj);
+            renderDetails(out, link, (Throwable)obj);
             return true;
         }
         return false;
     }
 
-    private void renderAsPage(Output out, Link link, Throwable thr) throws IOException
+    private void renderDetails(Output out, Link link, Throwable thr) throws IOException
     {
         Throwable t = thr;
         out.ul();
@@ -44,7 +44,7 @@ public class ThrowableRenderer
             out.li().b().text("Stack:")._b().ul();
             for(StackTraceElement elem : t.getStackTrace()) {
                 out.li();
-                out.renderObject(null, elem);
+                out.obj(null, elem);
                 out._li();
             }
             out._ul()._li();
@@ -57,6 +57,15 @@ public class ThrowableRenderer
             t = t.getCause();
         }
         out._ul();
+    }
+
+    @Override
+    public Object derefPage(Object obj, String link) throws InvalidDeref
+    {
+        if(obj instanceof Throwable) {
+            return Lathos.reflectiveDerefPage(obj, link);
+        }
+        throw InvalidDeref.instance;
     }
 
 }

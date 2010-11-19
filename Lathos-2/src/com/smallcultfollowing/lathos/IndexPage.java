@@ -11,7 +11,7 @@ public class IndexPage
     }
 
     @Override
-    public synchronized void renderAsPage(Output out, Link link) throws IOException
+    public synchronized void renderDetails(Output out, Link link) throws IOException
     {
         out.h1().text("Index")._h1();
         
@@ -19,12 +19,12 @@ public class IndexPage
         out.ul();
         for(RootPage rootPage : out.server.rootPages()) {
             out.li();
-            out.renderObject(new BaseLink(rootPage), rootPage);
+            out.obj(new BaseLink(rootPage), rootPage);
             out._li();
         }
         out._ul();
         
         out.h2().text("Log Messages")._h2();
-        super.renderAsPage(out, link);
+        super.renderDetails(out, link);
     }
 }

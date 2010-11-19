@@ -16,14 +16,14 @@ public class ClassObjectPage
     }
 
     @Override
-    public void renderAsLine(Output out, Link link) throws IOException
+    public void renderSummary(Output out, Link link) throws IOException
     {
         out.a(link).text(cls.toString()).text("]");
         out._a(link);
     }
 
     @Override
-    public void renderAsPage(Output out, Link link) throws IOException
+    public void renderDetails(Output out, Link link) throws IOException
     {
         out.h1().text(cls.toString())._h1();
         
@@ -49,7 +49,7 @@ public class ClassObjectPage
                 } catch (IllegalAccessException e) {
                     value = e;
                 }
-                out.renderObject(fLink, value);
+                out.obj(fLink, value);
                 out._td();
                 out._tr();
             }

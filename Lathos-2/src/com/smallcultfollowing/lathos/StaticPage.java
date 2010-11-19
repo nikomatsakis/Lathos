@@ -12,7 +12,7 @@ public class StaticPage
 {
 
     @Override
-    public void renderAsPage(Output out, Link link) throws IOException
+    public void renderDetails(Output out, Link link) throws IOException
     {
         out.h1().text("Static")._h1();
         out.text("You can examine static fields by using a URL like ");
@@ -31,7 +31,7 @@ public class StaticPage
     }
 
     @Override
-    public void renderAsLine(Output out, Link link) throws IOException
+    public void renderSummary(Output out, Link link) throws IOException
     {
         out.a(link).text("static");
         out._a(link);

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.rendersnake.Attributes;
 import org.rendersnake.AttributesFactory;
 import org.rendersnake.HtmlCanvas;
+import org.rendersnake.Renderable;
 
 public class Output
     extends HtmlCanvas
@@ -48,16 +49,36 @@ public class Output
      * Renders the object {@code obj}, creating a default link for it via
      * {@link LathosServer#defaultLink(Object)}
      */
-    public void renderObject(Object obj) throws IOException
+    public void obj(Object obj) throws IOException
     {
         Link link = server.defaultLink(obj);
-        server.renderObject(this, link, obj);
+        obj(link, obj);
     }
 
     /** Renders the object {@code obj}, using the link {@code link} */
-    public void renderObject(Link link, Object obj) throws IOException
+    public void obj(final Link link, final Object obj) throws IOException
     {
-        server.renderObject(this, link, obj);
+        render(new Renderable() {
+            @Override
+            public void renderOn(HtmlCanvas canvas) throws IOException
+            {
+                assert(canvas == Output.this);
+                server.renderObjectSummary(Output.this, link, obj);
+            }
+        });
+    }
+
+    /** Renders the object {@code obj}, using the link {@code link} */
+    public void embed(final Link link, final Object obj) throws IOException
+    {
+        render(new Renderable() {
+            @Override
+            public void renderOn(HtmlCanvas canvas) throws IOException
+            {
+                assert(canvas == Output.this);
+                server.renderObjectDetails(Output.this, link, obj);
+            }
+        });
     }
 
     /** Emit a link to {@code link}, if non-null */

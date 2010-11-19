@@ -82,31 +82,47 @@ public abstract class DefaultServer
     }
 
     @Override
-    public synchronized void renderObject(Output out, Link link, Object obj)
+    public synchronized void renderObjectSummary(Output out, Link link, Object obj)
             throws IOException
     {
         for (int i = renderers.size() - 1; i >= 0; i--) {
             ObjectRenderer renderer = renderers.get(i);
-            if (renderer.renderObject(out, link, obj))
+            if (renderer.renderObjectSummary(obj, out, link))
                 return;
         }
 
+        // Bare-bones default behavior:
         if (obj == null) {
             out.text("null");
-            return;
+        } else {
+            out.text(obj.toString());
         }
+    }
 
-        if (obj instanceof Page) {
-            ((Page) obj).renderAsLine(out, link);
-            return;
+    @Override
+    public void renderObjectDetails(Output out, Link link, Object obj)
+            throws IOException
+    {
+        for (int i = renderers.size() - 1; i >= 0; i--) {
+            ObjectRenderer renderer = renderers.get(i);
+            if (renderer.renderObjectDetails(obj, out, link))
+                return;
         }
         
-        if (obj instanceof String || obj instanceof Number) {
-            out.text(obj.toString());
-            return;
-        }
+        renderObjectSummary(out, link, obj);
+    }
 
-        Lathos.reflectiveRenderAsLine(obj, out, link);
+    public Object derefPage(Object page, String link)
+    {
+        for (int i = renderers.size() - 1; i >= 0; i--) {
+            ObjectRenderer renderer = renderers.get(i);
+            try {
+                return renderer.derefPage(page, link);
+            } catch (InvalidDeref _) {
+            }
+        }
+        
+        return null;
     }
 
     @Override
@@ -174,7 +190,7 @@ public abstract class DefaultServer
         }
 
         if (url.equals("")) {
-            renderObjectAsPage(out, new BaseLink(indexPage), indexPage);
+            renderObjectDetails(out, new BaseLink(indexPage), indexPage);
         } else {
             String[] names = url.split("/");
 
@@ -187,13 +203,7 @@ public abstract class DefaultServer
                 i = 1;
                 while (result != null && i < names.length) {
                     // Lookup index i:
-                    Object nextObject;
-                    if (result instanceof Page) {
-                        Page resultPage = (Page) result;
-                        nextObject = resultPage.derefPage(names[i]);
-                    } else {
-                        nextObject = Lathos.reflectiveDerefPage(result, names[i]);
-                    }
+                    Object nextObject = derefPage(result, names[i]);
 
                     // Index i is invalid: Nothing with that name.
                     if (nextObject == null) {
@@ -211,7 +221,7 @@ public abstract class DefaultServer
                 // Completely bogus URL.
                 renderError(writer, url, "No root page %s, display index",
                         names[0]);
-                renderObjectAsPage(out, new BaseLink(indexPage), indexPage);
+                renderObjectDetails(out, new BaseLink(indexPage), indexPage);
             } else {
                 if (i != names.length) {
                     renderError(
@@ -220,24 +230,12 @@ public abstract class DefaultServer
                             "Failed to dereference #%d (%s), display last valid object.",
                             i, names[i]);
                 }
-                renderObjectAsPage(out, new BaseLink(names, i), result);
+                renderObjectDetails(out, new BaseLink(names, i), result);
             }
         }
 
         out._body();
         out._html();
-    }
-
-    @Override
-    public void renderObjectAsPage(Output out, Link link, Object obj)
-            throws IOException
-    {
-        if (obj instanceof Page) {
-            Page page = (Page) obj;
-            page.renderAsPage(out, link);
-        } else {
-            Lathos.reflectiveRenderAsPage(obj, out, link);
-        }
     }
 
     @Override

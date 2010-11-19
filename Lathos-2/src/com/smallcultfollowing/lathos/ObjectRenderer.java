@@ -2,17 +2,40 @@ package com.smallcultfollowing.lathos;
 
 import java.io.IOException;
 
-/** Customizes how an object is rendered to HTML */
+/** Customizes how an object is rendered to HTML and how it behaves in URLs */
 public interface ObjectRenderer
 {
-    /** Renders {@code obj} onto {@code out}, returning {@code true}
-     *  if rendering was successful or {@code false} if {@code obj}
-     *  is not of a recognized class or is not renderable by this 
-     *  renderer. */ 
-    public boolean renderObject(Output out, Link link, Object obj)
+    /**
+     * Renders a summary of {@code obj} onto {@code out}.  The link
+     * {@code link}, if non-null and {@link Link#isValid() valid}, 
+     * leads to this object.
+     * 
+     * Typically looks like:
+     * <pre>
+     * out.a(link);
+     * out.text(...);
+     * out._a(link);
+     * </pre>
+     * 
+     * @see Lathos#reflectiveRenderSummary(Object, Output, Link)
+     */
+    public boolean renderObjectSummary(Object obj, Output out, Link link)
     throws IOException;
 
-    /** @see #renderObject(Output, Link, Object) */
-    public boolean renderObjectAsPage(Output out, Link link, Object obj)
+    /** @see #renderObjectSummary(Object, Output, Link) */
+    public boolean renderObjectDetails(Object obj, Output out, Link link)
     throws IOException;
+    
+    /**
+     * Dereferences a relative link to yield the next step. For example, if
+     * there is a link "/a/b/c", and "/a/b" leads to {@code this}, then this
+     * method would be invoked with "c" to yield the next step. If the link were
+     * "/a/b/c/d" instead, then the result of this method would then itself be
+     * casted to {@link Page} and have {@link #derefPage(String)} invoked with
+     * "d" as argument.
+     * 
+     * @return the result of the dereference.  
+     * @throws InvalidDeref if the link cannot be resolved against obj
+     */
+    public Object derefPage(Object obj, String link) throws InvalidDeref;
 }

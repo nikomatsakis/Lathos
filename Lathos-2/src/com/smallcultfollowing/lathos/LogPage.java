@@ -20,13 +20,13 @@ public class LogPage
     }
 
     @Override
-    public void renderAsPage(Output out, Link link) throws IOException
+    public void renderDetails(Output out, Link link) throws IOException
     {
         out.ul();
         for(Map.Entry<String, Page> entry : subpages.entrySet()) {
             RelativeLink pageLink = new RelativeLink(link, entry.getKey());
             out.li();
-            out.renderObject(pageLink, entry.getValue());
+            out.obj(pageLink, entry.getValue());
             out._li();
         }
         out._ul();
@@ -39,7 +39,7 @@ public class LogPage
     }
 
     @Override
-    public void renderAsLine(Output out, Link link) throws IOException
+    public void renderSummary(Output out, Link link) throws IOException
     {
         out.a(link);
         out.text(name);

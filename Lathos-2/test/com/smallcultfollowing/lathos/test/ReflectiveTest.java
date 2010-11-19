@@ -3,6 +3,7 @@ package com.smallcultfollowing.lathos.test;
 import java.io.IOException;
 
 import com.smallcultfollowing.lathos.Ignore;
+import com.smallcultfollowing.lathos.InvalidDeref;
 import com.smallcultfollowing.lathos.Lathos;
 import com.smallcultfollowing.lathos.Link;
 import com.smallcultfollowing.lathos.Output;
@@ -28,19 +29,19 @@ implements RootPage
     }
 
     @Override
-    public void renderAsLine(Output out, Link link) throws IOException
+    public void renderSummary(Output out, Link link) throws IOException
     {
-        Lathos.reflectiveRenderAsLine(this, out, link);
+        Lathos.reflectiveRenderSummary(this, out, link);
     }
 
     @Override
-    public void renderAsPage(Output out, Link link) throws IOException
+    public void renderDetails(Output out, Link link) throws IOException
     {
-        Lathos.reflectiveRenderAsPage(this, out, link);        
+        Lathos.reflectiveRenderDetails(this, out, link);        
     }
 
     @Override
-    public Object derefPage(String link)
+    public Object derefPage(String link) throws InvalidDeref
     {
         return Lathos.reflectiveDerefPage(this, link);
     }
