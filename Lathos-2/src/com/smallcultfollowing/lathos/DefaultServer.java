@@ -14,9 +14,6 @@ import org.apache.commons.lang.StringEscapeUtils;
 public abstract class DefaultServer
     implements LathosServer
 {
-    // Configuration keys:
-    private static final String includeStaticPage = "includeStaticPage";
-    
     private volatile ObjectSubst[] substs = new ObjectSubst[0];
     private final List<ObjectRenderer> renderers = new ArrayList<ObjectRenderer>();
     private final Map<String, RootPage> rootPages = new LinkedHashMap<String, RootPage>();
