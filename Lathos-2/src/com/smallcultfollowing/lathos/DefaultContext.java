@@ -77,4 +77,10 @@ public class DefaultContext
         return server;
     }
 
+    @Override
+    public ExtensiblePage topPage()
+    {
+        return stack.peek();
+    }
+
 }

@@ -186,4 +186,17 @@ public abstract class Lathos
         out.text(obj.toString());
         out._a(link);
     }
+    
+    /**
+     * Pushes and returns a sub-page with the content {@code objs} on the current context.
+     */
+    public static ExtensiblePage indent(Object... objs)
+    {
+        Context ctx = Lathos.context();
+        ExtensiblePage page = ctx.newPage(null);
+        ctx.embed(page);
+        ctx.push(page);
+        ctx.log(objs);
+        return page;
+    }
 }

@@ -54,6 +54,12 @@ public class Output
         Link link = server.defaultLink(obj);
         obj(link, obj);
     }
+    
+    /** Renders the object {@code obj}, using a relative link {@code link/fld} */
+    public void obj(Link link, String fld, Object obj) throws IOException
+    {
+        obj(new RelativeLink(link, fld), obj);        
+    }
 
     /** Renders the object {@code obj}, using the link {@code link} */
     public void obj(final Link link, final Object obj) throws IOException

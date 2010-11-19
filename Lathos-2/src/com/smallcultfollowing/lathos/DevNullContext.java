@@ -51,4 +51,10 @@ public class DevNullContext
     {
         return DevNullServer.instance;
     }
+
+    @Override
+    public ExtensiblePage topPage()
+    {
+        return DevNullPage.instance;
+    }
 }

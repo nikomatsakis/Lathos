@@ -116,11 +116,6 @@ public class CollectionRenderer
     @Override
     public Object derefPage(Object obj, LathosServer server, String link) throws InvalidDeref
     {
-        if (obj instanceof List) {
-            int idx = IndexLink.parseIndexLink(link);
-            return ((List<?>) obj).get(idx);
-        } 
-        
         if (obj instanceof Object[]) {
             int idx = IndexLink.parseIndexLink(link);
             return ((Object[]) obj)[idx];
@@ -145,16 +140,27 @@ public class CollectionRenderer
 //        }
         
         if (obj instanceof Iterable) {
-            int idx = IndexLink.parseIndexLink(link);
-            Iterator<?> iter = ((Iterable<?>) obj).iterator();
-            while (iter.hasNext()) {
-                Object elem = iter.next();
-                if (idx-- == 0)
-                    return elem;
-            }
-            throw InvalidDeref.instance;
+            Iterable<?> able = ((Iterable<?>) obj);
+            return derefIterablePage(able, link);
         }
 
+        throw InvalidDeref.instance;
+    }
+
+    public static Object derefIterablePage(Iterable<?> able, String link) throws InvalidDeref
+    {
+        int idx = IndexLink.parseIndexLink(link);
+        
+        if (able instanceof List) {
+            return ((List<?>) able).get(idx);
+        } 
+        
+        Iterator<?> iter = able.iterator();
+        while (iter.hasNext()) {
+            Object elem = iter.next();
+            if (idx-- == 0)
+                return elem;
+        }
         throw InvalidDeref.instance;
     }
 

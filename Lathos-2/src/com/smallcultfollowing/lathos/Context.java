@@ -58,4 +58,9 @@ public interface Context
      *            the page that should be on top of the stack, or null
      */
     public void pop(ExtensiblePage page);
+    
+    /** 
+     * Returns the top of the stack.
+     */
+    public ExtensiblePage topPage();
 }
