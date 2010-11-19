@@ -45,7 +45,7 @@ public class ArrayLine
     }
 
     @Override
-    public Object derefPage(String link) throws InvalidDeref
+    public Object derefPage(LathosServer server, String link) throws InvalidDeref
     {
         int i = IndexLink.parseIndexLink(link);
         if(i >= 0 && i < objs.length)

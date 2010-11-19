@@ -20,7 +20,7 @@ public class StaticPage
     }
 
     @Override
-    public Object derefPage(String link)
+    public Object derefPage(LathosServer server, String link)
     {
         try {
             Class<?> cls = Class.forName(link);

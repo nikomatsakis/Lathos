@@ -12,7 +12,7 @@ public class DevNullPage
     }
 
     @Override
-    public Object derefPage(String link)
+    public Object derefPage(LathosServer server, String link)
     {
         return null;
     }

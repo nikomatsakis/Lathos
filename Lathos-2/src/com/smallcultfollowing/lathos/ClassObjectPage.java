@@ -58,7 +58,7 @@ public class ClassObjectPage
     }
 
     @Override
-    public Object derefPage(String link)
+    public Object derefPage(LathosServer server, String link)
     {
         try {
             Field f = cls.getDeclaredField(link);

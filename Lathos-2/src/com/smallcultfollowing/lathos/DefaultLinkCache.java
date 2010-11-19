@@ -60,7 +60,7 @@ public class DefaultLinkCache
     }
 
     @Override
-    public Object derefPage(String link) throws InvalidDeref
+    public Object derefPage(LathosServer server, String link) throws InvalidDeref
     {
         long id;
         try {

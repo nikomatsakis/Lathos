@@ -27,7 +27,7 @@ public class ReflectiveRenderer
     }
 
     @Override
-    public Object derefPage(Object obj, String link) throws InvalidDeref
+    public Object derefPage(Object obj, LathosServer server, String link) throws InvalidDeref
     {
         return Lathos.reflectiveDerefPage(obj, link);
     }

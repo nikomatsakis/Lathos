@@ -80,7 +80,7 @@ public interface LathosServer
      * Dereferences {@code page} using the installed object renderers.
      * 
      * @see #addRenderer(ObjectRenderer)
-     * @see ObjectRenderer#derefPage(Object, String)
+     * @see ObjectRenderer#derefPage(Object, LathosServer, String)
      */
     public Object derefPage(Object page, String link);
 

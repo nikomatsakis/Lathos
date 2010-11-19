@@ -114,7 +114,7 @@ public class CollectionRenderer
     }
 
     @Override
-    public Object derefPage(Object obj, String link) throws InvalidDeref
+    public Object derefPage(Object obj, LathosServer server, String link) throws InvalidDeref
     {
         if (obj instanceof List) {
             int idx = IndexLink.parseIndexLink(link);

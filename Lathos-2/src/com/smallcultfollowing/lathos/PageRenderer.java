@@ -33,10 +33,10 @@ public class PageRenderer
     }
 
     @Override
-    public Object derefPage(Object obj, String link) throws InvalidDeref
+    public Object derefPage(Object obj, LathosServer server, String link) throws InvalidDeref
     {
         if (obj instanceof Page) {
-            return ((Page) obj).derefPage(link);
+            return ((Page) obj).derefPage(server, link);
         }
         throw InvalidDeref.instance;
     }

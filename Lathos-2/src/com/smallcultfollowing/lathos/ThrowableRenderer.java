@@ -60,7 +60,7 @@ public class ThrowableRenderer
     }
 
     @Override
-    public Object derefPage(Object obj, String link) throws InvalidDeref
+    public Object derefPage(Object obj, LathosServer server, String link) throws InvalidDeref
     {
         if(obj instanceof Throwable) {
             return Lathos.reflectiveDerefPage(obj, link);

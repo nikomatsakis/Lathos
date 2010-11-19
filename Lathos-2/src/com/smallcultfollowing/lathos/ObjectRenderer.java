@@ -33,9 +33,10 @@ public interface ObjectRenderer
      * "/a/b/c/d" instead, then the result of this method would then itself be
      * casted to {@link Page} and have {@link #derefPage(String)} invoked with
      * "d" as argument.
+     * @param server TODO
      * 
      * @return the result of the dereference.  
      * @throws InvalidDeref if the link cannot be resolved against obj
      */
-    public Object derefPage(Object obj, String link) throws InvalidDeref;
+    public Object derefPage(Object obj, LathosServer server, String link) throws InvalidDeref;
 }

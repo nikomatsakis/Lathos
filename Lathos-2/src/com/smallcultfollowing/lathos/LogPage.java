@@ -7,15 +7,12 @@ import java.util.Map;
 public class LogPage
     implements ExtensiblePage, RootPage
 {
-    private final String name;
+    private final String name; // warning: may be null
     private final Map<String, Page> subpages = new LinkedHashMap<String, Page>();
     
     public LogPage(String name)
     {
         super();
-        if(name == null) {
-            name = String.format("<LogPage:%02x>", System.identityHashCode(this) % 64);
-        }
         this.name = name;
     }
 
@@ -33,7 +30,7 @@ public class LogPage
     }
 
     @Override
-    public Object derefPage(String link)
+    public Object derefPage(LathosServer server, String link)
     {
         return subpages.get(link);
     }
@@ -42,22 +39,25 @@ public class LogPage
     public void renderSummary(Output out, Link link) throws IOException
     {
         out.a(link);
-        out.text(name);
+        out.text(rootPageName());
         out._a(link);
     }
 
     @Override
-    public synchronized void addSubPage(String id, Page page)
+    public synchronized void addSubPage(String link, Page page)
     {
-        if (id == null) {
-            id = "page" + subpages.size();
+        if (link == null) {
+            link = "page" + subpages.size();
         }
-        subpages.put(id, page);
+        subpages.put(link, page);
     }
 
     @Override
     public String rootPageName()
     {
+        if(name == null)
+            return String.format("<LogPage:%02x>", System.identityHashCode(this) % 64);
+
         return name;
     }
 

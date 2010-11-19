@@ -117,7 +117,7 @@ public abstract class DefaultServer
         for (int i = renderers.size() - 1; i >= 0; i--) {
             ObjectRenderer renderer = renderers.get(i);
             try {
-                return renderer.derefPage(page, link);
+                return renderer.derefPage(page, this, link);
             } catch (InvalidDeref _) {
             }
         }

@@ -27,13 +27,14 @@ public interface Page
      * there is a link "/a/b/c", and "/a/b" leads to {@code this}, then this
      * method would be invoked with "c" to yield the next step. If the link were
      * "/a/b/c/d" instead, then the result of this method would then itself be
-     * casted to {@link Page} and have {@link #derefPage(String)} invoked with
+     * casted to {@link Page} and have {@link #derefPage(LathosServer, String)} invoked with
      * "d" as argument.
+     * @param server TODO
      * 
      * @throws InvalidDeref
      *             if link cannot be dereferenced to an Object
      *             
      * @see Lathos#reflectiveDerefPage(Page, String)
      */
-    public Object derefPage(String link) throws InvalidDeref;
+    public Object derefPage(LathosServer server, String link) throws InvalidDeref;
 }

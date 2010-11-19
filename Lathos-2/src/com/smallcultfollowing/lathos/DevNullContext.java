@@ -12,12 +12,6 @@ public class DevNullContext
     }
 
     @Override
-    public ExtensiblePage subpage(String name)
-    {
-        return DevNullPage.instance;
-    }
-
-    @Override
     public ExtensiblePage push(ExtensiblePage page)
     {
         return DevNullPage.instance;
@@ -28,5 +22,33 @@ public class DevNullContext
     {
         if(page != null && page != DevNullPage.instance)
             throw new PoppedWrongPageException(DevNullPage.instance, page);
+    }
+
+    @Override
+    public void embed(Page page)
+    {
+    }
+
+    @Override
+    public void embed(String link, Page page)
+    {
+    }
+
+    @Override
+    public ExtensiblePage newPage(String name)
+    {
+        return DevNullPage.instance;
+    }
+
+    @Override
+    public Object linked(Object linkTo, Object... text)
+    {
+        return null;
+    }
+
+    @Override
+    public LathosServer server()
+    {
+        return DevNullServer.instance;
     }
 }

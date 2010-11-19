@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.smallcultfollowing.lathos.Ignore;
 import com.smallcultfollowing.lathos.InvalidDeref;
 import com.smallcultfollowing.lathos.Lathos;
+import com.smallcultfollowing.lathos.LathosServer;
 import com.smallcultfollowing.lathos.Link;
 import com.smallcultfollowing.lathos.Output;
 import com.smallcultfollowing.lathos.RootPage;
@@ -41,7 +42,7 @@ implements RootPage
     }
 
     @Override
-    public Object derefPage(String link) throws InvalidDeref
+    public Object derefPage(LathosServer server, String link) throws InvalidDeref
     {
         return Lathos.reflectiveDerefPage(this, link);
     }

@@ -30,15 +30,13 @@ public class DefaultContext
     }
     
     @Override 
-    public ExtensiblePage subpage(String name)
+    public ExtensiblePage newPage(String name)
     {
         ExtensiblePage top = stack.peek();
         if(top instanceof DevNullPage) {
             return top;
         } else {
-            ExtensiblePage subpage = new LogPage(name);
-            top.addSubPage(name, subpage);
-            return subpage;
+            return new LogPage(name);
         }
     }
     
@@ -53,6 +51,30 @@ public class DefaultContext
         ExtensiblePage popped = stack.pop();
         if(page != null && page != popped) 
             throw new PoppedWrongPageException(popped, page);
+    }
+
+    @Override
+    public void embed(Page page)
+    {
+        embed(null, page);
+    }
+
+    @Override
+    public void embed(String link, Page page)
+    {
+        stack.peek().addSubPage(link, page);
+    }
+
+    @Override
+    public Object linked(Object linkTo, Object... text)
+    {
+        return new Linked(linkTo, new ArrayLine(server, text));
+    }
+
+    @Override
+    public LathosServer server()
+    {
+        return server;
     }
 
 }
