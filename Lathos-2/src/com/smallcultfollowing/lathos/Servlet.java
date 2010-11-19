@@ -22,7 +22,7 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException 
     {
         if(req.getRequestURI().equals("/")) {
-            Link link = new BaseLink(server.indexPage());
+            Link link = new BaseLink(server.getIndexPage());
             StringBuilder sb = new StringBuilder();
             link.appendUrlString(sb);
             resp.sendRedirect("/" + sb.toString());

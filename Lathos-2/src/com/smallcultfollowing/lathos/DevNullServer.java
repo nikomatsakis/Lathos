@@ -53,7 +53,7 @@ public class DevNullServer
     }
 
     @Override
-    public RootPage indexPage()
+    public RootPage getIndexPage()
     {
         return DevNullPage.instance;
     }

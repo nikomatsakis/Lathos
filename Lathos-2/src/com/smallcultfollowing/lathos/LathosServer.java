@@ -7,7 +7,7 @@ import java.util.Collection;
 public interface LathosServer
 {
     /** Returns the default page for the server. */
-    public RootPage indexPage();
+    public RootPage getIndexPage();
 
     /**
      * Sets the object which generates default links if none is provided.
