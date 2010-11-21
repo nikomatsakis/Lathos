@@ -10,8 +10,13 @@ public class BaseLink
 
     public BaseLink(RootPage rootPage)
     {
+        this(rootPage.rootPageName());
+    }
+    
+    public BaseLink(String name)
+    {
         super();
-        this.names = new String[] { rootPage.rootPageName() };
+        this.names = new String[] { name };
     }
     
     public BaseLink(String[] names, int length) {

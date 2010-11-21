@@ -22,7 +22,7 @@ public class RunServer
         server.addSubstitutionFilter(testSubst);
         
         // Load up the index page:
-        Context ctx = server.context();
+        Context ctx = Lathos.newContextWithIndex(server);
         ctx.log("Test of the index page");
         
         ReflectiveTest test0 = new ReflectiveTest("Test0"); 
@@ -60,6 +60,8 @@ public class RunServer
         ctx.log("Maps: ", aMap);
 
         ctx.log("LinkCacheTest: ", new LinkCacheTest());
+        
+        ctx.log("EmbeddedPages: ", new EmbeddedPages());
         
         ctx.log("Don't forget to try the url /static/", StaticTest.class.getName());
         

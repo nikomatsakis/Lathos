@@ -14,14 +14,12 @@ public class DevNullContext
     @Override
     public ExtensiblePage push(ExtensiblePage page)
     {
-        return DevNullPage.instance;
+        return page;
     }
 
     @Override
     public void pop(ExtensiblePage page)
     {
-        if(page != null && page != DevNullPage.instance)
-            throw new PoppedWrongPageException(DevNullPage.instance, page);
     }
 
     @Override
@@ -41,7 +39,7 @@ public class DevNullContext
     }
 
     @Override
-    public Object linked(Object linkTo, Object... text)
+    public Page linked(Object linkTo, Object... text)
     {
         return null;
     }
@@ -56,5 +54,16 @@ public class DevNullContext
     public ExtensiblePage topPage()
     {
         return DevNullPage.instance;
+    }
+
+    @Override
+    public void append(Line line, Object... objs)
+    {
+    }
+
+    @Override
+    public Page i18n(String fmt, Object... args)
+    {
+        return null;
     }
 }

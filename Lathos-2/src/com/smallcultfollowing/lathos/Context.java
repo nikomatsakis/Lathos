@@ -14,16 +14,40 @@ public interface Context
     
     /**
      * Creates a new line with the given objects and adds it to the current
-     * LogPage.
+     * LogPage, after applying appropriate substitutions from the server.
+     * 
+     * Warning: takes ownership of the {@code objs} array.
      */
     Line log(Object... objs);
+
+    /**
+     * Appends the objs to the given line, after applying appropriate
+     * substitutions from the server.  
+     * 
+     * Warning: takes ownership of the {@code objs} array.
+     */
+    void append(Line line, Object... objs);
 
     /**
      * Returns an object suitable for passing to {@code log} that
      * will display the given text but, when clicked, go to 
      * {@code linkTo}.
+     * 
+     * @return the result, or null if this is {@link DevNullContext}
+     * 
+     * @see Linked
      */
-    Object linked(Object linkTo, Object... text);
+    Page linked(Object linkTo, Object... text);
+    
+    /**
+     * Returns an object suitable for passing to {@code log} that
+     * will display an internationalized message.
+     * 
+     * @return the result, or null if this is {@link DevNullContext}
+     * 
+     * @see I18nMessage
+     */
+    Page i18n(String fmt, Object... args);
     
     /** Adds the given page to the current LogPage */
     void embed(Page page);

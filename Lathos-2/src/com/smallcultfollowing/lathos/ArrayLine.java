@@ -3,19 +3,17 @@ package com.smallcultfollowing.lathos;
 import java.io.IOException;
 import java.util.Arrays;
 
+/** 
+ * The default {@link Line} implementation.  Stores its contained
+ * objects in an array. */
 public class ArrayLine
     implements Line
 {
-    private final LathosServer server;
     private Object[] objs;
     
-    public ArrayLine(LathosServer server, Object[] objs)
+    public ArrayLine(Object[] objs)
     {
-        this.server = server;
         this.objs = objs;
-        for(int i = 0; i < objs.length; i++) {
-            objs[i] = server.substitute(objs[i]);
-        }
     }
 
     @Override
@@ -23,9 +21,6 @@ public class ArrayLine
     {
         Object[] newObjs = Arrays.copyOf(objs, objs.length + moreObjs.length);
         System.arraycopy(moreObjs, 0, newObjs, objs.length, moreObjs.length);
-        for(int i = objs.length; i < newObjs.length; i++) {
-            newObjs[i] = server.substitute(newObjs[i]);
-        }
         objs = newObjs;
         
     }

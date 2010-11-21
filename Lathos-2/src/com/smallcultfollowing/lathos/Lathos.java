@@ -20,13 +20,16 @@ public abstract class Lathos
     }
 
     /**
-     * Performs the standard setup for a server, adding default object
-     * renders, a link cache, and other goodies. 
+     * Performs the standard setup for a server, adding default object renders,
+     * a link cache, and other goodies.
      */
     public static void setupServer(LathosServer server)
     {
+        server.addRootPage(new IndexPage());
         server.addRootPage(new StaticPage());
+        
         server.setLinkCache(new DefaultLinkCache(10000));
+        
         server.addRenderer(new ReflectiveRenderer());
         server.addRenderer(new ConstantRenderer());
         server.addRenderer(new ThrowableRenderer());
@@ -67,6 +70,53 @@ public abstract class Lathos
         Context oldCtx = currentContext.get();
         currentContext.set(newCtx);
         return oldCtx;
+    }
+
+    /**
+     * Creates a new context associated with {@code server} whose stack contains
+     * the index page for {@code server} (if any).
+     * 
+     * @param server
+     *            the server to associate with the context. If null, the
+     *            function returns {@link DevNullContext#instance}.
+     */
+    public static Context newContextWithIndex(LathosServer server)
+    {
+        if (server == null)
+            return DevNullContext.instance;
+
+        Context ctx = server.context();
+
+        Object indexPage = server.getIndexPage();
+        if (indexPage != null && indexPage instanceof ExtensiblePage) {
+            ctx.push((ExtensiblePage) indexPage);
+        }
+
+        return ctx;
+    }
+
+    /**
+     * Creates a new context associated with {@code server} whose stack contains
+     * the page {@code page}.
+     * 
+     * @param server
+     *            the server to associate with the context. If null, the
+     *            function returns {@link DevNullContext#instance}.
+     * 
+     * @param page
+     *            the page to push. If null, no page is pushed.
+     */
+    public static Context newContextWithPage(LathosServer server, ExtensiblePage page)
+    {
+        if (server == null)
+            return DevNullContext.instance;
+
+        Context ctx = server.context();
+
+        if (page != null)
+            ctx.push(page);
+
+        return ctx;
     }
 
     public static Line log(Object... objs)
@@ -129,7 +179,9 @@ public abstract class Lathos
      * default, unless the object implements the interface {@link Page}.
      * 
      * Returns {@link Lathos#invalidDeref}
-     * @throws InvalidDeref if there is no field {@code link}
+     * 
+     * @throws InvalidDeref
+     *             if there is no field {@code link}
      */
     public static Object reflectiveDerefPage(Object parentPage, String link) throws InvalidDeref
     {
@@ -186,9 +238,10 @@ public abstract class Lathos
         out.text(obj.toString());
         out._a(link);
     }
-    
+
     /**
-     * Pushes and returns a sub-page with the content {@code objs} on the current context.
+     * Pushes and returns a sub-page with the content {@code objs} on the
+     * current context.
      */
     public static ExtensiblePage indent(Object... objs)
     {

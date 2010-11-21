@@ -14,7 +14,7 @@ extends DefaultServer
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
         jettyServer.setHandler(context);
-        context.addServlet(new ServletHolder(new Servlet(this)), "/*");
+        context.addServlet(new ServletHolder(this), "/*");
         jettyServer.start();
     }
     

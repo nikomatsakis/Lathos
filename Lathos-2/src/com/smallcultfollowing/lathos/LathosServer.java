@@ -1,13 +1,41 @@
 package com.smallcultfollowing.lathos;
 
 import java.io.IOException;
-import java.io.Writer;
 import java.util.Collection;
+import java.util.Map;
+import java.util.ResourceBundle;
 
+/**
+ * A {@link LathosServer} is what processes requests to display pages.
+ * Basically, it's a web server. It is also the main point of configuration for
+ * matters such as localization, controlling how objects are rendered, etc.
+ * 
+ * A note on synchronization: like all Lathos objects, all public methods on
+ * LathosServers must be generally thread-safe. In addition, when a LathosServer
+ * is rendering a page, it will be locked, which means that if you have an
+ * {@link ObjectRenderer} or {@link Page} and its rendering methods are invoked,
+ * the server which it receives as arguments is locked and so will not be
+ * concurrently modified.
+ */
 public interface LathosServer
 {
-    /** Returns the default page for the server. */
-    public RootPage getIndexPage();
+    public static final String indexName = "index";
+
+    /**
+     * Returns the resource bundle to use for translating strings in this
+     * server.
+     * 
+     * @return the resource bundle set, or null if none has been set
+     * @see #setResourceBundle(ResourceBundle)
+     * @see ResourceBundle#getBundle(String)
+     */
+    public ResourceBundle getResourceBundle();
+
+    /**
+     * Returns the resource bundle to use for translating strings in this
+     * server.
+     */
+    public void setResourceBundle(ResourceBundle bundle);
 
     /**
      * Sets the object which generates default links if none is provided.
@@ -28,8 +56,6 @@ public interface LathosServer
      * @see #setLinkCache(LinkCache)
      */
     public Link defaultLink(Object obj);
-
-    public Iterable<RootPage> rootPages();
 
     /**
      * Used internally: when a log message is created, every object is run
@@ -55,11 +81,11 @@ public interface LathosServer
     public void addSubstitutionFilter(ObjectSubst subst);
 
     /**
-     * Renders {@code obj} using the installed object renderers. 
+     * Renders {@code obj} using the installed object renderers.
      * 
      * @throws IOException
      *             if an error occurs writing to {@code out}
-     *             
+     * 
      * @see ObjectRenderer#renderObjectSummary(Object, Output, Link)
      * @see #addRenderer(ObjectRenderer)
      */
@@ -70,7 +96,7 @@ public interface LathosServer
      * 
      * @throws IOException
      *             if an error occurs writing to {@code out}
-     *             
+     * 
      * @see ObjectRenderer#renderObjectDetails(Object, Output, Link)
      * @see #addRenderer(ObjectRenderer)
      */
@@ -98,32 +124,71 @@ public interface LathosServer
     public void addRenderer(ObjectRenderer render);
 
     /**
-     * Adds {@code page} as a root page. Root pages are pages whose links can
-     * form the initial part of a URL.
+     * Adds {@code page} as a root page using {@link RootPage#rootPageName()} as
+     * its link.
      */
     public void addRootPage(RootPage page);
 
     /** @see #addRootPage(RootPage) */
     public void addRootPages(Collection<RootPage> pages);
 
+    /**
+     * Adds a "root page", meaning one that is accessible with a url like
+     * {@code /foo}.
+     * 
+     * @param link
+     *            the url by which the page is accessible ({@code "foo"}, in the
+     *            example given above)
+     * @param page
+     *            the page to display
+     */
+    public void addRootPage(String link, Object page);
+
+    /**
+     * Returns an unmodifiable map containing the current root pages. Note that
+     * concurrent calls to {@link #addRootPage(String, Object)} will modify this
+     * map, so don't do that.
+     */
+    public Map<String, Object> rootPages();
+
     /** Removes {@code page} as a root page. */
     public void removeRootPage(RootPage page);
 
     /**
-     * Returns a fresh context whose stack consists only of the "main" or index
-     * page.
+     * Returns a fresh context. The stack on the context is empty.
      */
     public Context context();
 
     /**
-     * Process the URL {@code url} and writes the output to {@code writer}.
+     * Returns the root page mapped to {@link #indexName}, if any.
      */
-    public void renderURL(String url, Writer writer) throws IOException;
+    public Object getIndexPage();
 
     /** Waits until the server stops. */
     public void join();
 
     /** Stops the server. */
     public void stop() throws Exception;
+
+    /**
+     * When we are outputting objects, we will stop embedding after a certain
+     * point to prevent infinite recursion.  This allows you to configure the
+     * default cut-off point.
+     */
+    public void setMaxEmbedDepth(int maxDepth);
+
+    public int getMaxEmbedDepth();
+
+    /**
+     * The delegate controls matters of "look-and-feel".
+     */
+    public LathosServerDelegate getDelegate();
+
+    /**
+     * Sets the delegate for this server.  Must not be null.
+     * 
+     * @see #getDelegate()
+     */
+    public void setDelegate(LathosServerDelegate delegate);
 
 }

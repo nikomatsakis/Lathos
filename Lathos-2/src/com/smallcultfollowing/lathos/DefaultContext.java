@@ -8,12 +8,18 @@ public class DefaultContext
     private final LathosServer server;
     private final Stack<ExtensiblePage> stack;
     
-    public DefaultContext(LathosServer server, ExtensiblePage firstPage)
+    public DefaultContext(LathosServer server)
     {
         super();
         this.server = server;
         this.stack = new Stack<ExtensiblePage>();
-        stack.push(firstPage);
+    }
+    
+    private Object[] substitute(Object[] objs) {
+        for(int i = 0; i < objs.length; i++) {
+            objs[i] = server.substitute(objs[i]);
+        }
+        return objs;
     }
 
     @Override
@@ -23,7 +29,7 @@ public class DefaultContext
         if(top instanceof DevNullPage) {
             return DevNullLine.instance;
         } else {
-            ArrayLine line = new ArrayLine(server, objs);
+            ArrayLine line = new ArrayLine(substitute(objs));
             top.addSubPage(null, line);
             return line;
         }
@@ -66,9 +72,21 @@ public class DefaultContext
     }
 
     @Override
-    public Object linked(Object linkTo, Object... text)
+    public Page linked(Object linkTo, Object... text)
     {
-        return new Linked(linkTo, new ArrayLine(server, text));
+        return new Linked(linkTo, new ArrayLine(substitute(text)));
+    }
+    
+    @Override
+    public Page i18n(String fmt, Object... args)
+    {
+        return new I18nMessage(fmt, substitute(args));
+    }
+
+    @Override
+    public void append(Line line, Object... objs)
+    {
+        line.addObjectsToLine(substitute(objs));
     }
 
     @Override

@@ -1,9 +1,10 @@
 package com.smallcultfollowing.lathos;
 
 import java.io.IOException;
-import java.io.Writer;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 public class DevNullServer
     implements LathosServer
@@ -48,11 +49,6 @@ public class DevNullServer
     }
 
     @Override
-    public void renderURL(String url, Writer writer) throws IOException
-    {
-    }
-
-    @Override
     public RootPage getIndexPage()
     {
         return DevNullPage.instance;
@@ -62,12 +58,6 @@ public class DevNullServer
     public void renderObjectDetails(Output out, Link link, Object obj)
             throws IOException
     {
-    }
-
-    @Override
-    public Iterable<RootPage> rootPages()
-    {
-        return Collections.emptyList();
     }
 
     @Override
@@ -100,6 +90,50 @@ public class DevNullServer
     public Object derefPage(Object page, String link)
     {
         return null;
+    }
+
+    @Override
+    public ResourceBundle getResourceBundle()
+    {
+        return null;
+    }
+
+    @Override
+    public void setResourceBundle(ResourceBundle bundle)
+    {
+    }
+
+    @Override
+    public void addRootPage(String link, Object page)
+    {
+    }
+
+    @Override
+    public Map<String, Object> rootPages()
+    {
+        return Collections.emptyMap();
+    }
+
+    @Override
+    public void setMaxEmbedDepth(int maxDepth)
+    {
+    }
+
+    @Override
+    public int getMaxEmbedDepth()
+    {
+        return 0;
+    }
+
+    @Override
+    public LathosServerDelegate getDelegate()
+    {
+        return null;
+    }
+
+    @Override
+    public void setDelegate(LathosServerDelegate delegate)
+    {
     }
 
 }

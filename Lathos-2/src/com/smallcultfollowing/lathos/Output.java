@@ -15,20 +15,17 @@ public class Output
     extends HtmlCanvas
 {
     public final LathosServer server;
+    private int embedDepth = 0;
+    private final int maxEmbedDepth;
 
     public Output(LathosServer server, HttpServletRequest request, HttpServletResponse response, Writer out)
     {
         super(request, response, out);
         this.server = server;
+        this.maxEmbedDepth = server.getMaxEmbedDepth();
     }
 
-    public Output(LathosServer server, Writer output)
-    {
-        super(output);
-        this.server = server;
-    }
-
-    public static final Output devNull = new Output(DevNullServer.instance, new Writer() {
+    public static final Output devNull = new Output(DevNullServer.instance, null, null, new Writer() {
         @Override
         public void write(char[] cbuf, int off, int len) throws IOException
         {
@@ -54,11 +51,25 @@ public class Output
         Link link = server.defaultLink(obj);
         obj(link, obj);
     }
-    
-    /** Renders the object {@code obj}, using a relative link {@code link/fld} */
+
+    /**
+     * Renders the object {@code obj}, using a relative link {@code link/fld}
+     * 
+     * @see RelativeLink
+     */
     public void obj(Link link, String fld, Object obj) throws IOException
     {
-        obj(new RelativeLink(link, fld), obj);        
+        obj(new RelativeLink(link, fld), obj);
+    }
+
+    /**
+     * Renders the object {@code obj}, using an index link {@code link/fld}
+     * 
+     * @see IndexLink
+     */
+    public void obj(Link link, int idx, Object obj) throws IOException
+    {
+        obj(new IndexLink(link, idx), obj);
     }
 
     /** Renders the object {@code obj}, using the link {@code link} */
@@ -68,23 +79,54 @@ public class Output
             @Override
             public void renderOn(HtmlCanvas canvas) throws IOException
             {
-                assert(canvas == Output.this);
+                assert (canvas == Output.this);
                 server.renderObjectSummary(Output.this, link, obj);
             }
         });
     }
 
+    /**
+     * Embeds the object {@code obj}, using an indexed link {@code link/idx}
+     * 
+     * @see #embed(Link, Object)
+     * @see RelativeLink
+     */
+    public void embed(Link link, int idx, Object obj) throws IOException
+    {
+        embed(new IndexLink(link, idx), obj);
+    }
+    
+    /**
+     * Embeds the object {@code obj}, using a relative link {@code link/fld}
+     * 
+     * @see #embed(Link, Object)
+     * @see RelativeLink
+     */
+    public void embed(Link link, String fld, Object obj) throws IOException
+    {
+        embed(new RelativeLink(link, fld), obj);
+    }
+    
     /** Renders the object {@code obj}, using the link {@code link} */
     public void embed(final Link link, final Object obj) throws IOException
     {
+        if (embedDepth == maxEmbedDepth) {
+            i().text("Maximum embed depth of "+maxEmbedDepth+" exceeded!")._i();
+            return;
+        }
+
+        server.getDelegate().startEmbed(this, embedDepth, link, obj);
+        embedDepth += 1;
         render(new Renderable() {
             @Override
             public void renderOn(HtmlCanvas canvas) throws IOException
             {
-                assert(canvas == Output.this);
+                assert (canvas == Output.this);
                 server.renderObjectDetails(Output.this, link, obj);
             }
         });
+        embedDepth -= 1;
+        server.getDelegate().endEmbed(this, embedDepth, link, obj);
     }
 
     /** Emit a link to {@code link}, if non-null */
@@ -119,5 +161,11 @@ public class Output
             _a();
         }
         return this;
+    }
+
+    public void println(String string) throws IOException
+    {
+        text(string);
+        out.write("\n");
     }
 }
