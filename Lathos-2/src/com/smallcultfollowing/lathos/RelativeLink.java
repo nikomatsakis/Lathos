@@ -26,4 +26,10 @@ public class RelativeLink
     {
         return base != null && base.isValid();
     }
+    
+    @Override
+    public String toString() 
+    {
+        return BaseLink.toString(this);
+    }
 }

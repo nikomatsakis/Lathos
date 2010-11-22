@@ -1,9 +1,6 @@
 package com.smallcultfollowing.lathos;
 
 import java.io.IOException;
-import java.text.AttributedCharacterIterator;
-import java.text.MessageFormat;
-import java.util.ResourceBundle;
 
 public class I18nMessage
     implements Page
@@ -18,62 +15,10 @@ public class I18nMessage
         this.arguments = arguments;
     }
 
-    private boolean indicesEqual(Integer oldIndex, Integer newIndex)
-    {
-        if(oldIndex == newIndex)
-            return true;
-
-        if(oldIndex == null || newIndex == null)
-            return false;
-        
-        return newIndex.equals(oldIndex);
-    }
-    
     @Override
     public void renderSummary(Output out, Link link) throws IOException
     {
-        ResourceBundle bundle = out.server.getResourceBundle();
-        if(bundle != null) {
-            String messageFmt = bundle.getString(messageName);
-            if(messageFmt != null) {
-                MessageFormat fmt = new MessageFormat(messageFmt);
-                AttributedCharacterIterator iter = fmt.formatToCharacterIterator(arguments);
-                
-                Integer prevArgument = null;
-                Link currentLink = null;
-                
-                // XXX This is probably not ideal.  Maybe we should replace {1}
-                // XXX with a call to argument.renderSummary(), rather than
-                // XXX relying on MessageFormat to supply the toString() value.
-                
-                while(iter.getIndex() < iter.getEndIndex()) {
-                    Integer argument = (Integer) iter.getAttribute(MessageFormat.Field.ARGUMENT);
-                    
-                    if (!indicesEqual(prevArgument, argument)) {
-                        if(currentLink != null)
-                            out._a(currentLink);
-                        
-                        if(argument != null) {
-                            currentLink = new IndexLink(link, argument);
-                            out.a(currentLink);
-                        } else {
-                            currentLink = null;
-                        }
-                        
-                        prevArgument = argument;
-                    }
-                    
-                    out.text(Character.toString(iter.next()));
-                }
-            }
-        } else {
-            out.text(messageName);
-            out.text("(");
-            for(int i = 0; i < arguments.length; i++) {
-                out.obj(link, i, arguments[i]);
-            }
-            out.text(")");
-        }
+        Lathos.renderI18nSummary(messageName, arguments, out, link, link);
     }
 
     @Override

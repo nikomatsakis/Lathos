@@ -80,15 +80,15 @@ public class DefaultDelegate
         out._style();
         
         out.body();
-        emitBreadcrumbs(out);
+        emitBreadcrumbs(out, link);
     }
 
-    public void emitBreadcrumbs(Output out) throws IOException
+    public void emitBreadcrumbs(Output out, Link link) throws IOException
     {
         String color = nextBackgroundColor();
         out.div(id("breadcrumbs").class_("log initiallyOpen").style("background-color: " + color));
         
-        String uri = out.request.getRequestURI();
+        String uri = link.toString();
         assert uri.startsWith("/");
         StringBuffer sb = new StringBuffer();
         String[] names = uri.split("/");

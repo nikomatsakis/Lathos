@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import com.smallcultfollowing.lathos.Context;
 import com.smallcultfollowing.lathos.Lathos;
@@ -17,6 +18,8 @@ public class RunServer
     public static void main(String[] args) throws Exception
     {
         LathosServer server = Lathos.serverOnPort(8080);
+        
+        server.setResourceBundle(ResourceBundle.getBundle("com/smallcultfollowing/lathos/test/Test"));
         
         TestSubst testSubst = new TestSubst("subst-from", "subst-to");
         server.addSubstitutionFilter(testSubst);
@@ -64,6 +67,9 @@ public class RunServer
         ctx.log("EmbeddedPages: ", new EmbeddedPages());
         
         ctx.log("Don't forget to try the url /static/", StaticTest.class.getName());
+        
+        ctx.log("Internationalization 1: ", ctx.i18n("TestMessage", d1, test0));
+        ctx.log("Internationalization 2: ", ctx.i18n("UnknownTestMessage", d1, test0));
         
         server.join();
     }

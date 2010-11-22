@@ -133,9 +133,7 @@ public class Output
     public Output a(Link link) throws IOException
     {
         if (link != null && link.isValid()) {
-            StringBuilder sb = new StringBuilder();
-            link.appendUrlString(sb);
-            a(AttributesFactory.href(sb.toString()));
+            a(AttributesFactory.href(link.toString()));
         }
         return this;
     }
@@ -147,9 +145,7 @@ public class Output
     public Output a(Link link, Attributes attrs) throws IOException
     {
         if (link != null && link.isValid()) {
-            StringBuilder sb = new StringBuilder();
-            link.appendUrlString(sb);
-            a(attrs.href(sb.toString()));
+            a(attrs.href(link.toString()));
         }
         return this;
     }

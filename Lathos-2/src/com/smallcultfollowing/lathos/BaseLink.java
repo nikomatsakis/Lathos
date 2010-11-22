@@ -40,5 +40,18 @@ public class BaseLink
     {
         return true;
     }
+    
+    @Override
+    public String toString()
+    {
+        return toString(this);
+    }
+
+    public static String toString(Link link)
+    {
+        StringBuilder sb = new StringBuilder();
+        link.appendUrlString(sb);
+        return sb.toString();
+    }
 
 }

@@ -181,9 +181,7 @@ public abstract class DefaultServer
         String url = req.getRequestURI();
         if (url.equals("/")) {
             Link link = new BaseLink(LathosServer.indexName);
-            StringBuilder sb = new StringBuilder();
-            link.appendUrlString(sb);
-            resp.sendRedirect(sb.toString());
+            resp.sendRedirect(link.toString());
             return;
         }
 

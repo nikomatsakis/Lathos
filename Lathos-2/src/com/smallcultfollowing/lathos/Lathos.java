@@ -2,6 +2,11 @@ package com.smallcultfollowing.lathos;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.text.AttributedCharacterIterator;
+import java.text.MessageFormat;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 public abstract class Lathos
 {
@@ -27,9 +32,9 @@ public abstract class Lathos
     {
         server.addRootPage(new IndexPage());
         server.addRootPage(new StaticPage());
-        
+
         server.setLinkCache(new DefaultLinkCache(10000));
-        
+
         server.addRenderer(new ReflectiveRenderer());
         server.addRenderer(new ConstantRenderer());
         server.addRenderer(new ThrowableRenderer());
@@ -160,12 +165,39 @@ public abstract class Lathos
                     out.obj(fldLink, value);
                 } catch (Exception e) {
                     out.text("Failed to access: ");
-                    out.obj(fldLink, e);
+                    out.obj(e);
                 }
                 out._td();
 
                 out._tr();
             }
+            
+            for (Method mthd : cls.getDeclaredMethods()) {
+                AllowReflectiveDeref allow = mthd.getAnnotation(AllowReflectiveDeref.class);
+                if(allow == null || !allow.showInDetails())
+                    continue;
+                
+                mthd.setAccessible(true);
+                out.tr();
+                Link mthdLink = new RelativeLink(link, mthd.getName());
+                
+                out.td();
+                out.text(mthd.getName());
+                out._td();
+                
+                out.td();
+                try {
+                    Object value = mthd.invoke(page);
+                    out.obj(mthdLink, value);
+                } catch (Exception e) {
+                    out.text("Failed to invoke: ");
+                    out.obj(e);
+                }
+                out._td();
+                
+                out._tr();
+            }
+            
             cls = cls.getSuperclass();
         }
 
@@ -173,34 +205,137 @@ public abstract class Lathos
 
     }
 
+    private static boolean indicesEqual(Integer oldIndex, Integer newIndex)
+    {
+        if(oldIndex == newIndex)
+            return true;
+
+        if(oldIndex == null || newIndex == null)
+            return false;
+        
+        return newIndex.equals(oldIndex);
+    }
+    
+    public static void renderI18nSummary(String messageName, Object[] arguments, Output out, Link mainLink, Link argumentsLink)
+            throws IOException
+    {
+        ResourceBundle bundle = out.server.getResourceBundle();
+        fallback:
+        if(bundle != null) {
+            String messageFmt;
+            try {
+                 messageFmt = bundle.getString(messageName);                
+            } catch (MissingResourceException e) {
+                break fallback;
+            }
+            
+            MessageFormat fmt = new MessageFormat(messageFmt);
+            AttributedCharacterIterator iter = fmt.formatToCharacterIterator(arguments);
+            
+            Integer prevArgument = null;
+            Link currentLink = null;
+            
+            char c;
+            while((c = iter.next()) != AttributedCharacterIterator.DONE) {
+                Integer argument = (Integer) iter.getAttribute(MessageFormat.Field.ARGUMENT);
+                
+                if (!indicesEqual(prevArgument, argument)) {
+                    if(currentLink != null)
+                        out._a(currentLink);
+                    
+                    if(argument != null) {
+                        currentLink = new IndexLink(argumentsLink, argument);
+                        out.a(currentLink);
+                    } else {
+                        currentLink = null;
+                    }
+                    
+                    prevArgument = argument;
+                }
+                
+                // if some area is not otherwise linked, link to "mainLink"
+                if(currentLink == null) {
+                    currentLink = mainLink;
+                    out.a(currentLink);
+                }
+                
+                out.text(Character.toString(c));
+            }
+            
+            if(currentLink != null) {
+                out._a(currentLink);
+            }
+            
+            return;
+        }
+        
+        out.a(mainLink);
+        out.text(messageName);
+        out._a(mainLink);
+        out.text("(");
+        for(int i = 0; i < arguments.length; i++) {
+            if(i > 0)
+                out.text(", ");
+            out.obj(argumentsLink, i, arguments[i]);
+        }
+        out.text(")");
+    }
+
     /**
      * Reflectively dereferences a link from this object by looking for a field
-     * with that name. This is the method which is used to deref an object by
-     * default, unless the object implements the interface {@link Page}.
+     * or method with that name. 
      * 
-     * Returns {@link Lathos#invalidDeref}
+     * The behavior of this method can be somewhat controlled via annotation.
+     * Fields are enabled by default but can be annotated with {@link Ignore}
+     * to make them invisible and not followable.  Methods are <b>disabled</b>
+     * by default but can be annotated with {@link AllowReflectiveDeref} to
+     * make them followable.  
      * 
      * @throws InvalidDeref
      *             if there is no field {@code link}
      */
     public static Object reflectiveDerefPage(Object parentPage, String link) throws InvalidDeref
     {
+        // Search for a field with the name link:
         Class<?> cls = parentPage.getClass();
         while (cls != Object.class) {
             Field fld;
             try {
                 fld = cls.getDeclaredField(link);
-                fld.setAccessible(true);
-                try {
-                    return fld.get(parentPage);
-                } catch (Exception e) {
-                    return e;
+                if (fld.getAnnotation(Ignore.class) == null) {
+                    fld.setAccessible(true);
+                    try {
+                        return fld.get(parentPage);
+                    } catch (Exception e) {
+                        return e;
+                    }
                 }
             } catch (SecurityException e1) {
             } catch (NoSuchFieldException e1) {
             }
             cls = cls.getSuperclass();
         }
+
+        // Search for a method with the name link:
+        // (This is particularly important for Scala)
+        cls = parentPage.getClass();
+        while (cls != Object.class) {
+            try {
+                Method mthd = cls.getDeclaredMethod(link);
+                if(mthd.getAnnotation(AllowReflectiveDeref.class) != null) {
+                    mthd.setAccessible(true);
+                    try {
+                        return mthd.invoke(parentPage);
+                    } catch (Exception e) {
+                        return e;
+                    }
+                }
+            } catch (SecurityException e1) {
+            } catch (NoSuchMethodException e) {
+            }
+            cls = cls.getSuperclass();
+        }
+
         throw InvalidDeref.instance;
     }
 

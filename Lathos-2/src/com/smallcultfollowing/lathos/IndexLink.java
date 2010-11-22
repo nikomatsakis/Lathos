@@ -22,6 +22,12 @@ public class IndexLink
     }
 
     @Override
+    public String toString()
+    {
+        return BaseLink.toString(this);
+    }
+    
+    @Override
     public boolean isValid()
     {
         return base != null && base.isValid();
