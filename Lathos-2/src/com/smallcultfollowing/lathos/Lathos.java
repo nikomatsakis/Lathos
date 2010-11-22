@@ -387,4 +387,11 @@ public abstract class Lathos
         ctx.log(objs);
         return page;
     }
+
+    public static Object invalidDerefIfNull(Object object) throws InvalidDeref
+    {
+        if(object == null)
+            throw InvalidDeref.instance;
+        return object;
+    }
 }

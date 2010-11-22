@@ -192,10 +192,6 @@ public abstract class DefaultServer
             throws IOException
     {
         String url = req.getRequestURI();
-        if (url.startsWith("/")) {
-            url = url.substring(1);
-        }
-
         PrintWriter writer = resp.getWriter();
         try {
             Output out = new Output(this, req, resp, writer);
@@ -203,7 +199,7 @@ public abstract class DefaultServer
             if(delegate.handleRequest(url, out))
                 return;
     
-            String[] names = url.split("/");
+            String[] names = BaseLink.decodeIntoNames(url);
     
             // Try to dereference the URL pages. This is kind of
             // grungy, but the idea is to retain the last valid

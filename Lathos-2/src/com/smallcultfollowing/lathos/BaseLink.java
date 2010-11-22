@@ -1,5 +1,8 @@
 package com.smallcultfollowing.lathos;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Arrays;
 
 
@@ -29,10 +32,10 @@ public class BaseLink
     {
         sb.append("/");
         for(int i = 0; i < names.length - 1; i++) {
-            sb.append(names[i]);
+            sb.append(encode(names[i]));
             sb.append("/");
         }
-        sb.append(names[names.length - 1]);
+        sb.append(encode(names[names.length - 1]));
     }
 
     @Override
@@ -46,12 +49,41 @@ public class BaseLink
     {
         return toString(this);
     }
+    
+    public static String encode(String name)
+    {
+        try {
+            return URLEncoder.encode(name, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String decode(String url)
+    {
+        try {
+            return URLDecoder.decode(url, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static String toString(Link link)
     {
         StringBuilder sb = new StringBuilder();
         link.appendUrlString(sb);
         return sb.toString();
+    }
+
+    public static String[] decodeIntoNames(String url)
+    {
+        if(url.startsWith("/"))
+            url = url.substring(1);
+        String[] names = url.split("/");
+        for(int i = 0; i < names.length; i++) {
+            names[i] = BaseLink.decode(names[i]);
+        }
+        return names;
     }
 
 }

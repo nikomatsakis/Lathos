@@ -18,7 +18,7 @@ public class RelativeLink
     {
         base.appendUrlString(sb);
         sb.append("/");
-        sb.append(next);
+        sb.append(BaseLink.encode(next));
     }
 
     @Override

@@ -71,6 +71,8 @@ public class RunServer
         ctx.log("Internationalization 1: ", ctx.i18n("TestMessage", d1, test0));
         ctx.log("Internationalization 2: ", ctx.i18n("UnknownTestMessage", d1, test0));
         
+        ctx.log("URL Escaping is required for the keys in this guy to work: ", new UrlEscape());
+        
         server.join();
     }
 }

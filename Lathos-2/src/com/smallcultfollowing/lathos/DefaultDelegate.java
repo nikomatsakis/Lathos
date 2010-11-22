@@ -14,7 +14,6 @@ public class DefaultDelegate
 {
     private int maxId = 0;
     private final LinkedList<String> idStack = new LinkedList<String>();
-    private int currentBackgroundColor = 0;
     private final String[] backgroundColors = new String[] { "E6FAFF", "B2B091", "FFFDE9", "CCA6B2", "B29AA2" };
 
     @Override
@@ -85,18 +84,15 @@ public class DefaultDelegate
 
     public void emitBreadcrumbs(Output out, Link link) throws IOException
     {
-        String color = nextBackgroundColor();
+        String color = backgroundColor(0);
         out.div(id("breadcrumbs").class_("log initiallyOpen").style("background-color: " + color));
         
-        String uri = link.toString();
-        assert uri.startsWith("/");
-        StringBuffer sb = new StringBuffer();
-        String[] names = uri.split("/");
-        for(int i = 1; i < names.length; i++) {
-            if(i > 1)
+        String[] names = BaseLink.decodeIntoNames(link.toString());
+        for(int i = 0; i < names.length; i++) {
+            if(i > 0)
                 out.text(" → ");
-            sb.append("/").append(names[i]);
-            out.a(href(sb.toString())).text(names[i])._a();
+            Link linkSoFar = new BaseLink(names, i+1);
+            out.a(href(linkSoFar.toString())).text(names[i])._a();
         }
         
         out._div();
@@ -115,7 +111,7 @@ public class DefaultDelegate
         // Open a <DIV> and generate a unique id for it:
         String parentId = (idStack.isEmpty() ? "" : idStack.getLast());
         String id = freshId();
-        String color = nextBackgroundColor();
+        String color = backgroundColor(embedDepth);
         out.div(id(id).class_("log initiallyOpen").style("background-color: " + color));
         idStack.add(id);
 
@@ -132,9 +128,9 @@ public class DefaultDelegate
         }
     }
 
-    private String nextBackgroundColor()
+    private String backgroundColor(int depth)
     {
-        return backgroundColors[(currentBackgroundColor++) % backgroundColors.length];
+        return backgroundColors[depth % backgroundColors.length];
     }
 
     private String freshId()
