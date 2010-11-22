@@ -289,5 +289,4 @@ public abstract class DefaultServer
         this.delegate = delegate;
     }
 
-    
 }

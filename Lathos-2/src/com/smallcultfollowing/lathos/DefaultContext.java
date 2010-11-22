@@ -7,16 +7,17 @@ public class DefaultContext
 {
     private final LathosServer server;
     private final Stack<ExtensiblePage> stack;
-    
+
     public DefaultContext(LathosServer server)
     {
         super();
         this.server = server;
         this.stack = new Stack<ExtensiblePage>();
     }
-    
-    private Object[] substitute(Object[] objs) {
-        for(int i = 0; i < objs.length; i++) {
+
+    private Object[] substitute(Object[] objs)
+    {
+        for (int i = 0; i < objs.length; i++) {
             objs[i] = server.substitute(objs[i]);
         }
         return objs;
@@ -25,37 +26,45 @@ public class DefaultContext
     @Override
     public Line log(Object... objs)
     {
-        ExtensiblePage top = stack.peek();
-        if(top instanceof DevNullPage) {
+        if (!stack.isEmpty()) {
+            ExtensiblePage top = stack.peek();
+            if (top instanceof DevNullPage) {
+                return DevNullLine.instance;
+            } else {
+                ArrayLine line = new ArrayLine(substitute(objs));
+                top.addSubPage(null, line);
+                return line;
+            }
+        } else
             return DevNullLine.instance;
-        } else {
-            ArrayLine line = new ArrayLine(substitute(objs));
-            top.addSubPage(null, line);
-            return line;
-        }
     }
-    
-    @Override 
+
+    @Override
     public ExtensiblePage newPage(String name)
     {
-        ExtensiblePage top = stack.peek();
-        if(top instanceof DevNullPage) {
-            return top;
-        } else {
-            return new LogPage(name);
-        }
+        if (!stack.isEmpty()) {
+            ExtensiblePage top = stack.peek();
+            if (top instanceof DevNullPage) {
+                return top;
+            } else {
+                return new LogPage(name);
+            }
+        } else
+            return DevNullPage.instance;
     }
-    
+
     @Override
-    public ExtensiblePage push(ExtensiblePage page) {
+    public ExtensiblePage push(ExtensiblePage page)
+    {
         stack.push(page);
         return page;
     }
-    
+
     @Override
-    public void pop(ExtensiblePage page) {
+    public void pop(ExtensiblePage page)
+    {
         ExtensiblePage popped = stack.pop();
-        if(page != null && page != popped) 
+        if (page != null && page != popped)
             throw new PoppedWrongPageException(popped, page);
     }
 
@@ -68,7 +77,9 @@ public class DefaultContext
     @Override
     public void embed(String link, Page page)
     {
-        stack.peek().addSubPage(link, page);
+        if (!stack.isEmpty()) {
+            stack.peek().addSubPage(link, page);
+        }
     }
 
     @Override
@@ -76,7 +87,7 @@ public class DefaultContext
     {
         return new Linked(linkTo, new ArrayLine(substitute(text)));
     }
-    
+
     @Override
     public Page i18n(String fmt, Object... args)
     {
@@ -98,7 +109,10 @@ public class DefaultContext
     @Override
     public ExtensiblePage topPage()
     {
-        return stack.peek();
+        if (stack.isEmpty())
+            return DevNullPage.instance;
+        else
+            return stack.peek();
     }
 
 }

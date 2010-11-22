@@ -136,4 +136,9 @@ public class DevNullServer
     {
     }
 
+    @Override
+    public void openInBrowser()
+    {
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.smallcultfollowing.lathos;
 
+import static org.rendersnake.AttributesFactory.class_;
 import static org.rendersnake.AttributesFactory.href;
 import static org.rendersnake.AttributesFactory.id;
 import static org.rendersnake.AttributesFactory.onclick;
@@ -24,60 +25,62 @@ public class DefaultDelegate
         out.html();
         
         out.script(AttributesFactory.type("text/javascript"));
-        out.println("function toggleId(id)");
-        out.println("{");
-        out.println("    var target = document.getElementById(id);");
-        out.println("    var kids = target.childNodes;");
-        out.println("    var openedKids = false;");
-        out.println("    var closedKids = false;");
-        out.println("    for(var i = 0; (i < kids.length); i++) {");
-        out.println("        var kid = kids[i];");
-        out.println("        if(");
-        out.println("            kid.className == 'content' ||");
-        out.println("            kid.className == 'log initiallyOpen' ||");
-        out.println("            kid.className == 'log initiallyClosed'");
-        out.println("        ) {");
-        out.println("            if(kid.style.display == 'none') {");
-        out.println("                kid.style.display = 'block';");
-        out.println("                openedKids = true;");
-        out.println("            } else {");
-        out.println("                kid.style.display = 'none';");
-        out.println("                closedKids = true;");
-        out.println("            }");
-        out.println("        }");
-        out.println("    }");
-        out.println("    ");
-        out.println("    if(openedKids) {");
-        out.println("        target.style.opacity = 1.0;");
-        out.println("    } else if (closedKids) {");
-        out.println("        target.style.opacity = 0.25;");
-        out.println("    }");
-        out.println("}");
+        out.rawLine("function toggleId(id)");
+        out.rawLine("{");
+        out.rawLine("    var target = document.getElementById(id);");
+        out.rawLine("    var kids = target.childNodes;");
+        out.rawLine("    var openedKids = false;");
+        out.rawLine("    var closedKids = false;");
+        out.rawLine("    for(var i = 0; (i < kids.length); i++) {");
+        out.rawLine("        var kid = kids[i];");
+        out.rawLine("        if(");
+        out.rawLine("            kid.className == 'content'");
+        out.rawLine("        ) {");
+        out.rawLine("            if(kid.style.display == 'none') {");
+        out.rawLine("                kid.style.display = 'block';");
+        out.rawLine("                openedKids = true;");
+        out.rawLine("            } else {");
+        out.rawLine("                kid.style.display = 'none';");
+        out.rawLine("                closedKids = true;");
+        out.rawLine("            }");
+        out.rawLine("        }");
+        out.rawLine("    }");
+        out.rawLine("    ");
+        out.rawLine("    if(openedKids) {");
+        out.rawLine("        target.style.opacity = 1.0;");
+        out.rawLine("    } else if (closedKids) {");
+        out.rawLine("        target.style.opacity = 0.25;");
+        out.rawLine("    }");
+        out.rawLine("}");
         out._script();
 
         out.style();
-        out.println("DIV.log {");
-        out.println("    border-width: thin;");
-        out.println("    border-style: solid;");
-        out.println("    margin-top: .1cm;");
-        out.println("    margin-bottom: .1cm;");
-        out.println("    margin-left: .3cm;                    ");
-        out.println("}");
-        out.println(".initiallyOpen {");
-        out.println("    opacity: 1.0;                    ");
-        out.println("}");
-        out.println(".initiallyClosed {");
-        out.println("    opacity: 0.25;");
-        out.println("}");
-        out.println("A:hover {");
-        out.println("    text-decoration: underline;");
-        out.println("}");
-        out.println("A:link {");
-        out.println("    text-decoration: none;");
-        out.println("}");
-        out.println("A:visited {");
-        out.println("    text-decoration: none;");
-        out.println("}");
+        out.rawLine("DIV.controls {");
+        out.rawLine("    float: right;");
+        out.rawLine("    font-size: small;");
+        out.rawLine("}");
+        out.rawLine("DIV.log {");
+        out.rawLine("    border-width: thin;");
+        out.rawLine("    border-style: solid;");
+        out.rawLine("    margin-top: .1cm;");
+        out.rawLine("    margin-bottom: .1cm;");
+        out.rawLine("    margin-left: .3cm;                    ");
+        out.rawLine("}");
+        out.rawLine(".initiallyOpen {");
+        out.rawLine("    opacity: 1.0;                    ");
+        out.rawLine("}");
+        out.rawLine(".initiallyClosed {");
+        out.rawLine("    opacity: 0.25;");
+        out.rawLine("}");
+        out.rawLine("A:hover {");
+        out.rawLine("    text-decoration: underline;");
+        out.rawLine("}");
+        out.rawLine("A:link {");
+        out.rawLine("    text-decoration: none;");
+        out.rawLine("}");
+        out.rawLine("A:visited {");
+        out.rawLine("    text-decoration: none;");
+        out.rawLine("}");
         out._style();
         
         out.body();
@@ -117,17 +120,23 @@ public class DefaultDelegate
         out.div(id(id).class_("log initiallyOpen").style("background-color: " + color));
         idStack.add(id);
 
+        out.div(class_("controls").style("background-color: " + color));
+
         // Up-left arrow to go to parent:
-        out.a(href("#" + parentId)).text("\u21f1")._a();
+        // out.a(href("#" + parentId)).text("\u21f1")._a();
 
         // Down arrow to hide:
-        out.span(onclick("toggleId('"+id+"')")).text("\u25bc")._span();
+        out.span(onclick("toggleId('"+id+"')")).text("(hide)")._span();
 
         // Up arrow to magnify:
         if (link != null && link.isValid()) {
-            out.a(link).text("\u25b2");
+            out.a(link).text(" (focus)");
             out._a(link);
         }
+        
+        out._div();
+        
+        out.div(class_("content"));
     }
 
     private String backgroundColor(int depth)
@@ -143,6 +152,7 @@ public class DefaultDelegate
     @Override
     public void endEmbed(Output out, int embedDepth, Link link, Object obj) throws IOException
     {
+        out._div();
         out._div();
     }
 

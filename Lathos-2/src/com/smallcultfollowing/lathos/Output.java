@@ -159,9 +159,9 @@ public class Output
         return this;
     }
 
-    public void println(String string) throws IOException
+    public void rawLine(String string) throws IOException
     {
-        text(string);
+        out.write(string);
         out.write("\n");
     }
 }

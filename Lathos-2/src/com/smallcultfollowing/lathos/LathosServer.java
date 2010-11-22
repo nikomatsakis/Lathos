@@ -163,6 +163,9 @@ public interface LathosServer
      * Returns the root page mapped to {@link #indexName}, if any.
      */
     public Object getIndexPage();
+    
+    /** Attempts to open the index page. */
+    public void openInBrowser();
 
     /** Waits until the server stops. */
     public void join();

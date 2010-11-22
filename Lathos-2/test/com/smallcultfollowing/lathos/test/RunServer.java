@@ -73,6 +73,7 @@ public class RunServer
         
         ctx.log("URL Escaping is required for the keys in this guy to work: ", new UrlEscape());
         
+        server.openInBrowser();
         server.join();
     }
 }
