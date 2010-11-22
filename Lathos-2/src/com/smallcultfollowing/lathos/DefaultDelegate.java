@@ -14,7 +14,9 @@ public class DefaultDelegate
 {
     private int maxId = 0;
     private final LinkedList<String> idStack = new LinkedList<String>();
-    private final String[] backgroundColors = new String[] { "E6FAFF", "B2B091", "FFFDE9", "CCA6B2", "B29AA2" };
+    
+    private final String[] backgroundColors = 
+        new String[] { "C4D9FF", "B1C4E5", "93A3BF", "7A859E", "626D7F" };
 
     @Override
     public void startHtmlPage(Output out, Link link, Object rootPage) throws IOException
