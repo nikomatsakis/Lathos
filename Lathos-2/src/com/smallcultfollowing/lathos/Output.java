@@ -128,6 +128,23 @@ public class Output
         embedDepth -= 1;
         server.getDelegate().endEmbed(this, embedDepth, link, obj);
     }
+    
+    /** Asks the delegate to start a subpage. This generally produces
+     * the same decoration as an {@link #embed(Link, Object) embedded object},
+     * but without embedded any content.
+     * Must be matched with a call to link {{@link #_subpage()}. */
+    public void subpage() throws IOException
+    {
+        server.getDelegate().startSubPage(this, embedDepth);
+        embedDepth += 1;
+    }
+    
+    /** Matched close call for {@link #subpage()} */
+    public void _subpage() throws IOException
+    {
+        embedDepth -= 1;
+        server.getDelegate().endSubPage(this, embedDepth);
+    }
 
     /** Emit a link to {@code link}, if non-null */
     public Output a(Link link) throws IOException

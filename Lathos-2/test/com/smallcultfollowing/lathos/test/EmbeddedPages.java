@@ -26,6 +26,14 @@ implements Page
     {
         out.embed(link, "lst1", lst1);
         out.embed(link, "lst2", lst2);
+        
+        out.subpage();
+        out.text("A subpage!");
+        out.subpage();
+        out.text("A nested subpage!");
+        out._subpage();
+        out.text("Back in the original subpage!");
+        out._subpage();
     }
 
     @Override

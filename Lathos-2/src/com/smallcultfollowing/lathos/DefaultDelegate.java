@@ -114,11 +114,11 @@ public class DefaultDelegate
     public void startEmbed(Output out, int embedDepth, Link link, Object obj) throws IOException
     {
         // Open a <DIV> and generate a unique id for it:
-        String parentId = (idStack.isEmpty() ? "" : idStack.getLast());
+        // String parentId = (idStack.isEmpty() ? "" : idStack.getLast());
         String id = freshId();
         String color = backgroundColor(embedDepth);
         out.div(id(id).class_("log initiallyOpen").style("background-color: " + color));
-        idStack.add(id);
+        idStack.push(id);
 
         out.div(class_("controls").style("background-color: " + color));
 
@@ -154,12 +154,25 @@ public class DefaultDelegate
     {
         out._div();
         out._div();
+        idStack.pop();
     }
 
     @Override
     public boolean handleRequest(String url, Output out) throws IOException
     {
         return false;
+    }
+
+    @Override
+    public void startSubPage(Output output, int embedDepth) throws IOException
+    {
+        startEmbed(output, embedDepth, null, null);
+    }
+
+    @Override
+    public void endSubPage(Output output, int embedDepth) throws IOException
+    {
+        endEmbed(output, embedDepth, null, null);
     }
 
 }

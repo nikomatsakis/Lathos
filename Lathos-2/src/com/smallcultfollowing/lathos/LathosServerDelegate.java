@@ -14,4 +14,6 @@ public interface LathosServerDelegate
     public void endHtmlPage(Output out, Link link, Object rootPage) throws IOException;
     public void startEmbed(Output out, int embedDepth, Link link, Object obj) throws IOException;
     public void endEmbed(Output out, int embedDepth, Link link, Object obj) throws IOException;
+    public void startSubPage(Output output, int embedDepth) throws IOException;
+    public void endSubPage(Output output, int embedDepth) throws IOException;
 }
