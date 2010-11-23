@@ -15,15 +15,15 @@ public class DefaultDelegate
 {
     private int maxId = 0;
     private final LinkedList<String> idStack = new LinkedList<String>();
-    
-    private final String[] backgroundColors = 
-        new String[] { "C4D9FF", "B1C4E5", "93A3BF", "7A859E", "626D7F" };
+
+    private final String[] backgroundColors = new String[] { "C4D9FF", "BACEF2", "B1C4E5", "A7B7D9", "9DAECC",
+            "93A3BF", "8998B2" };
 
     @Override
     public void startHtmlPage(Output out, Link link, Object rootPage) throws IOException
     {
         out.html();
-        
+
         out.script(AttributesFactory.type("text/javascript"));
         out.rawLine("function toggleId(id)");
         out.rawLine("{");
@@ -82,7 +82,7 @@ public class DefaultDelegate
         out.rawLine("    text-decoration: none;");
         out.rawLine("}");
         out._style();
-        
+
         out.body();
         emitBreadcrumbs(out, link);
     }
@@ -91,15 +91,15 @@ public class DefaultDelegate
     {
         String color = backgroundColor(0);
         out.div(id("breadcrumbs").class_("log initiallyOpen").style("background-color: " + color));
-        
+
         String[] names = BaseLink.decodeIntoNames(link.toString());
-        for(int i = 0; i < names.length; i++) {
-            if(i > 0)
+        for (int i = 0; i < names.length; i++) {
+            if (i > 0)
                 out.text(" → ");
-            Link linkSoFar = new BaseLink(names, i+1);
+            Link linkSoFar = new BaseLink(names, i + 1);
             out.a(href(linkSoFar.toString())).text(names[i])._a();
         }
-        
+
         out._div();
     }
 
@@ -126,16 +126,16 @@ public class DefaultDelegate
         // out.a(href("#" + parentId)).text("\u21f1")._a();
 
         // Down arrow to hide:
-        out.span(onclick("toggleId('"+id+"')")).text("(hide)")._span();
+        out.span(onclick("toggleId('" + id + "')")).text("(hide)")._span();
 
         // Up arrow to magnify:
         if (link != null && link.isValid()) {
             out.a(link).text(" (focus)");
             out._a(link);
         }
-        
+
         out._div();
-        
+
         out.div(class_("content"));
     }
 
