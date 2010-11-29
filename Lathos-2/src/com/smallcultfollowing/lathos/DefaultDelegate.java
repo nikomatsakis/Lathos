@@ -16,8 +16,45 @@ public class DefaultDelegate
     private int maxId = 0;
     private final LinkedList<String> idStack = new LinkedList<String>();
 
-    private final String[] backgroundColors = new String[] { "C4D9FF", "BACEF2", "B1C4E5", "A7B7D9", "9DAECC",
-            "93A3BF", "8998B2" };
+    private static class RGB
+    {
+        final int red;
+        final int green;
+        final int blue;
+
+        RGB(int red, int green, int blue)
+        {
+            super();
+            this.red = red;
+            this.green = green;
+            this.blue = blue;
+        }
+
+        public RGB[] series(int number, double reduceBy)
+        {
+            RGB[] result = new RGB[number];
+            result[0] = this;
+            double amount = 1.0;
+            for (int i = 1; i < number; i++) {
+                amount -= reduceBy;
+                result[i] = new RGB((int) (red * amount), (int) (green * amount), (int) (blue * amount));
+            }
+            return result;
+        }
+
+        public String toString()
+        {
+            return String.format("%02X%02X%02X", red, green, blue);
+        }
+    }
+
+    public static final RGB periwinkle = new RGB(196, 217, 255);
+
+    //private final String[] backgroundColors = new String[] { "C4D9FF", "BACEF2", "B1C4E5", "A7B7D9", "9DAECC",
+            // "93A3BF", "8998B2" };
+    private final int numberBackgroundColors = 6;
+    private final double reduceBy = 0.05;
+    private final RGB[] backgroundColors = periwinkle.series(numberBackgroundColors, reduceBy);
 
     @Override
     public void startHtmlPage(Output out, Link link, Object rootPage) throws IOException
@@ -141,7 +178,7 @@ public class DefaultDelegate
 
     private String backgroundColor(int depth)
     {
-        return backgroundColors[depth % backgroundColors.length];
+        return backgroundColors[depth % backgroundColors.length].toString();
     }
 
     private String freshId()

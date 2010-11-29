@@ -18,7 +18,10 @@ public class Linked
     @Override
     public void renderSummary(Output out, Link link) throws IOException
     {
-        out.obj(link, displayAs);
+        Link link2 = new RelativeLink(link, "linkedTo");
+        out.a(link2);
+        out.obj(null, displayAs);
+        out._a(link2);
     }
 
     @Override

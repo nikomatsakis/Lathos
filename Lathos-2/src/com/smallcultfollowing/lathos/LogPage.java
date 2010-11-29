@@ -19,14 +19,14 @@ public class LogPage
     @Override
     public void renderDetails(Output out, Link link) throws IOException
     {
-        out.ul();
+//        out.ul();
         for(Map.Entry<String, Page> entry : subpages.entrySet()) {
             RelativeLink pageLink = new RelativeLink(link, entry.getKey());
-            out.li();
-            out.obj(pageLink, entry.getValue());
-            out._li();
+//            out.li();
+            out.embed(pageLink, entry.getValue());
+//            out._li();
         }
-        out._ul();
+//        out._ul();
     }
 
     @Override
