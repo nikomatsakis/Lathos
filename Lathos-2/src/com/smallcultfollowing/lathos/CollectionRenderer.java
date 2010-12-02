@@ -5,38 +5,42 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class CollectionRenderer
     implements ObjectRenderer
 {
 
     public class BasePage
-        implements Page.Detailed
+        implements Page.Detailed, Page.Titled
     {
         private final Object object;
 
-        public BasePage(Object object) {
+        public BasePage(Object object)
+        {
             this.object = object;
         }
 
         @Override
-        public void renderObjectTitle(Output out, Link link) throws IOException {
+        public void renderTitle(Output out, Link link) throws IOException
+        {
             Lathos.reflectiveRenderTitle(object, out, link);
         }
 
         @Override
-        public void renderDetails(Output out, Link link) throws IOException {
+        public void renderDetails(Output out, Link link) throws IOException
+        {
             Lathos.reflectiveRenderDetails(object, out, link);
         }
 
         @Override
-        public void renderSummary(Output out, Link link) throws IOException {
+        public void renderSummary(Output out, Link link) throws IOException
+        {
             Lathos.reflectiveRenderSummary(object, out, link);
         }
 
         @Override
-        public Object derefPage(LathosServer server, String link) throws InvalidDeref {
+        public Object derefPage(LathosServer server, String link) throws InvalidDeref
+        {
             return Lathos.reflectiveDerefPage(object, link);
         }
     }
@@ -46,7 +50,8 @@ public class CollectionRenderer
     {
         private final Iterable<? extends T> iterable;
 
-        public IterablePage(Iterable<? extends T> iterable) {
+        public IterablePage(Iterable<? extends T> iterable)
+        {
             super(iterable);
             this.iterable = iterable;
         }
@@ -57,7 +62,8 @@ public class CollectionRenderer
         }
 
         @Override
-        public void renderSummary(Output out, Link link) throws IOException {
+        public void renderSummary(Output out, Link link) throws IOException
+        {
             out.text("[");
 
             Iterator<? extends T> elems = iterable.iterator();
@@ -78,7 +84,8 @@ public class CollectionRenderer
         }
 
         @Override
-        public void renderDetails(Output out, Link link) throws IOException {
+        public void renderDetails(Output out, Link link) throws IOException
+        {
             out.ol();
             int i = 0;
             for (T elem : iterable) {
@@ -90,7 +97,8 @@ public class CollectionRenderer
         }
 
         @Override
-        public Object derefPage(LathosServer server, String link) throws InvalidDeref {
+        public Object derefPage(LathosServer server, String link) throws InvalidDeref
+        {
             int idx = IndexLink.parseIndexLink(link);
 
             if (iterable instanceof List) {
@@ -109,11 +117,12 @@ public class CollectionRenderer
     }
 
     public class MapPage
-    extends IterablePage<Map.Entry<?, ?>>
+        extends IterablePage<Map.Entry<?, ?>>
     {
         private final Map<?, ?> map;
 
-        public MapPage(Map<?, ?> map) {
+        public MapPage(Map<?, ?> map)
+        {
             super(map.entrySet());
             this.map = map;
         }
@@ -121,7 +130,8 @@ public class CollectionRenderer
         private final String entryString(Map.Entry<?, ?> entry)
         {
             Object key = entry.getKey();
-            if (key == null) return "null";
+            if (key == null)
+                return "null";
             return key.toString();
         }
 
@@ -131,10 +141,11 @@ public class CollectionRenderer
         }
 
         @Override
-        public void renderDetails(Output out, Link link) throws IOException {
+        public void renderDetails(Output out, Link link) throws IOException
+        {
             out.table();
             int i = 0;
-            for(Map.Entry<?, ?> entry : map.entrySet()) {
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
                 out.tr();
 
                 Link entryLink = linkForIndex(link, i++, entry);
@@ -153,9 +164,10 @@ public class CollectionRenderer
         }
 
         @Override
-        public Object derefPage(LathosServer server, String link) throws InvalidDeref {
-            for(Map.Entry<?, ?> entry : map.entrySet()) {
-                if(entry.getKey().toString().equals(link)) {
+        public Object derefPage(LathosServer server, String link) throws InvalidDeref
+        {
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                if (entry.getKey().toString().equals(link)) {
                     return entry;
                 }
             }
@@ -169,12 +181,14 @@ public class CollectionRenderer
     {
         private final Map.Entry<?, ?> entry;
 
-        public MapEntryPage(Map.Entry<?, ?> entry) {
+        public MapEntryPage(Map.Entry<?, ?> entry)
+        {
             this.entry = entry;
         }
 
         @Override
-        public void renderSummary(Output out, Link link) throws IOException {
+        public void renderSummary(Output out, Link link) throws IOException
+        {
             out.text("(");
             out.obj(link, "key", entry.getKey());
             out.code().text(" -> ")._code();
@@ -183,22 +197,27 @@ public class CollectionRenderer
         }
 
         @Override
-        public Object derefPage(LathosServer server, String link) throws InvalidDeref {
-            if (link.equals("key")) return entry.getKey();
-            else if (link.equals("value")) return entry.getValue();
-            else return null;
+        public Object derefPage(LathosServer server, String link) throws InvalidDeref
+        {
+            if (link.equals("key"))
+                return entry.getKey();
+            else if (link.equals("value"))
+                return entry.getValue();
+            else
+                return null;
         }
     }
 
     @Override
-    public Page asPage(LathosServer server, Object obj) {
-        if(obj instanceof Object[]) {
+    public Page asPage(LathosServer server, Object obj)
+    {
+        if (obj instanceof Object[]) {
             Object[] arr = (Object[]) obj;
-            return new IterablePage(Arrays.asList(arr));
+            return new IterablePage<Object>(Arrays.asList(arr));
         }
 
-        if(obj instanceof Iterable<?>) {
-            return new IterablePage<Object>((Iterable<?>)obj);
+        if (obj instanceof Iterable<?>) {
+            return new IterablePage<Object>((Iterable<?>) obj);
         }
 
         if (obj instanceof Map) {
@@ -207,7 +226,7 @@ public class CollectionRenderer
         }
 
         if (obj instanceof Map.Entry) {
-            return new MapEntryPage((Map.Entry<?, ?>)obj);
+            return new MapEntryPage((Map.Entry<?, ?>) obj);
         }
 
         return null;

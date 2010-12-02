@@ -1,15 +1,13 @@
 package com.smallcultfollowing.lathos;
 
-import java.io.IOException;
-
 public class DevNullPage
-    implements ExtensiblePage, RootPage, Page.Detailed
+    implements ExtensiblePage, RootPage, Page.Detailed, Page.Titled
 {
 
     public static final DevNullPage instance = new DevNullPage();
 
     @Override
-    public void renderObjectTitle(Output out, Link link)
+    public void renderTitle(Output out, Link link)
     {
     }
 

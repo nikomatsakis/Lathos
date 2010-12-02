@@ -11,7 +11,7 @@ public class DefaultLinkCache
     private LinkRecord[] linkRecords = null;
     private long nextLinkId = 0;
     private Link baseLink = new BaseLink(this);
-    
+
     public DefaultLinkCache(int linkRecordSize)
     {
         super();
@@ -62,14 +62,14 @@ public class DefaultLinkCache
         } catch (NumberFormatException e) {
             return Lathos.reflectiveDerefPage(this, link);
         }
-        
-        if(linkRecords != null) {
-            int index = (int)(id % linkRecords.length);
+
+        if (linkRecords != null) {
+            int index = (int) (id % linkRecords.length);
             LinkRecord lr = linkRecords[index];
-            if(lr != null) {
+            if (lr != null) {
                 if (lr.linkId == id) {
                     Object node = lr.node.get();
-                    if(node != null)
+                    if (node != null)
                         return node;
                 }
             }
@@ -82,7 +82,7 @@ public class DefaultLinkCache
     {
         return "link-cache";
     }
-    
+
     @Override
     public String toString()
     {

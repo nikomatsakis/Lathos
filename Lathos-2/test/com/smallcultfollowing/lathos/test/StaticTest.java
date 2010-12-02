@@ -10,12 +10,12 @@ import com.smallcultfollowing.lathos.Output;
 import com.smallcultfollowing.lathos.Page;
 
 public class StaticTest
-implements Page.Detailed
+    implements Page.Detailed, Page.Titled
 {
     public static String stringField = "foo";
     public static int intField = 10;
     public static StaticTest instance = new StaticTest();
-    
+
     @Override
     public void renderSummary(Output out, Link link) throws IOException
     {
@@ -23,7 +23,8 @@ implements Page.Detailed
     }
 
     @Override
-    public void renderObjectTitle(Output out, Link link) throws IOException {
+    public void renderTitle(Output out, Link link) throws IOException
+    {
         Lathos.reflectiveRenderTitle(this, out, link);
     }
 
@@ -33,7 +34,7 @@ implements Page.Detailed
         out.h1().text("Hello world!")._h1();
         Lathos.reflectiveRenderDetails(this, out, link);
     }
-    
+
     @Override
     public Object derefPage(LathosServer server, String link) throws InvalidDeref
     {

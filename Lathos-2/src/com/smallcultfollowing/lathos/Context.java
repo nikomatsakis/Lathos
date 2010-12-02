@@ -1,17 +1,17 @@
 package com.smallcultfollowing.lathos;
 
 /**
- * Thread-local context for generating logs.  If logs are disabled,
- * these methods do nothing, returning null or dummy values. 
+ * Thread-local context for generating logs. If logs are disabled, these methods
+ * do nothing, returning null or dummy values.
  * 
- * Generally passed via calls to {@link Lathos#context()}
- * or {@link Lathos#setContext(Context)}. 
+ * Generally passed via calls to {@link Lathos#context()} or
+ * {@link Lathos#setContext(Context)}.
  */
 public interface Context
 {
     /** Server with which this context is associated */
     LathosServer server();
-    
+
     /**
      * Creates a new line with the given objects and adds it to the current
      * LogPage, after applying appropriate substitutions from the server.
@@ -22,33 +22,32 @@ public interface Context
 
     /**
      * Appends the objs to the given line, after applying appropriate
-     * substitutions from the server.  
+     * substitutions from the server.
      * 
      * Warning: takes ownership of the {@code objs} array.
      */
     void append(Line line, Object... objs);
 
     /**
-     * Returns an object suitable for passing to {@code log} that
-     * will display the given text but, when clicked, go to 
-     * {@code linkTo}.
+     * Returns an object suitable for passing to {@code log} that will display
+     * the given text but, when clicked, go to {@code linkTo}.
      * 
      * @return the result, or null if this is {@link DevNullContext}
      * 
      * @see Linked
      */
     Page linked(Object linkTo, Object... text);
-    
+
     /**
-     * Returns an object suitable for passing to {@code log} that
-     * will display an internationalized message.
+     * Returns an object suitable for passing to {@code log} that will display
+     * an internationalized message.
      * 
      * @return the result, or null if this is {@link DevNullContext}
      * 
      * @see I18nMessage
      */
     Page i18n(String fmt, Object... args);
-    
+
     /** Adds the given page to the current LogPage */
     void embed(Page page);
 
@@ -66,9 +65,10 @@ public interface Context
      * 
      * @param name
      *            a name for the new log page, or null to use a default name
-     *
-     * @param title the object(s) to use as the title of the new page
-     *            
+     * 
+     * @param title
+     *            the object(s) to use as the title of the new page
+     * 
      * @see #push(ExtensiblePage)
      * @see #embed(Page)
      */
@@ -84,8 +84,8 @@ public interface Context
      *            the page that should be on top of the stack, or null
      */
     public void pop(ExtensiblePage page);
-    
-    /** 
+
+    /**
      * Returns the top of the stack.
      */
     public ExtensiblePage topPage();

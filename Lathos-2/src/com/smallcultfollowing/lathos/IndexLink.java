@@ -5,7 +5,7 @@ public class IndexLink
 {
     private final Link base;
     private final int index;
-    
+
     public IndexLink(Link base, int index)
     {
         super();
@@ -26,21 +26,23 @@ public class IndexLink
     {
         return BaseLink.toString(this);
     }
-    
+
     @Override
     public boolean isValid()
     {
         return base != null && base.isValid();
     }
 
-    public static int parseIndexLink(String link) throws InvalidDeref {
+    public static int parseIndexLink(String link) throws InvalidDeref
+    {
         try {
             int idx = Integer.parseInt(link);
-            if (idx < 0) throw InvalidDeref.instance;
+            if (idx < 0)
+                throw InvalidDeref.instance;
             return idx;
         } catch (NumberFormatException e) {
             throw InvalidDeref.instance;
         }
     }
-    
+
 }

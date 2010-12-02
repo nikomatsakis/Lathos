@@ -5,10 +5,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 public class ClassObjectPage
-    implements Page, Page.Detailed
+    implements Page, Page.Detailed, Page.Titled
 {
     private final Class<?> cls;
-    
+
     public ClassObjectPage(Class<?> cls)
     {
         super();
@@ -23,7 +23,8 @@ public class ClassObjectPage
     }
 
     @Override
-    public void renderObjectTitle(Output out, Link link) throws IOException {
+    public void renderTitle(Output out, Link link) throws IOException
+    {
         out.h2();
         out.text(cls.toString());
         out._h2();
@@ -37,12 +38,12 @@ public class ClassObjectPage
         out.th().text("Static Field")._th();
         out.th().text("Value")._th();
         out._tr();
-        for(Field f : cls.getDeclaredFields()) {
-            if(Modifier.isStatic(f.getModifiers())) {
+        for (Field f : cls.getDeclaredFields()) {
+            if (Modifier.isStatic(f.getModifiers())) {
                 out.tr();
                 String name = f.getName();
                 out.td().text(name)._td();
-                
+
                 out.td();
                 Link fLink = new RelativeLink(link, f.getName());
                 Object value;

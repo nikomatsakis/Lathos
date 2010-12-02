@@ -7,12 +7,13 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 public class JettyServer
-extends DefaultServer
+    extends DefaultServer
 {
     private final int port;
     private final Server jettyServer;
 
-    public JettyServer(int port) throws Exception {
+    public JettyServer(int port) throws Exception
+    {
         this.port = port;
         jettyServer = new Server(port);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -21,23 +22,26 @@ extends DefaultServer
         context.addServlet(new ServletHolder(this), "/*");
         jettyServer.start();
     }
-    
-    public static LathosServer start(int port) throws Exception {
-        if(port == 0)
+
+    public static LathosServer start(int port) throws Exception
+    {
+        if (port == 0)
             return DevNullServer.instance;
         return new JettyServer(port);
     }
-    
+
     @Override
-    public void join() {
+    public void join()
+    {
         try {
             jettyServer.join();
         } catch (InterruptedException e) {
         }
     }
-    
+
     @Override
-    public void stop() throws Exception {
+    public void stop() throws Exception
+    {
         jettyServer.stop();
     }
 

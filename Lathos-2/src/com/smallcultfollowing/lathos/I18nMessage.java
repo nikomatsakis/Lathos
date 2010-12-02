@@ -25,7 +25,7 @@ public class I18nMessage
     public Object derefPage(LathosServer server, String link) throws InvalidDeref
     {
         int i = IndexLink.parseIndexLink(link);
-        if(i < arguments.length)
+        if (i < arguments.length)
             return arguments[i];
         throw InvalidDeref.instance;
     }

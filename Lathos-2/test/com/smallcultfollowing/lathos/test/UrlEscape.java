@@ -13,11 +13,12 @@ import com.smallcultfollowing.lathos.Page;
 import com.smallcultfollowing.lathos.RelativeLink;
 
 public class UrlEscape
-implements Page.Detailed
+    implements Page.Detailed
 {
     public final Map<String, String> map = new HashMap<String, String>();
-    
-    public UrlEscape() {
+
+    public UrlEscape()
+    {
         // some characters that can't (normally) go into URLs:
         map.put("→", "right arrow");
         map.put("←", "left arrow");
@@ -32,24 +33,19 @@ implements Page.Detailed
     }
 
     @Override
-    public void renderObjectTitle(Output out, Link link) throws IOException {
-        Lathos.reflectiveRenderTitle(this, out, link);
-    }
-
-    @Override
     public void renderDetails(Output out, Link link) throws IOException
     {
         out.h3().text("URL Escaping Test")._h3();
-        
+
         out.ul();
-        for(Map.Entry<String, String> entry : map.entrySet()) {
+        for (Map.Entry<String, String> entry : map.entrySet()) {
             out.li();
-            
+
             Link relLink = new RelativeLink(link, entry.getKey());
             out.a(relLink);
             out.text("Key: ").text(entry.getKey()).text(" → ").text(entry.getValue());
             out._a(relLink);
-            
+
             out._li();
         }
         out._ul();
@@ -59,7 +55,6 @@ implements Page.Detailed
     public Object derefPage(LathosServer server, String link) throws InvalidDeref
     {
         return Lathos.invalidDerefIfNull(map.get(link));
-    }    
-    
-    
+    }
+
 }

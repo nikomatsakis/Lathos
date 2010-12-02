@@ -10,6 +10,8 @@ import java.util.LinkedList;
 
 import org.rendersnake.AttributesFactory;
 
+import com.smallcultfollowing.lathos.Page.Titled;
+
 public class DefaultDelegate
     implements LathosServerDelegate
 {
@@ -50,8 +52,9 @@ public class DefaultDelegate
 
     public static final RGB periwinkle = new RGB(196, 217, 255);
 
-    //private final String[] backgroundColors = new String[] { "C4D9FF", "BACEF2", "B1C4E5", "A7B7D9", "9DAECC",
-            // "93A3BF", "8998B2" };
+    // private final String[] backgroundColors = new String[] { "C4D9FF",
+    // "BACEF2", "B1C4E5", "A7B7D9", "9DAECC",
+    // "93A3BF", "8998B2" };
     private final int numberBackgroundColors = 6;
     private final double reduceBy = 0.05;
     private final RGB[] backgroundColors = periwinkle.series(numberBackgroundColors, reduceBy);
@@ -169,7 +172,7 @@ public class DefaultDelegate
     }
 
     @Override
-    public void startEmbedTitle(Output out, int embedDepth, Link link, Page.Detailed page) throws IOException
+    public void startEmbedTitle(Output out, int embedDepth, Link link, Titled page) throws IOException
     {
         String id = idStack.peek();
         String color = backgroundColor(embedDepth);
@@ -189,12 +192,12 @@ public class DefaultDelegate
         }
 
         out._div();
-        
+
         out.div(class_("title"));
     }
 
     @Override
-    public void endEmbedTitle(Output out, int embedDepth, Link link, Page.Detailed page) throws IOException
+    public void endEmbedTitle(Output out, int embedDepth, Link link, Titled page) throws IOException
     {
         out._div();
     }
@@ -225,32 +228,38 @@ public class DefaultDelegate
     }
 
     @Override
-    public void startSubpage(Output out, int embedDepth) throws IOException {
+    public void startSubpage(Output out, int embedDepth) throws IOException
+    {
         startEmbed(out, embedDepth, null, null);
     }
 
     @Override
-    public void startSubpageTitle(Output out, int embedDepth) throws IOException {
+    public void startSubpageTitle(Output out, int embedDepth) throws IOException
+    {
         startEmbedTitle(out, embedDepth, null, null);
     }
 
     @Override
-    public void endSubpageTitle(Output out, int embedDepth) throws IOException {
+    public void endSubpageTitle(Output out, int embedDepth) throws IOException
+    {
         endEmbedTitle(out, embedDepth, null, null);
     }
 
     @Override
-    public void startSubpageContent(Output out, int embedDepth) throws IOException {
+    public void startSubpageContent(Output out, int embedDepth) throws IOException
+    {
         startEmbedContent(out, embedDepth, null, null);
     }
 
     @Override
-    public void endSubpageContent(Output out, int embedDepth) throws IOException {
+    public void endSubpageContent(Output out, int embedDepth) throws IOException
+    {
         endEmbedContent(out, embedDepth, null, null);
     }
 
     @Override
-    public void endSubpage(Output out, int embedDepth) throws IOException {
+    public void endSubpage(Output out, int embedDepth) throws IOException
+    {
         endEmbed(out, embedDepth, null, null);
     }
 }

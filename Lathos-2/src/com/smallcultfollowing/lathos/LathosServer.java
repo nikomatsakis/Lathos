@@ -1,6 +1,5 @@
 package com.smallcultfollowing.lathos;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -81,8 +80,8 @@ public interface LathosServer
     public void addSubstitutionFilter(ObjectSubst subst);
 
     /**
-     * Creates an appropriate page for object using the current
-     * object renderers.
+     * Creates an appropriate page for object using the current object
+     * renderers.
      */
     public Page asPage(Object obj);
 
@@ -139,7 +138,7 @@ public interface LathosServer
      * Returns the root page mapped to {@link #indexName}, if any.
      */
     public Object getIndexPage();
-    
+
     /** Attempts to open the index page. */
     public void openInBrowser();
 
@@ -151,7 +150,7 @@ public interface LathosServer
 
     /**
      * When we are outputting objects, we will stop embedding after a certain
-     * point to prevent infinite recursion.  This allows you to configure the
+     * point to prevent infinite recursion. This allows you to configure the
      * default cut-off point.
      */
     public void setMaxEmbedDepth(int maxDepth);
@@ -164,7 +163,7 @@ public interface LathosServer
     public LathosServerDelegate getDelegate();
 
     /**
-     * Sets the delegate for this server.  Must not be null.
+     * Sets the delegate for this server. Must not be null.
      * 
      * @see #getDelegate()
      */

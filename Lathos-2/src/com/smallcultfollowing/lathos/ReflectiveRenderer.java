@@ -3,8 +3,8 @@ package com.smallcultfollowing.lathos;
 import java.io.IOException;
 
 /**
- * An object renderer that uses reflection to print a summary and other
- * details, as well as to dereference fields. 
+ * An object renderer that uses reflection to print a summary and other details,
+ * as well as to dereference fields.
  * 
  * @see Lathos
  */
@@ -12,16 +12,18 @@ public class ReflectiveRenderer
     implements ObjectRenderer
 {
     public static class ReflectivePage
-    implements Page.Detailed
+        implements Page.Detailed, Page.Titled
     {
         private final Object obj;
 
-        public ReflectivePage(Object obj) {
+        public ReflectivePage(Object obj)
+        {
             this.obj = obj;
         }
 
         @Override
-        public void renderObjectTitle(Output out, Link link) throws IOException {
+        public void renderTitle(Output out, Link link) throws IOException
+        {
             Lathos.reflectiveRenderTitle(obj, out, link);
         }
 
@@ -46,7 +48,8 @@ public class ReflectiveRenderer
     }
 
     @Override
-    public Page asPage(LathosServer server, Object obj) {
+    public Page asPage(LathosServer server, Object obj)
+    {
         return new ReflectivePage(obj);
     }
 }

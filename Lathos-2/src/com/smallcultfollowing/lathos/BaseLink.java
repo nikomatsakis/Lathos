@@ -5,7 +5,6 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Arrays;
 
-
 public class BaseLink
     implements Link
 {
@@ -15,23 +14,24 @@ public class BaseLink
     {
         this(rootPage.rootPageName());
     }
-    
+
     public BaseLink(String name)
     {
         super();
         this.names = new String[] { name };
     }
-    
-    public BaseLink(String[] names, int length) {
+
+    public BaseLink(String[] names, int length)
+    {
         super();
         this.names = Arrays.copyOf(names, length);
     }
-    
+
     @Override
     public void appendUrlString(StringBuilder sb)
     {
         sb.append("/");
-        for(int i = 0; i < names.length - 1; i++) {
+        for (int i = 0; i < names.length - 1; i++) {
             sb.append(encode(names[i]));
             sb.append("/");
         }
@@ -43,13 +43,13 @@ public class BaseLink
     {
         return true;
     }
-    
+
     @Override
     public String toString()
     {
         return toString(this);
     }
-    
+
     public static String encode(String name)
     {
         try {
@@ -77,10 +77,10 @@ public class BaseLink
 
     public static String[] decodeIntoNames(String url)
     {
-        if(url.startsWith("/"))
+        if (url.startsWith("/"))
             url = url.substring(1);
         String[] names = url.split("/");
-        for(int i = 0; i < names.length; i++) {
+        for (int i = 0; i < names.length; i++) {
             names[i] = BaseLink.decode(names[i]);
         }
         return names;

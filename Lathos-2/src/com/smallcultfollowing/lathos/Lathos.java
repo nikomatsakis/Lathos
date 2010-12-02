@@ -1,20 +1,16 @@
 package com.smallcultfollowing.lathos;
 
-import com.sun.xml.internal.bind.v2.util.QNameMap;
-
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.AttributedCharacterIterator;
 import java.text.MessageFormat;
-import java.util.HashMap;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public abstract class Lathos
 {
     private static ThreadLocal<Context> currentContext = new ThreadLocal<Context>();
-
 
     /**
      * Starts and returns a "batteries included" Lathos HTTP server on port
@@ -175,20 +171,20 @@ public abstract class Lathos
 
                 out._tr();
             }
-            
+
             for (Method mthd : cls.getDeclaredMethods()) {
                 AllowReflectiveDeref allow = mthd.getAnnotation(AllowReflectiveDeref.class);
-                if(allow == null || !allow.showInDetails())
+                if (allow == null || !allow.showInDetails())
                     continue;
-                
+
                 mthd.setAccessible(true);
                 out.tr();
                 Link mthdLink = new RelativeLink(link, mthd.getName());
-                
+
                 out.td();
                 out.text(mthd.getName());
                 out._td();
-                
+
                 out.td();
                 try {
                     Object value = mthd.invoke(page);
@@ -198,10 +194,10 @@ public abstract class Lathos
                     out.obj(e);
                 }
                 out._td();
-                
+
                 out._tr();
             }
-            
+
             cls = cls.getSuperclass();
         }
 
@@ -211,74 +207,77 @@ public abstract class Lathos
 
     private static boolean indicesEqual(Integer oldIndex, Integer newIndex)
     {
-        if(oldIndex == newIndex)
+        if (oldIndex == newIndex)
             return true;
 
-        if(oldIndex == null || newIndex == null)
+        if (oldIndex == null || newIndex == null)
             return false;
-        
+
         return newIndex.equals(oldIndex);
     }
-    
-    public static void renderI18nSummary(String messageName, Object[] arguments, Output out, Link mainLink, Link argumentsLink)
-            throws IOException
+
+    public static void renderI18nSummary(
+            String messageName,
+            Object[] arguments,
+            Output out,
+            Link mainLink,
+            Link argumentsLink) throws IOException
     {
         ResourceBundle bundle = out.server.getResourceBundle();
-        fallback:
-        if(bundle != null) {
+        fallback: if (bundle != null) {
             String messageFmt;
             try {
-                 messageFmt = bundle.getString(messageName);                
+                messageFmt = bundle.getString(messageName);
             } catch (MissingResourceException e) {
                 break fallback;
             }
-            
+
             MessageFormat fmt = new MessageFormat(messageFmt);
             AttributedCharacterIterator iter = fmt.formatToCharacterIterator(arguments);
-            
+
             Integer prevArgument = null;
             Link currentLink = null;
-            
+
             char c;
-            while((c = iter.next()) != AttributedCharacterIterator.DONE) {
+            while ((c = iter.next()) != AttributedCharacterIterator.DONE) {
                 Integer argument = (Integer) iter.getAttribute(MessageFormat.Field.ARGUMENT);
-                
+
                 if (!indicesEqual(prevArgument, argument)) {
-                    if(currentLink != null)
+                    if (currentLink != null)
                         out._a(currentLink);
-                    
-                    if(argument != null) {
+
+                    if (argument != null) {
                         currentLink = new IndexLink(argumentsLink, argument);
                         out.a(currentLink);
                     } else {
                         currentLink = null;
                     }
-                    
+
                     prevArgument = argument;
                 }
-                
+
                 // if some area is not otherwise linked, link to "mainLink"
-                if(currentLink == null) {
+                if (currentLink == null) {
                     currentLink = mainLink;
                     out.a(currentLink);
                 }
-                
+
                 out.text(Character.toString(c));
             }
-            
-            if(currentLink != null) {
+
+            if (currentLink != null) {
                 out._a(currentLink);
             }
-            
+
             return;
         }
-        
+
         out.a(mainLink);
         out.text(messageName);
         out._a(mainLink);
         out.text("(");
-        for(int i = 0; i < arguments.length; i++) {
-            if(i > 0)
+        for (int i = 0; i < arguments.length; i++) {
+            if (i > 0)
                 out.text(", ");
             out.obj(argumentsLink, i, arguments[i]);
         }
@@ -287,13 +286,13 @@ public abstract class Lathos
 
     /**
      * Reflectively dereferences a link from this object by looking for a field
-     * or method with that name. 
+     * or method with that name.
      * 
      * The behavior of this method can be somewhat controlled via annotation.
-     * Fields are enabled by default but can be annotated with {@link Ignore}
-     * to make them invisible and not followable.  Methods are <b>disabled</b>
-     * by default but can be annotated with {@link AllowReflectiveDeref} to
-     * make them followable.  
+     * Fields are enabled by default but can be annotated with {@link Ignore} to
+     * make them invisible and not followable. Methods are <b>disabled</b> by
+     * default but can be annotated with {@link AllowReflectiveDeref} to make
+     * them followable.
      * 
      * @throws InvalidDeref
      *             if there is no field {@code link}
@@ -326,7 +325,7 @@ public abstract class Lathos
         while (cls != Object.class) {
             try {
                 Method mthd = cls.getDeclaredMethod(link);
-                if(mthd.getAnnotation(AllowReflectiveDeref.class) != null) {
+                if (mthd.getAnnotation(AllowReflectiveDeref.class) != null) {
                     mthd.setAccessible(true);
                     try {
                         return mthd.invoke(parentPage);
@@ -393,13 +392,14 @@ public abstract class Lathos
 
     public static Object invalidDerefIfNull(Object object) throws InvalidDeref
     {
-        if(object == null)
+        if (object == null)
             throw InvalidDeref.instance;
         return object;
     }
 
-    public static void reflectiveRenderTitle(Object obj, Output out, Link link) throws IOException {
-        if(obj == null) {
+    public static void reflectiveRenderTitle(Object obj, Output out, Link link) throws IOException
+    {
+        if (obj == null) {
             out.text("Null");
         } else {
             Class<?> cls = obj.getClass();

@@ -3,16 +3,16 @@ package com.smallcultfollowing.lathos;
 import java.io.IOException;
 
 /**
- * A useful root page that is included by default.
- * Allows you to access static fields, avoiding
- * the need to register all pages.
+ * A useful root page that is included by default. Allows you to access static
+ * fields, avoiding the need to register all pages.
  */
 public class StaticPage
-    implements RootPage, Page.Detailed
+    implements RootPage, Page.Detailed, Page.Titled
 {
 
     @Override
-    public void renderObjectTitle(Output out, Link link) throws IOException {
+    public void renderTitle(Output out, Link link) throws IOException
+    {
         out.h2().text("Static Field Access")._h2();
     }
 

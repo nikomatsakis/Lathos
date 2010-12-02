@@ -5,7 +5,7 @@ public class RelativeLink
 {
     private final Link base;
     private final String next;
-    
+
     public RelativeLink(Link baseLink, String next)
     {
         super();
@@ -26,9 +26,9 @@ public class RelativeLink
     {
         return base != null && base.isValid();
     }
-    
+
     @Override
-    public String toString() 
+    public String toString()
     {
         return BaseLink.toString(this);
     }

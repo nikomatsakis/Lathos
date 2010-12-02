@@ -7,7 +7,7 @@ public class Linked
 {
     private final Object linkedTo;
     private final Object displayAs;
-    
+
     public Linked(Object linkedTo, Object displayAs)
     {
         super();

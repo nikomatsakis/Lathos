@@ -166,19 +166,18 @@ public abstract class DefaultServer
         renderURL(req, resp);
     }
 
-    public synchronized void renderURL(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException
+    public synchronized void renderURL(HttpServletRequest req, HttpServletResponse resp) throws IOException
     {
         String url = req.getRequestURI();
         PrintWriter writer = resp.getWriter();
         try {
             Output out = new Output(this, req, resp, writer);
-            
-            if(delegate.handleRequest(url, out))
+
+            if (delegate.handleRequest(url, out))
                 return;
-    
+
             String[] names = BaseLink.decodeIntoNames(url);
-    
+
             // Try to dereference the URL pages. This is kind of
             // grungy, but the idea is to retain the last valid
             // object we found ("object") and the last index we tried ("i").
@@ -189,19 +188,20 @@ public abstract class DefaultServer
                 while (result != null && i < names.length) {
                     // Lookup index i:
                     Object nextObject = derefPage(result, names[i]);
-    
+
                     // Index i is invalid: Nothing with that name.
                     if (nextObject == null) {
                         break;
                     }
-    
+
                     // Index i is valid, store it in result and increment "i".
                     result = nextObject;
                     i++;
                 }
             }
-    
-            // Render the page we found, or the last valid one, following back to the index if nothing else:
+
+            // Render the page we found, or the last valid one, following back
+            // to the index if nothing else:
             if (result == null) {
                 renderRootPage(out, new BaseLink(indexName), getIndexPage());
             } else {

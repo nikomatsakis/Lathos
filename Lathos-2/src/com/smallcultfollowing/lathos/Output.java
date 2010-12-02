@@ -96,7 +96,7 @@ public class Output
     {
         embed(new IndexLink(link, idx), obj);
     }
-    
+
     /**
      * Embeds the object {@code obj}, using a relative link {@code link/fld}
      * 
@@ -107,23 +107,23 @@ public class Output
     {
         embed(new RelativeLink(link, fld), obj);
     }
-    
+
     /** Renders the object {@code obj}, using the link {@code link} */
     public void embed(final Link link, final Object obj) throws IOException
     {
         if (embedDepth == maxEmbedDepth) {
-            i().text("Maximum embed depth of "+maxEmbedDepth+" exceeded!")._i();
+            i().text("Maximum embed depth of " + maxEmbedDepth + " exceeded!")._i();
             return;
         }
 
         final Page page = server.asPage(obj);
         server.getDelegate().startEmbed(this, embedDepth, link, page);
 
-        if(page instanceof Page.Detailed) {
-            Page.Detailed detailed = (Page.Detailed) page;
-            server.getDelegate().startEmbedTitle(this, embedDepth, link, detailed);
-            detailed.renderObjectTitle(Output.this, link);
-            server.getDelegate().endEmbedTitle(this, embedDepth, link, detailed);
+        if (page instanceof Page.Titled) {
+            Page.Titled titled = (Page.Titled) page;
+            server.getDelegate().startEmbedTitle(this, embedDepth, link, titled);
+            titled.renderTitle(Output.this, link);
+            server.getDelegate().endEmbedTitle(this, embedDepth, link, titled);
         }
 
         server.getDelegate().startEmbedContent(this, embedDepth, link, page);
@@ -134,8 +134,8 @@ public class Output
             public void renderOn(HtmlCanvas canvas) throws IOException
             {
                 assert (canvas == Output.this);
-                if(page instanceof Page.Detailed) {
-                    ((Page.Detailed)page).renderDetails(Output.this, link);
+                if (page instanceof Page.Detailed) {
+                    ((Page.Detailed) page).renderDetails(Output.this, link);
                 } else {
                     page.renderSummary(Output.this, link);
                 }
@@ -147,10 +147,10 @@ public class Output
 
         server.getDelegate().endEmbed(this, embedDepth, link, page);
     }
-    
+
     /**
-     * Starts a subpage without a title.
-     * Must be matched with a call to link {{@link #_subpage()}.
+     * Starts a subpage without a title. Must be matched with a call to link {
+     * {@link #_subpage()}.
      */
     public void subpage() throws IOException
     {
@@ -160,8 +160,8 @@ public class Output
     }
 
     /**
-     * Starts a subpage whose title is {@code title}.
-     * Must be matched with a call to {@link #_subpage()}.
+     * Starts a subpage whose title is {@code title}. Must be matched with a
+     * call to {@link #_subpage()}.
      */
     public void subpage(Link link, Object title) throws IOException
     {
@@ -176,7 +176,10 @@ public class Output
         embedDepth += 1;
     }
 
-    /** Matched close call for {@link #subpage()} or {@link #subpage(Link, Object)} */
+    /**
+     * Matched close call for {@link #subpage()} or
+     * {@link #subpage(Link, Object)}
+     */
     public void _subpage() throws IOException
     {
         embedDepth -= 1;

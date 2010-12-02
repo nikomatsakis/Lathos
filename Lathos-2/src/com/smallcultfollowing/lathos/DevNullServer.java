@@ -1,6 +1,5 @@
 package com.smallcultfollowing.lathos;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -125,7 +124,8 @@ public class DevNullServer
     }
 
     @Override
-    public Page asPage(Object obj) {
+    public Page asPage(Object obj)
+    {
         return DevNullPage.instance;
     }
 }

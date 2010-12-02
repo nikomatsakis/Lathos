@@ -6,7 +6,7 @@ public class PoppedWrongPageException
 {
     public final Page popped;
     public final Page expected;
-    
+
     public PoppedWrongPageException(Page popped, Page expected)
     {
         super();

@@ -2,21 +2,29 @@ package com.smallcultfollowing.lathos.test;
 
 import java.io.IOException;
 
-import com.smallcultfollowing.lathos.*;
+import com.smallcultfollowing.lathos.AllowReflectiveDeref;
+import com.smallcultfollowing.lathos.Ignore;
+import com.smallcultfollowing.lathos.InvalidDeref;
+import com.smallcultfollowing.lathos.Lathos;
+import com.smallcultfollowing.lathos.LathosServer;
+import com.smallcultfollowing.lathos.Link;
+import com.smallcultfollowing.lathos.Output;
+import com.smallcultfollowing.lathos.Page;
+import com.smallcultfollowing.lathos.RootPage;
 
 public class ReflectiveTest
-implements RootPage, Page.Detailed
+    implements RootPage, Page.Detailed, Page.Titled
 {
     private final String name;
-    
+
     @SuppressWarnings("unused")
-    @Ignore 
+    @Ignore
     private final int ignoreMe = 22;
-    
+
     public ReflectiveTest deref0;
-    
+
     public ReflectiveTest deref1;
-    
+
     public ReflectiveTest(String name)
     {
         super();
@@ -24,19 +32,22 @@ implements RootPage, Page.Detailed
     }
 
     @AllowReflectiveDeref(showInDetails = true)
-    public ReflectiveTest getDeref0() {
+    public ReflectiveTest getDeref0()
+    {
         return deref0;
     }
-    
+
     @AllowReflectiveDeref(showInDetails = false)
-    public ReflectiveTest getDeref0X() {
+    public ReflectiveTest getDeref0X()
+    {
         return deref0;
     }
-    
-    public ReflectiveTest getDeref1() {
+
+    public ReflectiveTest getDeref1()
+    {
         return deref1;
     }
-    
+
     @Override
     public void renderSummary(Output out, Link link) throws IOException
     {
@@ -44,14 +55,15 @@ implements RootPage, Page.Detailed
     }
 
     @Override
-    public void renderObjectTitle(Output out, Link link) throws IOException {
+    public void renderTitle(Output out, Link link) throws IOException
+    {
         Lathos.reflectiveRenderTitle(this, out, link);
     }
 
     @Override
     public void renderDetails(Output out, Link link) throws IOException
     {
-        Lathos.reflectiveRenderDetails(this, out, link);        
+        Lathos.reflectiveRenderDetails(this, out, link);
     }
 
     @Override
@@ -65,7 +77,7 @@ implements RootPage, Page.Detailed
     {
         return name;
     }
-    
+
     @Override
     public String toString()
     {

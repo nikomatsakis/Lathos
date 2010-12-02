@@ -10,19 +10,19 @@ public class ThrowableRenderer
     {
         private final Throwable thr;
 
-        public ThrowablePage(Throwable thr) {
+        public ThrowablePage(Throwable thr)
+        {
             super(thr);
             this.thr = thr;
         }
 
         @Override
-        public void renderDetails(Output out, Link link)
-                throws IOException
+        public void renderDetails(Output out, Link link) throws IOException
         {
             Throwable t = thr;
             out.ul();
-            while(t != null) {
-                if(t != thr) {
+            while (t != null) {
+                if (t != thr) {
                     out.li();
                     out.text("Caused by:");
                     out.ul();
@@ -32,14 +32,14 @@ public class ThrowableRenderer
                 out.li().b().text("Message: ")._b().text(t.getMessage())._li();
 
                 out.li().b().text("Stack:")._b().ul();
-                for(StackTraceElement elem : t.getStackTrace()) {
+                for (StackTraceElement elem : t.getStackTrace()) {
                     out.li();
                     out.obj(null, elem);
                     out._li();
                 }
                 out._ul()._li();
 
-                if(t != thr) {
+                if (t != thr) {
                     out._ul();
                     out._li();
                 }
@@ -52,9 +52,10 @@ public class ThrowableRenderer
     }
 
     @Override
-    public Page asPage(LathosServer server, Object obj) {
-        if(obj instanceof Throwable)
-            return new ThrowablePage((Throwable)obj);
+    public Page asPage(LathosServer server, Object obj)
+    {
+        if (obj instanceof Throwable)
+            return new ThrowablePage((Throwable) obj);
         return null;
     }
 }
