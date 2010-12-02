@@ -22,12 +22,6 @@ public class I18nMessage
     }
 
     @Override
-    public void renderDetails(Output out, Link link) throws IOException
-    {
-        renderSummary(out, link);
-    }
-
-    @Override
     public Object derefPage(LathosServer server, String link) throws InvalidDeref
     {
         int i = IndexLink.parseIndexLink(link);

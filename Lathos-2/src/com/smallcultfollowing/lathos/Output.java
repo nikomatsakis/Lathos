@@ -75,12 +75,13 @@ public class Output
     /** Renders the object {@code obj}, using the link {@code link} */
     public void obj(final Link link, final Object obj) throws IOException
     {
+        final Page page = server.asPage(obj);
         render(new Renderable() {
             @Override
             public void renderOn(HtmlCanvas canvas) throws IOException
             {
                 assert (canvas == Output.this);
-                server.renderObjectSummary(Output.this, link, obj);
+                page.renderSummary(Output.this, link);
             }
         });
     }
@@ -115,35 +116,72 @@ public class Output
             return;
         }
 
-        server.getDelegate().startEmbed(this, embedDepth, link, obj);
+        final Page page = server.asPage(obj);
+        server.getDelegate().startEmbed(this, embedDepth, link, page);
+
+        if(page instanceof Page.Detailed) {
+            Page.Detailed detailed = (Page.Detailed) page;
+            server.getDelegate().startEmbedTitle(this, embedDepth, link, detailed);
+            detailed.renderObjectTitle(Output.this, link);
+            server.getDelegate().endEmbedTitle(this, embedDepth, link, detailed);
+        }
+
+        server.getDelegate().startEmbedContent(this, embedDepth, link, page);
         embedDepth += 1;
+
         render(new Renderable() {
             @Override
             public void renderOn(HtmlCanvas canvas) throws IOException
             {
                 assert (canvas == Output.this);
-                server.renderObjectDetails(Output.this, link, obj);
+                if(page instanceof Page.Detailed) {
+                    ((Page.Detailed)page).renderDetails(Output.this, link);
+                } else {
+                    page.renderSummary(Output.this, link);
+                }
             }
         });
+
         embedDepth -= 1;
-        server.getDelegate().endEmbed(this, embedDepth, link, obj);
+        server.getDelegate().endEmbedContent(this, embedDepth, link, page);
+
+        server.getDelegate().endEmbed(this, embedDepth, link, page);
     }
     
-    /** Asks the delegate to start a subpage. This generally produces
-     * the same decoration as an {@link #embed(Link, Object) embedded object},
-     * but without embedded any content.
-     * Must be matched with a call to link {{@link #_subpage()}. */
+    /**
+     * Starts a subpage without a title.
+     * Must be matched with a call to link {{@link #_subpage()}.
+     */
     public void subpage() throws IOException
     {
-        server.getDelegate().startSubPage(this, embedDepth);
+        server.getDelegate().startSubpage(this, embedDepth);
+        server.getDelegate().startSubpageContent(this, embedDepth);
         embedDepth += 1;
     }
-    
-    /** Matched close call for {@link #subpage()} */
+
+    /**
+     * Starts a subpage whose title is {@code title}.
+     * Must be matched with a call to {@link #_subpage()}.
+     */
+    public void subpage(Link link, Object title) throws IOException
+    {
+        server.getDelegate().startSubpage(this, embedDepth);
+
+        Page page = server.asPage(title);
+        server.getDelegate().startSubpageTitle(this, embedDepth);
+        page.renderSummary(this, link);
+        server.getDelegate().endSubpageTitle(this, embedDepth);
+
+        server.getDelegate().startSubpageContent(this, embedDepth);
+        embedDepth += 1;
+    }
+
+    /** Matched close call for {@link #subpage()} or {@link #subpage(Link, Object)} */
     public void _subpage() throws IOException
     {
         embedDepth -= 1;
-        server.getDelegate().endSubPage(this, embedDepth);
+        server.getDelegate().endSubpageContent(this, embedDepth);
+        server.getDelegate().endSubpage(this, embedDepth);
     }
 
     /** Emit a link to {@code link}, if non-null */

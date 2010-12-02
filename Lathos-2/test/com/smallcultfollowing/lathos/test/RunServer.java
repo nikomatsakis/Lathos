@@ -8,17 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import com.smallcultfollowing.lathos.Context;
-import com.smallcultfollowing.lathos.Lathos;
-import com.smallcultfollowing.lathos.LathosServer;
-import com.smallcultfollowing.lathos.Line;
+import com.smallcultfollowing.lathos.*;
 
 public class RunServer
 {
     public static void main(String[] args) throws Exception
     {
         LathosServer server = Lathos.serverOnPort(8080);
-        
+
         server.setResourceBundle(ResourceBundle.getBundle("com/smallcultfollowing/lathos/test/Test"));
         
         TestSubst testSubst = new TestSubst("subst-from", "subst-to");
@@ -26,6 +23,7 @@ public class RunServer
         
         // Load up the index page:
         Context ctx = Lathos.newContextWithIndex(server);
+        Lathos.setContext(ctx);
         ctx.log("Test of the index page");
         
         ReflectiveTest test0 = new ReflectiveTest("Test0"); 
@@ -74,6 +72,10 @@ public class RunServer
         ctx.log("URL Escaping is required for the keys in this guy to work: ", new UrlEscape());
         
         ctx.log("Links can also ", ctx.linked(aMap, "have custom text"), " (that links to ", aMap, ")");
+
+        ExtensiblePage page = Lathos.indent("Indented page");
+        ctx.log("This is on the indented page!");
+        ctx.pop(page);
 
         server.openInBrowser();
         server.join();

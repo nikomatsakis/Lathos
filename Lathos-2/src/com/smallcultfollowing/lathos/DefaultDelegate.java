@@ -147,8 +147,18 @@ public class DefaultDelegate
         out._html();
     }
 
+    private String backgroundColor(int depth)
+    {
+        return backgroundColors[depth % backgroundColors.length].toString();
+    }
+
+    private String freshId()
+    {
+        return "id" + (maxId++);
+    }
+
     @Override
-    public void startEmbed(Output out, int embedDepth, Link link, Object obj) throws IOException
+    public void startEmbed(Output out, int embedDepth, Link link, Page page) throws IOException
     {
         // Open a <DIV> and generate a unique id for it:
         // String parentId = (idStack.isEmpty() ? "" : idStack.getLast());
@@ -156,6 +166,13 @@ public class DefaultDelegate
         String color = backgroundColor(embedDepth);
         out.div(id(id).class_("log initiallyOpen").style("background-color: " + color));
         idStack.push(id);
+    }
+
+    @Override
+    public void startEmbedTitle(Output out, int embedDepth, Link link, Page.Detailed page) throws IOException
+    {
+        String id = idStack.peek();
+        String color = backgroundColor(embedDepth);
 
         out.div(class_("controls").style("background-color: " + color));
 
@@ -172,24 +189,31 @@ public class DefaultDelegate
         }
 
         out._div();
-
-        out.div(class_("content"));
-    }
-
-    private String backgroundColor(int depth)
-    {
-        return backgroundColors[depth % backgroundColors.length].toString();
-    }
-
-    private String freshId()
-    {
-        return "id" + (maxId++);
+        
+        out.div(class_("title"));
     }
 
     @Override
-    public void endEmbed(Output out, int embedDepth, Link link, Object obj) throws IOException
+    public void endEmbedTitle(Output out, int embedDepth, Link link, Page.Detailed page) throws IOException
     {
         out._div();
+    }
+
+    @Override
+    public void startEmbedContent(Output out, int embedDepth, Link link, Page page) throws IOException
+    {
+        out.div(class_("content"));
+    }
+
+    @Override
+    public void endEmbedContent(Output out, int embedDepth, Link link, Page page) throws IOException
+    {
+        out._div();
+    }
+
+    @Override
+    public void endEmbed(Output out, int embedDepth, Link link, Page page) throws IOException
+    {
         out._div();
         idStack.pop();
     }
@@ -201,15 +225,32 @@ public class DefaultDelegate
     }
 
     @Override
-    public void startSubPage(Output output, int embedDepth) throws IOException
-    {
-        startEmbed(output, embedDepth, null, null);
+    public void startSubpage(Output out, int embedDepth) throws IOException {
+        startEmbed(out, embedDepth, null, null);
     }
 
     @Override
-    public void endSubPage(Output output, int embedDepth) throws IOException
-    {
-        endEmbed(output, embedDepth, null, null);
+    public void startSubpageTitle(Output out, int embedDepth) throws IOException {
+        startEmbedTitle(out, embedDepth, null, null);
     }
 
+    @Override
+    public void endSubpageTitle(Output out, int embedDepth) throws IOException {
+        endEmbedTitle(out, embedDepth, null, null);
+    }
+
+    @Override
+    public void startSubpageContent(Output out, int embedDepth) throws IOException {
+        startEmbedContent(out, embedDepth, null, null);
+    }
+
+    @Override
+    public void endSubpageContent(Output out, int embedDepth) throws IOException {
+        endEmbedContent(out, embedDepth, null, null);
+    }
+
+    @Override
+    public void endSubpage(Output out, int embedDepth) throws IOException {
+        endEmbed(out, embedDepth, null, null);
+    }
 }

@@ -10,7 +10,7 @@ import com.smallcultfollowing.lathos.Output;
 import com.smallcultfollowing.lathos.Page;
 
 public class LinkCacheTest
-implements Page
+implements Page.Detailed
 {
     int counter = 0;
     
@@ -18,6 +18,11 @@ implements Page
     public void renderSummary(Output out, Link link) throws IOException
     {
         Lathos.reflectiveRenderSummary(this, out, link);
+    }
+
+    @Override
+    public void renderObjectTitle(Output out, Link link) throws IOException {
+        Lathos.reflectiveRenderTitle(this, out, link);
     }
 
     @Override

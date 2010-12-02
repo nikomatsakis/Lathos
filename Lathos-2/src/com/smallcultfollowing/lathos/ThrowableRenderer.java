@@ -5,67 +5,56 @@ import java.io.IOException;
 public class ThrowableRenderer
     implements ObjectRenderer
 {
-    @Override
-    public boolean renderObjectSummary(Object obj, Output out, Link link)
-            throws IOException
+    public static class ThrowablePage
+        extends ReflectiveRenderer.ReflectivePage
     {
-        if (obj instanceof Throwable) {
-            out.a(link).text("<Throwable: "+obj+">");
-            out._a(link);
-        }
-        return false;
-    }
+        private final Throwable thr;
 
-    @Override
-    public boolean renderObjectDetails(Object obj, Output out, Link link)
-            throws IOException
-    {
-        if(obj instanceof Throwable) {
-            renderDetails(out, link, (Throwable)obj);
-            return true;
+        public ThrowablePage(Throwable thr) {
+            super(thr);
+            this.thr = thr;
         }
-        return false;
-    }
 
-    private void renderDetails(Output out, Link link, Throwable thr) throws IOException
-    {
-        Throwable t = thr;
-        out.ul();
-        while(t != null) {
-            if(t != thr) {
-                out.li();
-                out.text("Caused by:");
-                out.ul();
+        @Override
+        public void renderDetails(Output out, Link link)
+                throws IOException
+        {
+            Throwable t = thr;
+            out.ul();
+            while(t != null) {
+                if(t != thr) {
+                    out.li();
+                    out.text("Caused by:");
+                    out.ul();
+                }
+
+                out.li().b().text("Class: ")._b().text(t.getClass().getName())._li();
+                out.li().b().text("Message: ")._b().text(t.getMessage())._li();
+
+                out.li().b().text("Stack:")._b().ul();
+                for(StackTraceElement elem : t.getStackTrace()) {
+                    out.li();
+                    out.obj(null, elem);
+                    out._li();
+                }
+                out._ul()._li();
+
+                if(t != thr) {
+                    out._ul();
+                    out._li();
+                }
+
+                t = t.getCause();
             }
-            
-            out.li().b().text("Class: ")._b().text(t.getClass().getName())._li();
-            out.li().b().text("Message: ")._b().text(t.getMessage())._li();
-            
-            out.li().b().text("Stack:")._b().ul();
-            for(StackTraceElement elem : t.getStackTrace()) {
-                out.li();
-                out.obj(null, elem);
-                out._li();
-            }
-            out._ul()._li();
-            
-            if(t != thr) {
-                out._ul();
-                out._li();
-            }
-            
-            t = t.getCause();
+            out._ul();
         }
-        out._ul();
+
     }
 
     @Override
-    public Object derefPage(Object obj, LathosServer server, String link) throws InvalidDeref
-    {
-        if(obj instanceof Throwable) {
-            return Lathos.reflectiveDerefPage(obj, link);
-        }
-        throw InvalidDeref.instance;
+    public Page asPage(LathosServer server, Object obj) {
+        if(obj instanceof Throwable)
+            return new ThrowablePage((Throwable)obj);
+        return null;
     }
-
 }

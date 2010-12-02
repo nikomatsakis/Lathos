@@ -2,17 +2,10 @@ package com.smallcultfollowing.lathos.test;
 
 import java.io.IOException;
 
-import com.smallcultfollowing.lathos.AllowReflectiveDeref;
-import com.smallcultfollowing.lathos.Ignore;
-import com.smallcultfollowing.lathos.InvalidDeref;
-import com.smallcultfollowing.lathos.Lathos;
-import com.smallcultfollowing.lathos.LathosServer;
-import com.smallcultfollowing.lathos.Link;
-import com.smallcultfollowing.lathos.Output;
-import com.smallcultfollowing.lathos.RootPage;
+import com.smallcultfollowing.lathos.*;
 
 public class ReflectiveTest
-implements RootPage
+implements RootPage, Page.Detailed
 {
     private final String name;
     
@@ -48,6 +41,11 @@ implements RootPage
     public void renderSummary(Output out, Link link) throws IOException
     {
         Lathos.reflectiveRenderSummary(this, out, link);
+    }
+
+    @Override
+    public void renderObjectTitle(Output out, Link link) throws IOException {
+        Lathos.reflectiveRenderTitle(this, out, link);
     }
 
     @Override

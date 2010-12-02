@@ -1,16 +1,20 @@
 package com.smallcultfollowing.lathos;
 
+import com.sun.xml.internal.bind.v2.util.QNameMap;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.AttributedCharacterIterator;
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public abstract class Lathos
 {
     private static ThreadLocal<Context> currentContext = new ThreadLocal<Context>();
+
 
     /**
      * Starts and returns a "batteries included" Lathos HTTP server on port
@@ -381,10 +385,9 @@ public abstract class Lathos
     public static ExtensiblePage indent(Object... objs)
     {
         Context ctx = Lathos.context();
-        ExtensiblePage page = ctx.newPage(null);
+        ExtensiblePage page = ctx.newPage(null, objs);
         ctx.embed(page);
         ctx.push(page);
-        ctx.log(objs);
         return page;
     }
 
@@ -394,4 +397,17 @@ public abstract class Lathos
             throw InvalidDeref.instance;
         return object;
     }
+
+    public static void reflectiveRenderTitle(Object obj, Output out, Link link) throws IOException {
+        if(obj == null) {
+            out.text("Null");
+        } else {
+            Class<?> cls = obj.getClass();
+            out.text("Instance of ");
+            out.text(cls.getName());
+            out.text(" with identity hash ");
+            out.text(String.format("%x", System.identityHashCode(obj)));
+        }
+    }
+
 }

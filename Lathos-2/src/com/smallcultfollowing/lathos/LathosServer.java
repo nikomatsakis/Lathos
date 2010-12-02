@@ -81,34 +81,10 @@ public interface LathosServer
     public void addSubstitutionFilter(ObjectSubst subst);
 
     /**
-     * Renders {@code obj} using the installed object renderers.
-     * 
-     * @throws IOException
-     *             if an error occurs writing to {@code out}
-     * 
-     * @see ObjectRenderer#renderObjectSummary(Object, Output, Link)
-     * @see #addRenderer(ObjectRenderer)
+     * Creates an appropriate page for object using the current
+     * object renderers.
      */
-    public void renderObjectSummary(Output out, Link link, Object obj) throws IOException;
-
-    /**
-     * Renders {@code obj} as a page using the installed object renderers.
-     * 
-     * @throws IOException
-     *             if an error occurs writing to {@code out}
-     * 
-     * @see ObjectRenderer#renderObjectDetails(Object, Output, Link)
-     * @see #addRenderer(ObjectRenderer)
-     */
-    public void renderObjectDetails(Output out, Link link, Object obj) throws IOException;
-
-    /**
-     * Dereferences {@code page} using the installed object renderers.
-     * 
-     * @see #addRenderer(ObjectRenderer)
-     * @see ObjectRenderer#derefPage(Object, LathosServer, String)
-     */
-    public Object derefPage(Object page, String link);
+    public Page asPage(Object obj);
 
     /**
      * Adds an object renderer. When we render a webpage, any objects in the
@@ -193,5 +169,4 @@ public interface LathosServer
      * @see #getDelegate()
      */
     public void setDelegate(LathosServerDelegate delegate);
-
 }

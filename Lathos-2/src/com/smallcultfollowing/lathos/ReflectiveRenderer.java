@@ -11,25 +11,42 @@ import java.io.IOException;
 public class ReflectiveRenderer
     implements ObjectRenderer
 {
-
-    @Override
-    public boolean renderObjectSummary(Object obj, Output out, Link link) throws IOException
+    public static class ReflectivePage
+    implements Page.Detailed
     {
-        Lathos.reflectiveRenderSummary(obj, out, link);
-        return true;
+        private final Object obj;
+
+        public ReflectivePage(Object obj) {
+            this.obj = obj;
+        }
+
+        @Override
+        public void renderObjectTitle(Output out, Link link) throws IOException {
+            Lathos.reflectiveRenderTitle(obj, out, link);
+        }
+
+        @Override
+        public void renderSummary(Output out, Link link) throws IOException
+        {
+            Lathos.reflectiveRenderSummary(obj, out, link);
+        }
+
+        @Override
+        public void renderDetails(Output out, Link link) throws IOException
+        {
+            Lathos.reflectiveRenderDetails(obj, out, link);
+        }
+
+        @Override
+        public Object derefPage(LathosServer server, String link) throws InvalidDeref
+        {
+            return Lathos.reflectiveDerefPage(obj, link);
+        }
+
     }
 
     @Override
-    public boolean renderObjectDetails(Object obj, Output out, Link link) throws IOException
-    {
-        Lathos.reflectiveRenderDetails(obj, out, link);
-        return true;
+    public Page asPage(LathosServer server, Object obj) {
+        return new ReflectivePage(obj);
     }
-
-    @Override
-    public Object derefPage(Object obj, LathosServer server, String link) throws InvalidDeref
-    {
-        return Lathos.reflectiveDerefPage(obj, link);
-    }
-
 }

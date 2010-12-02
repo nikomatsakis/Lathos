@@ -9,27 +9,32 @@ import java.io.IOException;
 public class ConstantRenderer
     implements ObjectRenderer
 {
-
-    @Override
-    public boolean renderObjectSummary(Object obj, Output out, Link link) throws IOException
+    public static class ConstantPage
+        implements Page
     {
-        if(obj instanceof String || obj instanceof Number) {
-            out.text(obj.toString());
-            return true;
+        private final Object constant;
+
+        public ConstantPage(Object constant) {
+            this.constant = constant;
         }
-        return false;
+
+        @Override
+        public void renderSummary(Output out, Link link) throws IOException {
+            out.text(constant.toString());
+        }
+
+        @Override
+        public Object derefPage(LathosServer server, String link) throws InvalidDeref {
+            throw InvalidDeref.instance;
+        }
     }
 
     @Override
-    public boolean renderObjectDetails(Object obj, Output out, Link link) throws IOException
-    {
-        return renderObjectSummary(obj, out, link);
-    }
-
-    @Override
-    public Object derefPage(Object obj, LathosServer server, String link) throws InvalidDeref
-    {
-        throw InvalidDeref.instance;
+    public Page asPage(LathosServer server, Object obj) {
+        if(obj instanceof String || obj instanceof Number) {
+            return new ConstantPage(obj);
+        }
+        return null;
     }
 
 }

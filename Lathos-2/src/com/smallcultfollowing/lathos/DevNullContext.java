@@ -33,7 +33,7 @@ public class DevNullContext
     }
 
     @Override
-    public ExtensiblePage newPage(String name)
+    public ExtensiblePage newPage(String name, Object... title)
     {
         return DevNullPage.instance;
     }

@@ -13,15 +13,18 @@ public class IndexPage
 {
     public IndexPage()
     {
-        super("index");
+        super("index", null);
+    }
+
+    @Override
+    public void renderObjectTitle(Output out, Link link) throws IOException {
+        out.h1().text("Index")._h1();
     }
 
     @Override
     public synchronized void renderDetails(Output out, Link link) throws IOException
     {
-        out.h1().text("Index")._h1();
-        
-        out.h2().text("Root Pages")._h2();
+        out.subpage(null, "Root Pages");
         out.ul();
         for(Map.Entry<String, Object> entry : out.server.rootPages().entrySet())
         {
@@ -30,8 +33,10 @@ public class IndexPage
             out._li();
         }
         out._ul();
-        
-        out.h2().text("Log Messages")._h2();
+        out._subpage();
+
+        out.subpage(null, "Log Messages");
         super.renderDetails(out, link);
+        out._subpage();;
     }
 }

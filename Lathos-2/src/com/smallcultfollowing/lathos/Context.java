@@ -66,11 +66,13 @@ public interface Context
      * 
      * @param name
      *            a name for the new log page, or null to use a default name
+     *
+     * @param title the object(s) to use as the title of the new page
      *            
      * @see #push(ExtensiblePage)
      * @see #embed(Page)
      */
-    public ExtensiblePage newPage(String name);
+    public ExtensiblePage newPage(String name, Object... title);
 
     /** Pushes the given page at the top of the stack */
     public ExtensiblePage push(ExtensiblePage page);

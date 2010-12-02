@@ -86,48 +86,26 @@ public abstract class DefaultServer
     }
 
     @Override
-    public synchronized void renderObjectSummary(Output out, Link link, Object obj) throws IOException
+    public Page asPage(Object obj)
     {
-        if (obj == null) {
-            out.text("null");
-            return;
-        }
-
         for (int i = renderers.size() - 1; i >= 0; i--) {
             ObjectRenderer renderer = renderers.get(i);
-            if (renderer.renderObjectSummary(obj, out, link))
-                return;
+            Page page = renderer.asPage(this, obj);
+            if (page != null)
+                return page;
         }
 
-        // Bare-bones default behavior:
-        out.a(link);
-        out.text(obj.toString());
-        out._a(link);
+        return new ConstantRenderer.ConstantPage(obj);
     }
 
-    @Override
-    public void renderObjectDetails(Output out, Link link, Object obj) throws IOException
+    private Object derefPage(Object obj, String link)
     {
-        for (int i = renderers.size() - 1; i >= 0; i--) {
-            ObjectRenderer renderer = renderers.get(i);
-            if (renderer.renderObjectDetails(obj, out, link))
-                return;
+        Page page = asPage(obj);
+        try {
+            return page.derefPage(this, link);
+        } catch (InvalidDeref _) {
+            return null;
         }
-
-        renderObjectSummary(out, link, obj);
-    }
-
-    public Object derefPage(Object page, String link)
-    {
-        for (int i = renderers.size() - 1; i >= 0; i--) {
-            ObjectRenderer renderer = renderers.get(i);
-            try {
-                return renderer.derefPage(page, this, link);
-            } catch (InvalidDeref _) {
-            }
-        }
-
-        return null;
     }
 
     @Override

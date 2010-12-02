@@ -54,12 +54,6 @@ public class DefaultLinkCache
     }
 
     @Override
-    public void renderDetails(Output out, Link link) throws IOException
-    {
-        Lathos.reflectiveRenderDetails(this, out, link);
-    }
-
-    @Override
     public Object derefPage(LathosServer server, String link) throws InvalidDeref
     {
         long id;

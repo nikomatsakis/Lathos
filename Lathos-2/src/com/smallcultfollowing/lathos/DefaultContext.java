@@ -40,14 +40,14 @@ public class DefaultContext
     }
 
     @Override
-    public ExtensiblePage newPage(String name)
+    public ExtensiblePage newPage(String name, Object... title)
     {
         if (!stack.isEmpty()) {
             ExtensiblePage top = stack.peek();
             if (top instanceof DevNullPage) {
                 return top;
             } else {
-                return new LogPage(name);
+                return new LogPage(name, new ArrayLine(substitute(title)));
             }
         } else
             return DevNullPage.instance;

@@ -13,7 +13,7 @@ import com.smallcultfollowing.lathos.Page;
 import com.smallcultfollowing.lathos.RelativeLink;
 
 public class UrlEscape
-implements Page
+implements Page.Detailed
 {
     public final Map<String, String> map = new HashMap<String, String>();
     
@@ -29,6 +29,11 @@ implements Page
     public void renderSummary(Output out, Link link) throws IOException
     {
         Lathos.reflectiveRenderSummary(this, out, link);
+    }
+
+    @Override
+    public void renderObjectTitle(Output out, Link link) throws IOException {
+        Lathos.reflectiveRenderTitle(this, out, link);
     }
 
     @Override

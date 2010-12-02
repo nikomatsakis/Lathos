@@ -8,8 +8,13 @@ import java.io.IOException;
  * the need to register all pages.
  */
 public class StaticPage
-    implements RootPage
+    implements RootPage, Page.Detailed
 {
+
+    @Override
+    public void renderObjectTitle(Output out, Link link) throws IOException {
+        out.h2().text("Static Field Access")._h2();
+    }
 
     @Override
     public void renderDetails(Output out, Link link) throws IOException

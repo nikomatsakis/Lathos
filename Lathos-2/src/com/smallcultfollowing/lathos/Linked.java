@@ -25,15 +25,9 @@ public class Linked
     }
 
     @Override
-    public void renderDetails(Output out, Link link) throws IOException
-    {
-        out.embed(link, linkedTo);
-    }
-
-    @Override
     public Object derefPage(LathosServer server, String link) throws InvalidDeref
     {
-        return server.derefPage(linkedTo, link);
+        return server.asPage(linkedTo).derefPage(server, link);
     }
 
 }

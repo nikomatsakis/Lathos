@@ -16,11 +16,6 @@ public class DevNullLine
     }
 
     @Override
-    public void renderDetails(Output out, Link link)
-    {
-    }
-
-    @Override
     public Object derefPage(LathosServer server, String link)
     {
         return this;

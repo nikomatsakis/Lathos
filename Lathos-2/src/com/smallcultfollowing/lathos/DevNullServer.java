@@ -23,11 +23,6 @@ public class DevNullServer
     }
 
     @Override
-    public void renderObjectSummary(Output out, Link link, Object obj)
-    {
-    }
-
-    @Override
     public void addRenderer(ObjectRenderer render)
     {
     }
@@ -55,12 +50,6 @@ public class DevNullServer
     }
 
     @Override
-    public void renderObjectDetails(Output out, Link link, Object obj)
-            throws IOException
-    {
-    }
-
-    @Override
     public void join()
     {
     }
@@ -84,12 +73,6 @@ public class DevNullServer
     @Override
     public void removeRootPage(RootPage page)
     {
-    }
-
-    @Override
-    public Object derefPage(Object page, String link)
-    {
-        return null;
     }
 
     @Override
@@ -141,4 +124,8 @@ public class DevNullServer
     {
     }
 
+    @Override
+    public Page asPage(Object obj) {
+        return DevNullPage.instance;
+    }
 }

@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 public class ClassObjectPage
-    implements Page
+    implements Page, Page.Detailed
 {
     private final Class<?> cls;
     
@@ -23,10 +23,15 @@ public class ClassObjectPage
     }
 
     @Override
+    public void renderObjectTitle(Output out, Link link) throws IOException {
+        out.h2();
+        out.text(cls.toString());
+        out._h2();
+    }
+
+    @Override
     public void renderDetails(Output out, Link link) throws IOException
     {
-        out.h1().text(cls.toString())._h1();
-        
         out.table();
         out.tr();
         out.th().text("Static Field")._th();

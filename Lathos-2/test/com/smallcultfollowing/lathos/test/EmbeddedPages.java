@@ -10,7 +10,7 @@ import com.smallcultfollowing.lathos.Output;
 import com.smallcultfollowing.lathos.Page;
 
 public class EmbeddedPages
-implements Page
+implements Page.Detailed
 {
     ConsPair lst1 = new ConsPair("foo", new ConsPair("bar", null));
     ConsPair lst2 = new ConsPair("a", new ConsPair("b", new ConsPair("c", null)));
@@ -19,6 +19,11 @@ implements Page
     public void renderSummary(Output out, Link link) throws IOException
     {
         Lathos.reflectiveRenderSummary(this, out, link);
+    }
+
+    @Override
+    public void renderObjectTitle(Output out, Link link) throws IOException {
+        Lathos.reflectiveRenderTitle(this, out, link);
     }
 
     @Override
