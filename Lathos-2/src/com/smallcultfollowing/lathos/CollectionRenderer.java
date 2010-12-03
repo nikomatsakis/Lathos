@@ -10,7 +10,7 @@ public class CollectionRenderer
     implements ObjectRenderer
 {
 
-    public class BasePage
+    public static class BasePage
         implements Page.Detailed, Page.Titled
     {
         private final Object object;
@@ -45,7 +45,7 @@ public class CollectionRenderer
         }
     }
 
-    public class IterablePage<T>
+    public static class IterablePage<T>
         extends BasePage
     {
         private final Iterable<? extends T> iterable;
@@ -116,7 +116,7 @@ public class CollectionRenderer
         }
     }
 
-    public class MapPage
+    public static class MapPage
         extends IterablePage<Map.Entry<?, ?>>
     {
         private final Map<?, ?> map;
@@ -176,7 +176,7 @@ public class CollectionRenderer
         }
     }
 
-    public class MapEntryPage
+    public static class MapEntryPage
         implements Page
     {
         private final Map.Entry<?, ?> entry;

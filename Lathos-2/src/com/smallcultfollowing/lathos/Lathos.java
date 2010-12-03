@@ -160,13 +160,13 @@ public abstract class Lathos
                 out._td();
 
                 out.td();
+                Object value;
                 try {
-                    Object value = fld.get(page);
-                    out.obj(fldLink, value);
+                    value = fld.get(page);
                 } catch (Exception e) {
-                    out.text("Failed to access: ");
-                    out.obj(e);
+                    value = e;
                 }
+                out.obj(fldLink, value);
                 out._td();
 
                 out._tr();
@@ -186,13 +186,13 @@ public abstract class Lathos
                 out._td();
 
                 out.td();
+                Object value;
                 try {
-                    Object value = mthd.invoke(page);
-                    out.obj(mthdLink, value);
+                    value = mthd.invoke(page);
                 } catch (Exception e) {
-                    out.text("Failed to invoke: ");
-                    out.obj(e);
+                    value = e;
                 }
+                out.obj(mthdLink, value);
                 out._td();
 
                 out._tr();
@@ -372,9 +372,13 @@ public abstract class Lathos
      */
     public static void reflectiveRenderSummary(Object obj, Output out, Link link) throws IOException
     {
-        out.a(link);
-        out.text(obj.toString());
-        out._a(link);
+        if(obj != null) {
+            out.a(link);
+            out.text(obj.toString());
+            out._a(link);
+        } else {
+            out.text("null");
+        }
     }
 
     /**

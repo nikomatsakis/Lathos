@@ -48,6 +48,12 @@ public class ReflectiveTest
         return deref1;
     }
 
+    @AllowReflectiveDeref(showInDetails = true)
+    public ReflectiveTest throwExc()
+    {
+        throw new RuntimeException("Test error");
+    }
+
     @Override
     public void renderSummary(Output out, Link link) throws IOException
     {
