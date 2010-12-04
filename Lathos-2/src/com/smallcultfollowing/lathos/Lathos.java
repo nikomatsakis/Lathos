@@ -238,8 +238,7 @@ public abstract class Lathos
             Integer prevArgument = null;
             Link currentLink = null;
 
-            char c;
-            while ((c = iter.next()) != AttributedCharacterIterator.DONE) {
+            for(char c = iter.current(); c != AttributedCharacterIterator.DONE; c = iter.next()) {
                 Integer argument = (Integer) iter.getAttribute(MessageFormat.Field.ARGUMENT);
 
                 if (!indicesEqual(prevArgument, argument)) {
