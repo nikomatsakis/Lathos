@@ -27,7 +27,8 @@ public class Linked
     @Override
     public Object derefPage(LathosServer server, String link) throws InvalidDeref
     {
-        return server.asPage(linkedTo).derefPage(server, link);
+        if(link.equals("linkedTo")) return linkedTo;
+        throw InvalidDeref.instance;
     }
 
 }
