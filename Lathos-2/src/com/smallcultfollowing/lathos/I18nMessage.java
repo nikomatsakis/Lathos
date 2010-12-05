@@ -18,7 +18,7 @@ public class I18nMessage
     @Override
     public void renderSummary(Output out, Link link) throws IOException
     {
-        Lathos.renderI18nSummary(messageName, arguments, out, link, link);
+        Lathos.renderI18nSummary(messageName, arguments, out, null, link);
     }
 
     @Override
