@@ -11,7 +11,7 @@ public interface Context
 {
     /** Server with which this context is associated */
     LathosServer server();
-
+    
     /**
      * Creates a new line with the given objects and adds it to the current
      * LogPage, after applying appropriate substitutions from the server.

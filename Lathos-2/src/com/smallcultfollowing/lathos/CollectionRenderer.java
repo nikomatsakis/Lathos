@@ -155,7 +155,7 @@ public class CollectionRenderer
                 out._td();
 
                 out.td();
-                out.obj(entryLink, "value", entry.getKey());
+                out.obj(entryLink, "value", entry.getValue());
                 out._td();
 
                 out._tr();
